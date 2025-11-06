@@ -1,0 +1,15 @@
+.chatLoader{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.loaderText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 10px;
+}
+.loaderDescription{
+    margin: 0;
+}

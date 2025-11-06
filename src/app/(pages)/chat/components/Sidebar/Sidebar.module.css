@@ -1,0 +1,373 @@
+/* Sidebar.module.css */
+
+/* container */
+.sidebar {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--main-color);
+  color: #fff;
+  padding: 12px;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: width 260ms cubic-bezier(.2,.9,.3,1), padding 180ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* widths */
+.closed {
+  width: 76px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.open {
+  width: 260px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* top area: logo + toggle */
+.topWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoImg {
+  border-radius: 8px;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+}
+
+/* toggle button */
+.toggleBtn {
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .18s ease, background .12s ease;
+  font-size: 18px;
+  line-height: 1;
+}
+.toggleBtn:hover {
+  background: rgba(255,255,255,0.05);
+}
+.toggleOpen {
+  transform: rotate(0deg);
+}
+
+/* nav list */
+.nav {
+  margin-top: 6px;
+  flex: 0 0 auto;
+}
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.navItem {}
+
+/* link */
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: background .18s ease, transform .18s ease, color .18s ease;
+}
+
+.navLink:hover {
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.85);
+  transform: translateX(-4px);
+}
+
+/* icon wrapper */
+.iconWrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: transparent;
+  transition: background .18s ease, box-shadow .18s ease;
+}
+
+/* icon <img> */
+.icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  filter: grayscale(100%) brightness(0.85);
+  transition: filter .18s ease;
+}
+
+.iconActive {
+  filter: none;
+}
+
+/* label text */
+.label {
+  font-size: 15px;
+  white-space: nowrap;
+  color: inherit;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+/* active state */
+.active {
+  background: linear-gradient(90deg, #094EFD 0%, #F901C9 100%);
+  box-shadow: 0 10px 30px rgba(9,78,253,0.08);
+}
+.active .icon {
+  filter: brightness(0) invert(1);
+}
+
+/* bottom area */
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.bottomList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+
+/* support button */
+.supportBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: #83868F;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.supportBtn:hover {
+  background: #2b2b3a;
+}
+.supportBtn img {
+  filter: brightness(0) invert(1);
+}
+
+/* profile card */
+.profileCard {
+  background: #1e1e2d;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+}
+.profileText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.profileName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* add account btn */
+.addAccountBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent; 
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* logout button */
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ff3b3b;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.logoutBtn:hover {
+  background: rgba(255,255,255,0.03);
+}
+.logoutBtn img {
+  filter: brightness(0) invert(1);
+}
+
+/* Collapsed rules */
+.closed .label,
+.closed .brand,
+.closed .profileText {
+  display: none;
+}
+.closed .profileBox {
+  justify-content: center;
+  gap: 0;
+  padding: 8px;
+}
+.closed .logo {
+  justify-content: center;
+}
+.closed .toggleBtn {
+  transform: none;
+}
+
+.SupportLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* padding: 10px 12px; */
+  border-radius: 10px;
+  color: #83868F;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+/* ========== 📱 Mobile Overlay Behavior ========== */
+@media (max-width: 991px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2000;
+    width: 260px;
+    height: 100vh;
+    border-radius: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateX(100%);
+    opacity: 0;
+    background: var(--main-color);
+  }
+
+  .open {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .closed {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* خلفية شفافة فوق الصفحة */
+  .sidebar::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .open::before {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* إخفاء زر التبديل */
+ 
+
+  /* nav adjustments */
+  .nav {
+    margin-top: 20px;
+  }
+
+  .navList {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navLink {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .bottom {
+    margin-top: auto;
+  }
+}

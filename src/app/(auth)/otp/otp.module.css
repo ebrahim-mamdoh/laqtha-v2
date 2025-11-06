@@ -1,0 +1,290 @@
+/* إعادة استخدام نفس الأسماء والألوان لتطابق Register */
+.registerWrapper {
+  min-height: 100vh;
+    background-image: url('/images/main-bg.png');
+  color: #fff;
+  padding: 20px;
+}
+
+/* card */
+.leftCard {
+  width: 100%;
+  max-width: 540px;
+  height: 50vh; /* موبايل: نص الشاشة */
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: url("/images/loginImage.png") center/cover no-repeat;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(0,0,0,0.4);
+}
+
+.leftCard img {
+  width: 180px;
+  height: 60px;
+  object-fit: contain;
+}
+
+/* النصوص اللي فوق الصورة */
+.imageText {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  text-align: right;
+  color: #fff;
+  padding: 15px;
+}
+
+.imageText h1 {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.imageText h2 {
+  font-size: 20px;
+  margin-top: 4px;
+}
+
+.imageText p {
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+@media (min-width: 768px) {
+  .leftCard {
+    height: 620px; /* ديسكتوب */
+  }
+}
+
+/* فورم كارد داخلي للتباعد البسيط */
+.formCard {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 14px;
+  padding: 16px 24px; /* أقل padding خارجياً، الفورم نفسه له padding داخلي */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* form */
+.form {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 14px;
+  padding: 0; /* نترك padding للفورم كارد الخارجي */
+}
+
+/* inputs */
+.input {
+  width: 100% !important; /* override bootstrap */
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid #fff; /* الإطار أبيض */
+  color: #fff;
+  outline: none;
+  font-size: 14px;
+  transition: box-shadow .15s ease, border-color .15s ease;
+  direction: rtl;
+  text-align: right;
+}
+
+.input:focus {
+  border-color: #fff; /* أبيض عند التركيز */
+  box-shadow: 0 4px 18px rgba(255,255,255,0.25);
+}
+
+.invalid {
+  border-color: #ff6b6b !important;
+}
+
+.err {
+  color: #ff9aa2;
+  font-size: 12px;
+  margin-top: 6px;
+  text-align: right;
+}
+
+/* primary / secondary buttons (مطابقة للتسجيل) */
+.primaryBtn {
+  width: 60%;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: white;
+  background: #ff00c8;
+  box-shadow: 0 8px 20px rgba(255,47,207,0.14);
+  
+}
+
+/* social buttons row */
+.socialRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-direction: column; /* stacked on small screens */
+}
+.socialRow button {
+width: 100%;
+}
+@media (min-width: 576px) {
+  .socialRow {
+    flex-direction: row; /* side-by-side on larger screens */
+  }
+}
+
+/* common social btn */
+.socialBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  font-weight: 700;
+  color: #111;
+  background: #fff; /* default white for google */
+}
+
+/* Google style (white) */
+.socialBtn.google img {
+  display: inline-block;
+}
+
+/* Facebook style — blue */
+.socialBtn.facebook {
+  background: linear-gradient(90deg, #2563eb 0%, #4f8cff 100%);
+  color: #fff;
+  border: none;
+}
+
+/* small link-like button (register link) */
+.linkBtn {
+  background: transparent;
+  border: none;
+  color: #00c4cc;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* buttons spacing */
+.secondaryBtn {
+  margin-top: 10px;
+  margin-bottom: 0;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(90deg, #2563eb 0%, #4f8cff 100%);
+}
+
+.resendLink{
+    background-color: transparent;
+    color: #ff00c8;
+    border: none;
+}
+/* النصوص */
+.heading,
+.hint,
+.terms {
+  text-align: center;
+}
+.heading{
+      padding: 30px 60px;
+}
+
+
+.hint,
+.terms {
+  color: #8A8A8A;
+}
+
+.terms {
+  margin-top: 14px;
+}
+
+/* highlight links inside terms */
+.highlight{
+  color: #00c4cc;  /* اللون المختلف */
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sccessWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 70px;
+  padding: 30px;
+}
+/* iput feild  */
+/* =========================
+   OTP Input Styles
+   ========================= */
+
+.otpInputs {
+  display: flex;
+  justify-content: center;
+  gap: 18px; /* المسافة بين الخانات */
+  margin: 25px 0;
+}
+
+.otpBox {
+  width: 65px;
+  height: 65px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.05);
+  text-align: center;
+  font-size: 28px;
+  font-weight: 500;
+  color: #ffffff;
+  outline: none;
+  caret-color: #ff00c7;
+  transition: border-color 0.2s ease-in-out;
+}
+
+/* في حالة وجود نص داخل الخانة */
+.otpBox:not(:placeholder-shown) {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* إزالة أسهم الإدخال من النوع number (لو استخدم لاحقاً) */
+.otpBox::-webkit-inner-spin-button,
+.otpBox::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+@media (max-width: 768px) {
+  /* .cardWrap {
+    flex-direction: column;
+    gap: 18px;
+  } */
+
+  /* image card moves on top and gets fixed height 200px as requested */
+  .leftCard {
+    width: 100%;
+    max-width: 100%;
+    min-height: 200px;
+    height: 200px;
+    border-radius: 12px;
+  }
+  .heading{
+      padding: 0px;
+}
+
+}

@@ -1,0 +1,40 @@
+.page {
+min-height: 100vh;
+background-image: url('/images/main-bg.png');
+background-size: cover;
+background-position: center;
+padding-bottom: 60px;
+color: #fff;
+}
+
+
+.loader { color: #fff; padding: 40px; text-align: center }
+
+.topRow {
+ align-items: center ;
+background: var(--color-walletCard);
+border-radius: var(--radius-main);
+}
+
+.cardGrid { display: grid; gap: 20px }
+
+.statCard {
+background-color: #220f49;
+border-radius: 14px;
+padding: 18px;
+box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+margin-left: 20px;
+}
+
+.cardTitle { color: rgba(255,255,255,0.9); font-size: 14px; margin-bottom: 8px }
+.amount { font-size: 18px; margin-top: 8px; color: #fff }
+
+
+.chartCard {
+background-color: #220f49;
+padding: 18px; border-radius: 14px;
+}
+
+
+/* .smallDonutWrapper { width: 120px; height: 120px } */
+

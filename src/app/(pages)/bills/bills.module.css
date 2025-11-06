@@ -1,0 +1,245 @@
+/* Bills.module.css */
+
+/* PAGE WRAP + background gradient (match screenshot) */
+.pageWrap {
+  min-height: 100vh;
+  background-image: url('/images/main-bg.png');
+    background-size: cover;
+    color: #fff;
+  padding: 0px 0 !important;
+}
+
+/* inner container styling */
+.inner {
+  padding: 22px;
+}
+
+/* STAT cards */
+.statCard {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius: 12px;
+  padding: 18px;
+  min-height: 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.04);
+  align-items: flex-start;
+}
+
+.statTitle {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+  text-align: right;
+  margin-bottom: 6px;
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-align: right;
+}
+
+/* FILTER ROW */
+.filterRow {
+  margin-top: 16px;
+}
+
+.searchWrap {
+  width: 100%;
+}
+
+.searchInput {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+/* pills */
+.pills {
+  display: flex;
+  gap: 10px;
+}
+
+.pill {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .18s ease;
+}
+
+.pill:hover { transform: translateY(-2px); }
+
+.pillActive {
+  background: linear-gradient(90deg,#094EFD 0%, #F901C9 100%);
+  border-color: transparent;
+}
+
+/* sort area */
+.sortWrap {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* نغلب Bootstrap form-select بالـ !important */
+.formSelect {
+  min-width: 210px;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-size: 0.95rem !important;
+}
+
+/* شكل السهم في القائمة */
+.formSelect option {
+  background-color: #121212;
+  color: #fff;
+}
+
+
+/* top right controls */
+.controlsRight {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.actionPrimary {
+  background: linear-gradient(90deg,#ff2fcf 0%, #ff0077 50%);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+/* TABLE WRAPPER */
+.tableWrap {
+  background: linear-gradient(180deg, rgba(249, 0, 0, 0.02), rgba(192, 17, 17, 0.01));
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 26px rgba(0,0,0,0.45);
+}
+
+/* HEADER ROW */
+.theadRow th {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+  padding: 14px 12px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  background-color: transparent !important;
+}
+
+/* BODY ROW */
+.tbodyRow td {
+  padding: 12px;
+  color: rgba(255,255,255,0.9);
+  vertical-align: middle;
+  border-bottom: 1px dashed rgba(255,255,255,0.03);
+  background-color: transparent !important;
+}
+
+/* 👇 هنا الجزء اللي بيحل المشكلة فعلاً */
+.transparentTable :global(.table) {
+   --bs-table-color: #ffffff; 
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+.transparentTable :global(.table > :not(caption) > * > *) {
+  background-color: transparent !important;
+  color: #fff !important;
+
+}
+
+
+/* MOBILE - cards */
+.billCard {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cardInvoice {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+}
+
+.cardAmount {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ff2fcf;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+ 
+.cardLabel {
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+}
+
+.cardValue {
+  color: rgba(255,255,255,0.95);
+  font-size: 14px;
+  text-align: left;
+}
+
+.cardAction {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* center helper */
+.center {
+  padding: 36px;
+  text-align: center;
+  color: rgba(255,255,255,0.9);
+}
+
+/* responsive tweaks */
+@media (min-width: 768px) {
+  .inner { padding: 28px; }
+}
+
+@media (max-width: 767px) {
+  .statCard { min-height: 80px; padding: 12px; }
+  .searchInput { font-size: 14px; }
+  .sortWrap .form-select { min-width: 130px; }
+  .tableWrap { display: none; } /* hide table on mobile (use cards) */
+}

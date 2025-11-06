@@ -1,0 +1,373 @@
+
+/* ===== chat.module.css (updated tweaks) ===== */
+
+/* ================= CHAT PAGE LAYOUT ================= */
+/* chat container (keeps original look) */
+.chatPage {
+    background-image: url('/images/main-bg.png');
+    background-size: cover;
+    background-position: center;    
+    background-repeat: no-repeat;
+  padding:45px 50px;
+}
+
+/* chat shell: flex column so messages / suggestions / input are stacked */
+.chatShell {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 500px);
+    transition: all 160ms ease;
+}
+
+
+
+.noMessages .suggestionsWrap {
+  /* allow the suggestions area to grow and center its content */
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+
+}
+
+.noMessages .welcomeSection {
+  margin-top: 0;
+}
+
+.noMessages .desktopList {
+  justify-content: center;
+}
+
+/* IMPORTANT FIXES FOR FLEX + SCROLLING ( prevents input clipping) */
+.messagesWrap {
+  /* allow messages area to shrink/grow inside the column layout */
+  flex: 1 1 auto;
+  min-height: 0; /* <--- CRUCIAL: allows child to scroll inside flex */
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+    /* min-height: 90% ; */
+
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* ensure messages column doesn't force width on siblings */
+  min-width: 0;
+}
+
+/* bubbles */
+.msgRow { display: flex; width: 100%; }
+.msgLeft { justify-content: flex-start; }
+.msgRight { justify-content: flex-end; }
+
+.bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  line-height: 1.4;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.bubbleBot {
+  background: rgba(255,255,255,0.1);
+  border-top-left-radius: 4px;
+}
+
+.bubbleUser {
+  background: linear-gradient(90deg, #ff2fcf 0%, #ff0077 50%);
+  border-top-right-radius: 4px;
+}
+
+/* ================= SUGGESTIONS AREA ================= */
+/* suggestions wrapper must not push layout: flex:0 0 auto */
+.suggestionsWrap {
+  flex: 0 0 auto;
+  margin-top: 12px;
+  /* ensure it doesn't create unexpected overflow */
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.suggestionsInner {
+  position: relative;
+}
+.welcomeSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.bubbleImg {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.welcomeMsg {
+  color: #fff;
+  text-align: center;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+/* MOBILE SWIPER (scrollable) */
+.suggestionsScroll {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  box-sizing: border-box;
+}
+.suggestionsScroll::-webkit-scrollbar { display: none; }
+
+/* make sure Swiper slides don't stretch container */
+/* make sure Swiper slides don't stretch container */
+.suggestionsScroll :global(.swiper-slide) {
+  width: auto !important;
+  flex: 0 0 auto;
+}
+.suggestionsScroll :global(.swiper-wrapper) {
+  align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+
+/* SUGGESTION CARD */
+.suggestionCard {
+  scroll-snap-align: start;
+  min-width: 220px;
+  max-width: 260px;
+  background:#100f1f;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  color: #fff;
+  text-align: right;
+  box-sizing: border-box;
+  flex: 0 0 auto; /* don't grow or shrink unexpectedly */
+  transition: all 0.5s ease;
+  margin-bottom: 10px;
+}
+.suggestionCard:hover { 
+  /* box-shadow: 0 8px 24px rgba(0,0,0,0.4);  */
+  background: linear-gradient(90deg, rgb(66, 12, 67), rgb(19, 15, 33));
+  
+
+}
+.suggestionCard:active { transform: translateY(2px); }
+
+.suggIcon { font-size: 26px; }
+.suggText { display: flex; flex-direction: column; gap: 2px; }
+.suggTitle { font-size: 15px; font-weight: 600; }
+.suggSubtitle { font-size: 13px; opacity: 0.8; }
+
+.desktopList {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* ================= INPUT BAR ================= */
+.inputBar {
+  flex: 0 0 auto; /* keep input visible, not pushed away */
+  padding: 8px 14px;
+  background: var(--main-color);
+  opacity: 50%;
+  border: 1px solid white;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.inputInner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0; /* allow children to shrink (important) */
+}
+
+/* the text input must be shrinkable inside the flex row */
+.textInput {
+  flex: 1 1 auto;
+  min-width: 0; /* CRUCIAL: prevents overflow/clipping */
+  border: none;
+  background: transparent;
+  border-radius: 50px;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+
+}
+
+.textInput:focus {
+  border-color: #ff2fcf;
+  box-shadow: 0 0 8px rgba(255,47,207,0.4);
+}
+
+.micBtn, .sendBtn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px;
+}
+.sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+/* ================= CHAT MESSAGES ================= */
+.messagesArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* فقاعة الرسالة العامة */
+.message {
+  max-width: 100% !important;
+  padding: 12px 16px;
+  border-radius: 18px;
+  word-break: break-word;
+  line-height: 1.4;
+  font-size: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  animation: fadeIn 0.25s ease;
+}
+
+/* رسالة المستخدم (يمين – وردية) */
+.userMsg {
+  align-self: flex-end ;
+  background: #ff2fcf;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+/* رسالة البوت (يسار – رمادية فاتحة) */
+.botMsg {
+  width: 100% !important;
+  align-self: flex-start !important;
+  /* background: var(--main-color); */
+  color: white;
+  border-bottom-left-radius: 4px;
+}
+
+/* تحسين التمرير */
+.messagesArea::-webkit-scrollbar {
+  width: 6px;
+}
+.messagesArea::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+
+.msgRow {
+  display: flex;
+  width: 100%;
+}
+
+.msgLeft {
+    justify-content: flex-end;
+}
+
+.msgRight {
+    justify-content: flex-start;
+}
+
+.message {
+  max-width: 100%; 
+  padding: 12px 16px;
+  border-radius: 18px;
+  word-break: break-word;
+  line-height: 1.4;
+  font-size: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  animation: fadeIn 0.25s ease;
+}
+
+.userMsg {
+  background: #ff2fcf;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.botMsg {
+  color: #fff;
+  border-bottom-left-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= RESPONSIVE ADJUSTMENTS ================= */
+@media (min-width: 768px) {
+  .chatShell {
+    padding: 28px;
+    min-height: 76vh;
+  }
+
+  /* On desktop: suggestions are not scrollable and displayed as fixed list */
+  .suggestionsScroll {
+    overflow: hidden !important;
+    justify-content: center;
+    padding: 12px 24px;
+  }
+
+  .desktopList {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (max-width: 767px) {
+  .chatShell {
+    padding: 16px;
+    min-height: 72vh;
+  }
+
+  .suggestionsScroll {
+    overflow-x: auto;
+  }
+
+  .suggestionCard {
+    min-width: 200px;
+  }
+
+  .desktopList {
+    display: none;
+  }
+  .chatPage {
+    padding: 30px 0px;
+    min-height: 93vh;
+  }
+}
+
+

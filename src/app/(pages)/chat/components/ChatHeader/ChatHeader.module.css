@@ -1,0 +1,108 @@
+/* ChatHeader.module.css */
+
+.header {
+  background: var(--main-color);
+  color: var(--color-white, #fff);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 16px;
+}
+
+/* ===== Desktop Header ===== */
+.desktopHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* user info */
+.userBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 14px 7px 20px;
+  border-radius: 50px;
+  background-color: #171625;
+}
+
+.userInfo {
+  text-align: right;
+}
+
+.userName {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.userBalance {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.balanceValue {
+  color: #09FDDC;
+  font-weight: 700;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ===== Mobile Header ===== */
+.mobileHeader {
+  display: none;
+}
+
+.toggleBtn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.bellBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.mobileUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobileUser .userName {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .desktopHeader {
+    display: none; /* إخفاء تصميم الديسكتوب */
+  }
+
+  .mobileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    direction: rtl;
+    gap: 12px;
+  }
+}

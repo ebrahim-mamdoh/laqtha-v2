@@ -1,0 +1,129 @@
+.page {
+  min-height: 100vh;
+  background-image:url(/images/main-bg.png);
+  color: #fff;
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.column {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.column h5 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #ffb7f5;
+}
+
+.card {
+  background-color: var(--color-faz3aCard);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+/* .card:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+} */
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid white;
+}
+
+.info {
+  flex: 1;
+}
+
+.info h6 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 5px 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.callBtn {
+  background-color:transparent;
+  color: white;
+  border: 1px solid gray;
+}
+
+.callBtn:hover {
+  background-color: #e100b5;
+}
+
+.favoriteBtn {
+  background-color: #570655;
+  color: #fff;
+}
+
+.favoriteBtn:hover {
+  background-color: #6d0a6c;
+}
+
+/* ===================== Responsive ===================== */
+.dropdownWrapper {
+  display: none;
+}
+
+.mobileList {
+  display: none;
+}
+
+/* ====== الموبايل ====== */
+@media (max-width: 992px) {
+  .grid {
+    display: none;
+  }
+
+  .dropdownWrapper {
+    display: block;
+  }
+
+  .mobileList {
+    display: block;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}

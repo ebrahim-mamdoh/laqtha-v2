@@ -1,0 +1,49 @@
+.hotelCard {
+          border-bottom: 2px solid #43306a;
+    padding: 43px;
+}
+.hotelimage{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bookBtn{
+      width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.deletepic{
+      padding: 15px 50px;
+    border-radius: 50px;
+    background-color: #1e1c3b;
+    color: white;
+    border: none;
+    margin-right: 10px;
+          border: 1px solid #43306a;
+
+
+}
+
+@media (max-width: 767px) {
+  .hotelCard {
+    padding: 10px;
+  }
+  .hotelDetails ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .hotelCard {
+          border-bottom: 2px solid #43306a;
+    padding: 43px 0px;
+}
+
+.deletepic{
+    width: 100%;
+}
+}

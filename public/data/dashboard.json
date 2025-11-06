@@ -1,0 +1,26 @@
+
+{
+"balance": { "amount": "357,369.00", "currency": "ر.س" },
+"overall": { "used": 26, "left": 74, "percent": 26 },
+"payments": { "paid": 39, "rest": 61, "amount": "12,476.00" },
+"paymentsPercent": 39,
+"topup": { "top": 26, "rest": 74, "amount": "6,476.00" },
+"topupPercent": 26,
+"chart": [
+{ "date": "29/03", "topup": 120, "pay": 30 },
+{ "date": "30/03", "topup": 360, "pay": 40 },
+{ "date": "31/03", "topup": 80, "pay": 20 },
+{ "date": "01/04", "topup": 40, "pay": 80 },
+{ "date": "02/04", "topup": 420, "pay": 60 },
+{ "date": "03/04", "topup": 220, "pay": 130 },
+{ "date": "04/04", "topup": 320, "pay": 100 },
+{ "date": "05/04", "topup": 380, "pay": 150 }
+],
+"transactions": [
+{ "title": "فندق الزهور", "type": "حجز فندق", "amount": "760" },
+{ "title": "مجموعة مقاعد", "type": "منتج", "amount": "1450" },
+{ "title": "فندق قصر الطيور", "type": "حجز فندق", "amount": "300" },
+{ "title": "طقم ادوات مطبخ", "type": "منتج", "amount": "650" },
+{ "title": "شحن رصيد", "type": "عملية شحن", "amount": "16,349" }
+]
+}

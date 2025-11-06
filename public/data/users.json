@@ -1,0 +1,95 @@
+[
+ 
+  {
+    "id": 2,
+    "name": "Omar Hassan",
+    "status": "online",
+    "isActive": true,
+    "isFavorite": true,
+    "avatar": "/faz3aUsers/image 11 (2).svg"
+  },
+  {
+    "id": 3,
+    "name": "Nour El-Din",
+    "status": "online",
+    "isActive": true,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11.svg"
+  },
+  {
+    "id": 4,
+    "name": "Laila Mohamed",
+    "status": "online",
+    "isActive": true,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11 (8).svg"
+  },
+  {
+    "id": 5,
+    "name": "Ali Mostafa",
+    "status": "online",
+    "isActive": true,
+    "isFavorite": true,
+    "avatar": "/faz3aUsers/image 11 (1).svg"
+  },
+
+  {
+    "id": 6,
+    "name": "Mona Adel",
+    "status": "online",
+    "isActive": false,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11 (8).svg"
+  },
+  {
+    "id": 7,
+    "name": "Ahmed Youssef",
+    "status": "online",
+    "isActive": false,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11 (7).svg"
+  },
+ 
+
+  {
+    "id": 9,
+    "name": "Khaled Tarek",
+    "status": "offline",
+    "isActive": false,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11 (6).svg"
+  },
+  {
+    "id": 10,
+    "name": "Rania Ehab",
+    "status": "offline",
+    "isActive": false,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11 (5).svg"
+  },
+  {
+    "id": 11,
+    "name": "Hassan Fathy",
+    "status": "offline",
+    "isActive": false,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11 (4).svg"
+  },
+  {
+    "id": 12,
+    "name": "Nada Elsayed",
+    "status": "offline",
+    "isActive": false,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11 (3).svg"
+  },
+  
+  {
+    "id": 14,
+    "name": "Hager Adel",
+    "status": "offline",
+    "isActive": false,
+    "isFavorite": false,
+    "avatar": "/faz3aUsers/image 11 (2).svg"
+  }
+]

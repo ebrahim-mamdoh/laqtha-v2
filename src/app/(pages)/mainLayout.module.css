@@ -1,0 +1,19 @@
+/* app/(pages)/mainLayout.module.css */
+.mainLayout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.contentArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0b0b1a; /* نفس الخلفية الداكنة */
+}
+
+.pageContent {
+  flex: 1;
+  overflow-y: auto;
+}

@@ -1,0 +1,37 @@
+
+.title{
+    font-size: 25px;
+      border-bottom: 1px solid #43306a;
+padding: 0px 0px 40px 0px;
+
+}
+.label{
+    font-size: 19px;
+}
+.description {
+    font-weight: lighter;
+    font-size: 12px;
+    color: gray;
+}
+.settingsItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+      border-bottom: 1px solid #43306a;
+padding: 13px 0px;
+}
+.lastSettingsItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+padding: 13px 0px;
+}
+.dropdown{
+        background-color: #321F59;
+    width: 95px;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+      border: 1px solid #43306a;
+
+}

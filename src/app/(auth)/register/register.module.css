@@ -1,0 +1,150 @@
+.registerWrapper {
+  min-height: 100vh;
+  background-image:url("/images/main-bg.png");
+  color: #fff;
+  padding: 20px;
+}
+
+/* card */
+.leftCard {
+  width: 100%;
+  max-width: 540px;
+  height: 50vh; /* موبايل نص الشاشة */
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: url("/images/loginImage.png") center/cover no-repeat;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(0,0,0,0.4);
+}
+.leftCard img{
+  width: 180px;
+  height: 60px;
+}
+/* النصوص اللي فوق الصورة */
+.imageText {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  text-align: right;
+  color: #fff;
+    padding: 15px;
+
+}
+
+.imageText h1 {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.imageText h2 {
+  font-size: 20px;
+  margin-top: 4px;
+}
+
+.imageText p {
+  font-size: 14px;
+  margin-top: 2px;
+  
+}
+
+@media (min-width: 768px) {
+  .leftCard {
+    height: 620px; /* ديسكتوب */
+  }
+}
+
+/* form */
+.form {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 14px;
+  padding: 32px;
+}
+
+/* inputs */
+.input {
+  width: 100% !important; /* override bootstrap */
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid #fff; /* ✅ الإطار أبيض */
+  color: #fff;
+  outline: none;
+  font-size: 14px;
+  transition: box-shadow .15s ease, border-color .15s ease;
+  direction: rtl;
+  text-align: right;
+}
+
+.input:focus {
+  border-color: #fff; /* أبيض عند التركيز */
+  box-shadow: 0 4px 18px rgba(255,255,255,0.25);
+}
+
+.invalid {
+  border-color: #ff6b6b !important;
+}
+
+.err {
+  color: #ff9aa2;
+  font-size: 12px;
+  margin-top: 6px;
+  text-align: right;
+}
+
+/* buttons */
+.primaryBtn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(90deg, #ff2fcf 0%, #ff0077 50%);
+  box-shadow: 0 8px 20px rgba(255,47,207,0.14);
+}
+
+.secondaryBtn {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(90deg, #2563eb 0%, #4f8cff 100%);
+}
+
+/* النصوص */
+.heading,
+.hint,
+.terms {
+  text-align: center; /* ✅ النصوص في المنتصف */
+
+}
+
+.hint,
+.terms {
+    color: #8A8A8A;
+
+}
+.highlight{
+  color: #00c4cc;  /* اللون المختلف (مثلاً أزرق فيروزي) */
+  font-weight: 600;
+  cursor: pointer;
+}
+.linkBtn {
+  background: transparent;
+  border: none;
+  color: #00c4cc;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}

@@ -1,0 +1,10 @@
+.transCard { 
+    background: var(--color-walletCard);
+     padding: 18px; border-radius: 14px }
+.title { margin-bottom: 12px }
+.list { display: flex; flex-direction: column; gap: 12px; max-height: 360px; overflow-y: auto }
+.rowItem { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 10px; background: rgba(255,255,255,0.02) }
+.meta { text-align: right }
+.name { font-weight: 600 }
+.type { font-size: 12px; color: rgba(255,255,255,0.6) }
+.amount { color: #ff2fb1; font-weight: 700 }
