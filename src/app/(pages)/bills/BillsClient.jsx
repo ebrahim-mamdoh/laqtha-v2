@@ -1,7 +1,7 @@
 // BillsClient.jsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import styles from "./Bills.module.css";
 import { useBillsLogic } from "./useBillsLogic";
 
@@ -14,7 +14,60 @@ function formatCurrency(val) {
     .replace("SAR", "ر.س");
 }
 
-export default function BillsClient() {
+// ✅ Memoized stat card component
+const StatCard = React.memo(({ title, value }) => (
+  <div className={styles.statCard}>
+    <div className={styles.statTitle}>{title}</div>
+    <div className={styles.statValue}>{formatCurrency(value)}</div>
+  </div>
+));
+StatCard.displayName = 'StatCard';
+
+// ✅ Memoized table row component
+const TableRow = React.memo(({ bill, index }) => (
+  <tr className={styles.tbodyRow}>
+    <td>{index + 1}</td>
+    <td>{bill.invoiceNumber}</td>
+    <td>{bill.name}</td>
+    <td>{bill.type}</td>
+    <td>{formatCurrency(bill.amount)}</td>
+    <td>{bill.status}</td>
+    <td>{new Date(bill.date).toLocaleDateString("ar-EG")}</td>
+  </tr>
+));
+TableRow.displayName = 'TableRow';
+
+// ✅ Memoized mobile bill card component
+const BillCard = React.memo(({ bill }) => (
+  <div className={styles.billCard}>
+    <div className={styles.cardTop}>
+      <div className={styles.cardInvoice}>{bill.invoiceNumber}</div>
+      <div className={styles.cardAmount}>{formatCurrency(bill.amount)}</div>
+    </div>
+
+    <div className={styles.cardBody}>
+      <div className={styles.cardRow}>
+        <span className={styles.cardLabel}>الاسم</span>
+        <span className={styles.cardValue}>{bill.name}</span>
+      </div>
+
+      <div className={styles.cardRow}>
+        <span className={styles.cardLabel}>النوع</span>
+        <span className={styles.cardValue}>{bill.type}</span>
+      </div>
+
+      <div className={styles.cardRow}>
+        <span className={styles.cardLabel}>التاريخ</span>
+        <span className={styles.cardValue}>
+          {new Date(bill.date).toLocaleDateString("ar-EG")}
+        </span>
+      </div>
+    </div>
+  </div>
+));
+BillCard.displayName = 'BillCard';
+
+function BillsClient() {
   const {
     bills,
     stats,
@@ -40,6 +93,31 @@ export default function BillsClient() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // ✅ Memoize handlers to prevent re-creating on every render
+  const handleSearchChange = useCallback((e) => {
+    setSearch(e.target.value);
+  }, [setSearch]);
+
+  const handleLast90DaysToggle = useCallback(() => {
+    setLast90Days((s) => !s);
+  }, [setLast90Days]);
+
+  const handleLessThan1000Toggle = useCallback(() => {
+    setLessThan1000((s) => !s);
+  }, [setLessThan1000]);
+
+  const handleSortChange = useCallback((e) => {
+    setSortBy(e.target.value);
+  }, [setSortBy]);
+
+  // ✅ Memoize loading/error/empty states
+  const contentDisplay = useMemo(() => {
+    if (loading) return <div className={styles.center}>جاري تحميل البيانات...</div>;
+    if (error) return <div className={styles.center}>خطأ: {error}</div>;
+    if (bills.length === 0) return <div className={styles.center}>لا توجد فواتير</div>;
+    return null;
+  }, [loading, error, bills.length]);
+
   return (
     <div className={styles.pageWrap}>
       <div className="container-fluid">
@@ -49,24 +127,15 @@ export default function BillsClient() {
             {/* ✅ Cards Summary */}
             <div className="row g-3">
               <div className="col-12 col-md-4">
-                <div className={styles.statCard}>
-                  <div className={styles.statTitle}>هذا الشهر</div>
-                  <div className={styles.statValue}>{formatCurrency(stats.thisMonth)}</div>
-                </div>
+                <StatCard title="هذا الشهر" value={stats.thisMonth} />
               </div>
 
               <div className="col-12 col-md-4">
-                <div className={styles.statCard}>
-                  <div className={styles.statTitle}>اخر 3 اشهر</div>
-                  <div className={styles.statValue}>{formatCurrency(stats.last3Months)}</div>
-                </div>
+                <StatCard title="اخر 3 اشهر" value={stats.last3Months} />
               </div>
 
               <div className="col-12 col-md-4">
-                <div className={styles.statCard}>
-                  <div className={styles.statTitle}>الإجمالي</div>
-                  <div className={styles.statValue}>{formatCurrency(stats.total)}</div>
-                </div>
+                <StatCard title="الإجمالي" value={stats.total} />
               </div>
             </div>
 
@@ -77,21 +146,21 @@ export default function BillsClient() {
                   className={`form-control ${styles.searchInput}`}
                   placeholder="البحث..."
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={handleSearchChange}
                 />
               </div>
 
               <div className="col-12 col-md-5 d-flex gap-2">
                 <button
                   className={`${styles.pill} ${last90Days ? styles.pillActive : ""}`}
-                  onClick={() => setLast90Days((s) => !s)}
+                  onClick={handleLast90DaysToggle}
                 >
                   اخر 90 يوم
                 </button>
 
                 <button
                   className={`${styles.pill} ${lessThan1000 ? styles.pillActive : ""}`}
-                  onClick={() => setLessThan1000((s) => !s)}
+                  onClick={handleLessThan1000Toggle}
                 >
                   اقل من 1000 ر.س
                 </button>
@@ -99,7 +168,7 @@ export default function BillsClient() {
                 <select
                   className={`form-select ${styles.formSelect} ms-auto`}
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
+                  onChange={handleSortChange}
                 >
                   <option value="newest">حسب الأحدث</option>
                   <option value="oldest">حسب الأقدم</option>
@@ -112,9 +181,7 @@ export default function BillsClient() {
             {/* ✅ content */}
             <div className="row mt-4">
               <div className="col-12">
-                {loading && <div className={styles.center}>جاري تحميل البيانات...</div>}
-                {error && <div className={styles.center}>خطأ: {error}</div>}
-                {!loading && bills.length === 0 && <div className={styles.center}>لا توجد فواتير</div>}
+                {contentDisplay}
 
                 {!loading && bills.length > 0 && (
                   <>
@@ -134,15 +201,7 @@ export default function BillsClient() {
                           </thead>
                           <tbody>
                             {bills.map((b, idx) => (
-                              <tr key={b.id} className={styles.tbodyRow}>
-                                <td>{idx + 1}</td>
-                                <td>{b.invoiceNumber}</td>
-                                <td>{b.name}</td>
-                                <td>{b.type}</td>
-                                <td>{formatCurrency(b.amount)}</td>
-                                <td>{b.status}</td>
-                                <td>{new Date(b.date).toLocaleDateString("ar-EG")}</td>
-                              </tr>
+                              <TableRow key={b.id} bill={b} index={idx} />
                             ))}
                           </tbody>
                         </table>
@@ -150,31 +209,7 @@ export default function BillsClient() {
                     ) : (
                       <div className="d-flex flex-column gap-3">
                         {bills.map((b) => (
-                          <div className={styles.billCard} key={b.id}>
-                            <div className={styles.cardTop}>
-                              <div className={styles.cardInvoice}>{b.invoiceNumber}</div>
-                              <div className={styles.cardAmount}>{formatCurrency(b.amount)}</div>
-                            </div>
-
-                            <div className={styles.cardBody}>
-                              <div className={styles.cardRow}>
-                                <span className={styles.cardLabel}>الاسم</span>
-                                <span className={styles.cardValue}>{b.name}</span>
-                              </div>
-
-                              <div className={styles.cardRow}>
-                                <span className={styles.cardLabel}>النوع</span>
-                                <span className={styles.cardValue}>{b.type}</span>
-                              </div>
-
-                              <div className={styles.cardRow}>
-                                <span className={styles.cardLabel}>التاريخ</span>
-                                <span className={styles.cardValue}>
-                                  {new Date(b.date).toLocaleDateString("ar-EG")}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
+                          <BillCard key={b.id} bill={b} />
                         ))}
                       </div>
                     )}
@@ -189,3 +224,6 @@ export default function BillsClient() {
     </div>
   );
 }
+
+// ✅ Export memoized version
+export default React.memo(BillsClient);

@@ -23,22 +23,26 @@ export default function SettingsLayoutClient({ children }) {
       <div className="row g-3">
 
         {/* ===== Desktop Sidebar ===== */}
-        <aside className={`col-md-3 ${styles.sidebar} d-none d-md-block`}>
-          <nav className={styles.navList}>
-            {sidebarItems.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className={`${styles.navItem} ${
-                  pathname.startsWith(item.href) ? styles.active : ""
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+         <aside className={`col-md-3 ${styles.sidebar} d-none d-md-block`}>
+          <div className={styles.sidebarInner}>
+            <nav className={styles.navList}>
+              {sidebarItems.map((item) => {
+                const active = pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    className={`${styles.navItem} ${
+                      active ? styles.active : ""
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
         </aside>
-
         {/* ===== Mobile Header ===== */}
         <div className="d-md-none col-12">
           <div className={styles.mobileHeaderRow}>

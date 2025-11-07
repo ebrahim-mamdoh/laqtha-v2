@@ -3,18 +3,24 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/queryKeys";
+
+// Fetch function - can be reused for prefetching
+const fetchUsers = async () => {
+  const res = await fetch("/data/users.json");
+  if (!res.ok) throw new Error("فشل في تحميل المستخدمين");
+  return res.json();
+};
 
 export function useAdvanceLogic() {
   const [filter, setFilter] = useState("active");
 
   const { data: users = [], isLoading, error } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await fetch("/data/users.json");
-      if (!res.ok) throw new Error("فشل في تحميل المستخدمين");
-      return res.json();
-    },
-    staleTime: 60000, // ✅ تحسين الأداء: cache لمدة دقيقة
+    queryKey: queryKeys.users,
+    queryFn: fetchUsers,
+    staleTime: 5 * 60 * 1000, // ✅ 5 minutes cache
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+    refetchOnWindowFocus: false,
   });
 
   const connectedActive = users.filter((u) => u.status === "online" && u.isActive);
@@ -49,3 +55,6 @@ export function useAdvanceLogic() {
     getFiltered,
   };
 }
+
+// Export for prefetching
+export { fetchUsers };

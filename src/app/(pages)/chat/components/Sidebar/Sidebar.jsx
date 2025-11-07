@@ -1,11 +1,13 @@
 // sidebar.jsx
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { useQueryClient } from "@tanstack/react-query";
+import { prefetchByRoute } from "@/lib/prefetchHelpers";
 import styles from "./Sidebar.module.css";
 
 const NAV_ITEMS = [
@@ -20,6 +22,15 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuth(); // ✅ استدعاء user من الكونتكست
+  const queryClient = useQueryClient(); // ✅ Get query client for prefetching
+
+  // ✅ Prefetch handler with useCallback for performance
+  const handlePrefetch = useCallback((href) => {
+    const prefetchFn = prefetchByRoute[href];
+    if (prefetchFn) {
+      prefetchFn(queryClient);
+    }
+  }, [queryClient]);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -88,6 +99,7 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
                   href={item.href}
                   className={`${styles.navLink} ${active ? styles.active : ""}`}
                   aria-current={active ? "page" : undefined}
+                  onMouseEnter={() => handlePrefetch(item.href)} // ✅ Prefetch on hover
                 >
                   <span className={styles.iconWrapper}>
                     <Image

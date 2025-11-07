@@ -1,7 +1,9 @@
 // useBillsLogic.js
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/queryKeys";
 
 // helpers
 function parseAmount(val) {
@@ -18,47 +20,40 @@ function withinLastDays(dateStr, days) {
   }
 }
 
+// Fetch function - can be reused for prefetching
+const fetchBills = async () => {
+  const res = await fetch("/data/bills.json");
+  if (!res.ok) throw new Error("خطأ في تحميل البيانات");
+  const data = await res.json();
+  
+  return data.map((item, idx) => ({
+    id: item.id ?? idx,
+    invoiceNumber: item.invoiceNumber ?? item.id ?? `inv-${idx}`,
+    name: item.name ?? item.merchant ?? "—",
+    type: item.type ?? "—",
+    amount: parseAmount(item.amount ?? item.price ?? 0),
+    date: item.date ?? item.transactionDate ?? new Date().toISOString(),
+    status: item.status ?? "مكتمل",
+  }));
+};
+
 export function useBillsLogic() {
-  const [bills, setBills] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // ✅ Replace useEffect + fetch with React Query
+  const { data: bills = [], isLoading: loading, error: queryError } = useQuery({
+    queryKey: queryKeys.bills,
+    queryFn: fetchBills,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+    refetchOnWindowFocus: false,
+  });
+
+  const error = queryError?.message || null;
 
   // UI state
   const [search, setSearch] = useState("");
   const [lessThan1000, setLessThan1000] = useState(false);
   const [last90Days, setLast90Days] = useState(false);
   const [sortBy, setSortBy] = useState("newest");
-
-  // fetch once
-  useEffect(() => {
-    let alive = true;
-    setLoading(true);
-
-    fetch("/data/bills.json")
-      .then((res) => {
-        if (!res.ok) throw new Error("خطأ في تحميل البيانات");
-        return res.json();
-      })
-      .then((data) => {
-        if (!alive) return;
-
-        const normalized = data.map((item, idx) => ({
-          id: item.id ?? idx,
-          invoiceNumber: item.invoiceNumber ?? item.id ?? `inv-${idx}`,
-          name: item.name ?? item.merchant ?? "—",
-          type: item.type ?? "—",
-          amount: parseAmount(item.amount ?? item.price ?? 0),
-          date: item.date ?? item.transactionDate ?? new Date().toISOString(),
-          status: item.status ?? "مكتمل",
-        }));
-
-        setBills(normalized);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => alive && setLoading(false));
-
-    return () => (alive = false);
-  }, []);
 
   /** Filtering + Sorting */
   const filteredBills = useMemo(() => {
@@ -132,3 +127,6 @@ export function useBillsLogic() {
     setSortBy,
   };
 }
+
+// Export for prefetching
+export { fetchBills };
