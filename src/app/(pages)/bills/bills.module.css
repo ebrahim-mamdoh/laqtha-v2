@@ -133,9 +133,30 @@
   box-shadow: 0 6px 26px rgba(0,0,0,0.45);
 }
 
+/* FORCE WHITE TEXT COLOR - Override Bootstrap immediately */
+.transparentTable {
+  --bs-table-color: #ffffff !important;
+  --bs-table-bg: transparent !important;
+  color: #ffffff !important;
+}
+
+.transparentTable :global(table) {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.transparentTable :global(thead),
+.transparentTable :global(tbody),
+.transparentTable :global(tr),
+.transparentTable :global(th),
+.transparentTable :global(td) {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
 /* HEADER ROW */
 .theadRow th {
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.85) !important;
   font-weight: 600;
   padding: 14px 12px;
   font-size: 14px;
@@ -146,23 +167,10 @@
 /* BODY ROW */
 .tbodyRow td {
   padding: 12px;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.9) !important;
   vertical-align: middle;
   border-bottom: 1px dashed rgba(255,255,255,0.03);
   background-color: transparent !important;
-}
-
-/* 👇 هنا الجزء اللي بيحل المشكلة فعلاً */
-.transparentTable :global(.table) {
-   --bs-table-color: #ffffff; 
-  background-color: transparent !important;
-  color: #fff !important;
-}
-
-.transparentTable :global(.table > :not(caption) > * > *) {
-  background-color: transparent !important;
-  color: #fff !important;
-
 }
 
 
