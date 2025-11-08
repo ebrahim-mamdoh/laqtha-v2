@@ -1,5 +1,18 @@
 'use client';
-import { BarChart as ReBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import dynamic from "next/dynamic";
+
+// نعمل dynamic import لكل كومبوننت من recharts
+const ReBarChart = dynamic(() =>
+  import("recharts").then((mod) => mod.BarChart),
+  { ssr: false, loading: () => <div style={{height: 200}}>Loading chart…</div> }
+);
+
+const Bar = dynamic(() => import("recharts").then((mod) => mod.Bar), { ssr: false });
+const XAxis = dynamic(() => import("recharts").then((mod) => mod.XAxis), { ssr: false });
+const YAxis = dynamic(() => import("recharts").then((mod) => mod.YAxis), { ssr: false });
+const CartesianGrid = dynamic(() => import("recharts").then((mod) => mod.CartesianGrid), { ssr: false });
+const Tooltip = dynamic(() => import("recharts").then((mod) => mod.Tooltip), { ssr: false });
+const ResponsiveContainer = dynamic(() => import("recharts").then((mod) => mod.ResponsiveContainer), { ssr: false });
 import styles from './barchart.module.css';
 
 

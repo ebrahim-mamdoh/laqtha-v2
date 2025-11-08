@@ -1,8 +1,11 @@
-/** @type {import('next').NextConfig} */
+// next.config.mjs
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
-  experimental: {
-    // فاضي مفيش حاجة غلط
-  },
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -13,10 +16,14 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**', // Allow any HTTPS domain for flexibility
+        hostname: '**',
       }
     ],
-  }
+  },
 };
 
-export default nextConfig;
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+export default withBundleAnalyzer(nextConfig);

@@ -3,14 +3,18 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Image from "next/image";
-import WaveSurfer from "wavesurfer.js";
 import { useChatLogic } from "./ChatLogic";
 import HotelsMsg from "./components/hotelsCard/HotelsMsg";
+
+/* ----------------------------- dinamic import ----------------------------- */
+import dynamic from "next/dynamic";
+const WaveSurfer = dynamic(() => import("wavesurfer.js"), { ssr: false });
+
 import styles from "./chat.module.css";
+
+
 
 // ===== Suggestions Data =====
 const SUGGESTIONS = [
@@ -182,19 +186,17 @@ export default function ChatPage() {
 
               <div className={styles.suggestionsInner}>
                 {isMobile ? (
-                  <Swiper spaceBetween={12} slidesPerView="auto" className={styles.suggestionsScroll}>
+                  <div className={styles.suggestionsScroll}>
                     {SUGGESTIONS.map((s) => (
-                      <SwiperSlide key={s.id} className={styles.slide}>
-                        <button className={styles.suggestionCard} onClick={() => handleSuggestionClick(s)}>
-                          <div className={styles.suggIcon}>{s.icon}</div>
-                          <div className={styles.suggText}>
-                            <div className={styles.suggTitle}>{s.title}</div>
-                            <div className={styles.suggSubtitle}>{s.subtitle}</div>
-                          </div>
-                        </button>
-                      </SwiperSlide>
+                      <button key={s.id} className={styles.suggestionCard} onClick={() => handleSuggestionClick(s)}>
+                        <div className={styles.suggIcon}>{s.icon}</div>
+                        <div className={styles.suggText}>
+                          <div className={styles.suggTitle}>{s.title}</div>
+                          <div className={styles.suggSubtitle}>{s.subtitle}</div>
+                        </div>
+                      </button>
                     ))}
-                  </Swiper>
+                  </div>
                 ) : (
                   <div className={styles.desktopList}>
                     {SUGGESTIONS.map((s) => (
