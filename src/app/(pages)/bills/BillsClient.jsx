@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import styles from "./Bills.module.css";
+import styles from "./bills.module.css";
 import { useBillsLogic } from "./useBillsLogic";
 
 function formatCurrency(val) {

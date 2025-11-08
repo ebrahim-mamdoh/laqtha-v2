@@ -3,7 +3,7 @@
 import React, { useMemo } from "react";
 import useWalletLogic from "./useWalletLogic";
 import TransactionsList from "./components/TransactionsList/TransactionsList";
-import BalanceCard from "./components/Balance/Balance";
+import BalanceCard from "./components/Balance/balance.module.css";
 import dynamic from "next/dynamic";
 import { SkeletonCard, SkeletonChart } from "@/components/Skeleton";
 
