@@ -3,7 +3,7 @@
 import React, { useMemo } from "react";
 import useWalletLogic from "./useWalletLogic";
 import TransactionsList from "./components/TransactionsList/TransactionsList";
-import BalanceCard from "./components/Balance/balance.module.css";
+import BalanceCard from "./components/Balance/balance";
 import dynamic from "next/dynamic";
 import { SkeletonCard, SkeletonChart } from "@/components/Skeleton";
 
@@ -72,7 +72,7 @@ function WalletClient() {
   return (
     <div className={styles.page} dir="rtl">
       <div className="container pt-4">
-        
+
         <div className={`row ${styles.topRow}`}>
           <div className="col-md-3">
             <DonutChart
@@ -93,18 +93,18 @@ function WalletClient() {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 mb-4">
-                <StatCard 
-                  title="المدفوعات" 
-                  data={data.payments} 
-                  percent={data.paymentsPercent} 
+                <StatCard
+                  title="المدفوعات"
+                  data={data.payments}
+                  percent={data.paymentsPercent}
                 />
               </div>
 
               <div className="col-md-6 mb-4">
-                <StatCard 
-                  title="الشحن" 
-                  data={data.topup} 
-                  percent={data.topupPercent} 
+                <StatCard
+                  title="الشحن"
+                  data={data.topup}
+                  percent={data.topupPercent}
                 />
               </div>
             </div>

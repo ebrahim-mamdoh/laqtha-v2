@@ -1,0 +1,240 @@
+/* partner.module.css */
+
+.pageWrapper {
+  min-height: 100vh;
+  padding: var(--space-lg) var(--space-md);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px; /* Space for nav if exists */
+  background: var(--color-bg-1);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(112, 45, 231, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255, 0, 200, 0.1) 0%, transparent 40%);
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.title {
+  font-size: var(--heading-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: var(--color-muted);
+  font-size: var(--text-base);
+}
+
+.wizardWrapper {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-strong);
+  overflow: hidden;
+  position: relative;
+}
+
+.stepContainer {
+  margin-top: var(--space-lg);
+}
+
+/* Step Indicator */
+.indicatorWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin-bottom: var(--space-lg);
+  padding: 0 var(--space-md);
+}
+
+.progressTrack {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-border);
+  z-index: 0;
+  transform: translateY(-50%);
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--gradient-accent);
+  transition: width 0.4s ease;
+}
+
+.stepNode {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+  font-weight: 700;
+  color: var(--color-muted);
+  transition: all 0.3s ease;
+}
+
+.stepNode.active {
+  border-color: var(--color-accent);
+  color: var(--color-white);
+  box-shadow: 0 0 15px rgba(255, 0, 200, 0.3);
+}
+
+.stepNode.completed {
+  background: var(--gradient-accent);
+  border-color: transparent;
+  color: var(--color-white);
+}
+
+/* Form Styles used in inner components */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 640px) {
+  .formGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  color: var(--color-white);
+  font-size: var(--text-base);
+  font-family: inherit;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(255, 0, 200, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+/* Step 3 specific */
+.reviewCard {
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.reviewRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.reviewLabel {
+  color: var(--color-muted);
+}
+
+.reviewValue {
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+/* Arabic Step Indicator Styles */
+.stepItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.stepLabel {
+  font-size: 12px;
+  color: var(--color-muted);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.activeLabel {
+  color: var(--color-white);
+  font-weight: 700;
+}
+
+/* Phone Input Styles */
+.phoneGroup {
+  display: flex;
+  gap: 8px;
+  direction: ltr; /* Ensure phone number inputs align correctly */
+}
+
+.phoneGroup select {
+  width: 80px;
+  padding: 0 8px;
+  text-align: center;
+}
