@@ -1,253 +1,355 @@
 /* Bills.module.css */
 
-/* PAGE WRAP + background gradient (match screenshot) */
+/* PAGE WRAP */
 .pageWrap {
   min-height: 100vh;
-  background-image: url('/images/main-bg.png');
-    background-size: cover;
-    color: #fff;
+  /* background-image is handled globally or via main-bg, but we ensure text is white */
+  color: #fff;
   padding: 0px 0 !important;
+  font-family: inherit; /* Use global font */
 }
 
 /* inner container styling */
 .inner {
-  padding: 22px;
+  padding: 24px;
 }
 
-/* STAT cards */
+/* STAT CARDS */
 .statCard {
-  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-  border-radius: 12px;
-  padding: 18px;
-  min-height: 84px;
+  background: linear-gradient(180deg, #2E0B49 0%, #1A0429 100%);
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-  border: 1px solid rgba(255,255,255,0.04);
-  align-items: flex-start;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
 }
 
 .statTitle {
-  font-size: 14px;
-  color: rgba(255,255,255,0.9);
-  text-align: right;
-  margin-bottom: 6px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 12px;
+  font-weight: 500;
+  width: 100%;
+  text-align: right; /* RTL */
 }
 
 .statValue {
-  font-size: 20px;
+  width: 100%;
+  text-align: right; /* RTL */
+  font-size: 24px;
   font-weight: 700;
   color: #fff;
-  text-align: right;
 }
 
 /* FILTER ROW */
 .filterRow {
-  margin-top: 16px;
+  margin-top: 32px;
+  margin-bottom: 24px;
 }
 
-.searchWrap {
-  width: 100%;
-}
-
+/* Search Input */
 .searchInput {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(27, 8, 48, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
-  padding: 10px 14px;
-  border-radius: 10px;
-}
-
-/* pills */
-.pills {
-  display: flex;
-  gap: 10px;
-}
-
-.pill {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all .18s ease;
-}
-
-.pill:hover { transform: translateY(-2px); }
-
-.pillActive {
-  background: linear-gradient(90deg,#094EFD 0%, #F901C9 100%);
-  border-color: transparent;
-}
-
-/* sort area */
-.sortWrap {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 8px;
+  padding: 12px 16px;
   border-radius: 8px;
+  width: 100%;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+.searchInput:focus {
+  background: rgba(27, 8, 48, 0.8);
+  border-color: #D900A9;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(217, 0, 169, 0.2);
+  color: white;
+}
+
+/* Filter Actions Area */
+.filterActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end; /* Align to the right in LTR, left in RTL context? Screenshot has search on Left, Filters on Right. */
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative; /* For popup anchor */
+}
+
+/* Common button style for filters */
+.filterBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  white-space: nowrap;
+}
+
+.filterBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.filterBtnActive {
+  background: #D900A9; /* Pink background for active main filter btn */
+  border-color: #D900A9;
+  color: #fff;
+}
+
+.filterBtnActive:hover {
+  background: #b5008d;
+}
+
+/* The dark sort button */
+.sortBtnDark {
+  background: #1e052d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  min-width: 140px;
+  justify-content: space-between;
+}
+.sortBtnDark:hover {
+  background: #2a0840;
+}
+
+/* FILTER POPUP (The large menu) */
+.filterPopup {
+  position: absolute;
+  top: 100%;
+  left: 0; /* RTL alignment - Left edge of container? Or Right? Screenshot shows aligned below buttons. */
+  z-index: 102; /* Higher than dropdown */
+  background: #1e052d; /* Dark purple deep */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 8px;
+  min-width: 320px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* RTL: If needed, align popup accordingly */
+[dir="rtl"] .filterPopup {
+  right: auto;
+  left: 0; /* Keep left or adjust based on parent */
+}
+
+.filterOptionGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.filterChip {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1 1 auto;
+  text-align: center;
+  min-width: 80px;
+}
+
+.filterChip:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+
+.filterChipActive {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #D900A9; /* Pink border */
+  color: #fff;
+  box-shadow: 0 0 8px rgba(217, 0, 169, 0.15); 
+}
+
+
+/* Sort Dropdown (Small one) */
+.sortDropdown {
+  position: relative;
   display: inline-block;
 }
 
-/* نغلب Bootstrap form-select بالـ !important */
-.formSelect {
-  min-width: 210px;
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  color: #fff !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 6px !important;
-  padding: 6px 12px !important;
-  font-size: 0.95rem !important;
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0; 
+  right: auto; 
+  z-index: 100;
+  background: #25093b; 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 8px;
+  min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-/* شكل السهم في القائمة */
-.formSelect option {
-  background-color: #121212;
+.dropdownItem {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255,255,255,0.7);
+  padding: 10px 12px;
+  text-align: right; 
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  width: 100%;
+}
+.dropdownItem:hover {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  border-color: rgba(255,255,255,0.1);
+}
+.dropdownItemActive {
+  background: rgba(255,255,255,0.1);
   color: #fff;
 }
 
 
-/* top right controls */
-.controlsRight {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-}
-
-.actionPrimary {
-  background: linear-gradient(90deg,#ff2fcf 0%, #ff0077 50%);
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-}
 /* TABLE WRAPPER */
-.tableWrap {
-  background: linear-gradient(180deg, rgba(249, 0, 0, 0.02), rgba(192, 17, 17, 0.01));
-  padding: 12px;
+.tableContainer {
+  /* background: transparent; */
+  /* The screenshot shows rows have distinct backgrounds or the container is transparent */
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.04);
-  box-shadow: 0 6px 26px rgba(0,0,0,0.45);
+  overflow: hidden;
+  margin-top: 16px;
 }
 
-/* FORCE WHITE TEXT COLOR - Override Bootstrap immediately */
 .transparentTable {
-  --bs-table-color: #ffffff !important;
-  --bs-table-bg: transparent !important;
-  color: #ffffff !important;
+  width: 100%;
+  border-collapse: separate; 
+  border-spacing: 0;
 }
 
-.transparentTable :global(table) {
-  color: #ffffff !important;
-  background-color: transparent !important;
-}
-
-.transparentTable :global(thead),
-.transparentTable :global(tbody),
-.transparentTable :global(tr),
-.transparentTable :global(th),
-.transparentTable :global(td) {
-  color: #ffffff !important;
-  background-color: transparent !important;
-}
-
-/* HEADER ROW */
-.theadRow th {
-  color: rgba(255,255,255,0.85) !important;
-  font-weight: 600;
-  padding: 14px 12px;
+.transparentTable th {
+  padding: 16px 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
   font-size: 14px;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  background-color: transparent !important;
+  text-align: right; /* RTL */
+  border: none;
+  background: transparent;
 }
 
-/* BODY ROW */
-.tbodyRow td {
-  padding: 12px;
-  color: rgba(255,255,255,0.9) !important;
+.transparentTable td {
+  padding: 16px 12px;
+  color: #fff;
+  font-size: 14px;
   vertical-align: middle;
-  border-bottom: 1px dashed rgba(255,255,255,0.03);
-  background-color: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+  text-align: right;
+  background: transparent;
 }
 
+/* Row Styling */
+.tbodyRow {
+  transition: background 0.2s;
+}
+.tbodyRow:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
 
-/* MOBILE - cards */
+/* Custom Checkbox */
+.checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #D900A9;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  margin-top: 4px; /* Slight alignment fix */
+}
+
+/* Action Button (...) */
+.actionBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.actionBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.storeName {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* MOBILE CARDS */
 .billCard {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  background: linear-gradient(180deg, rgba(46, 11, 73, 0.6), rgba(26, 4, 41, 0.6));
   border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-  border: 1px solid rgba(255,255,255,0.03);
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 16px;
 }
-
 .cardTop {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
-
-.cardInvoice {
-  font-size: 14px;
-  color: rgba(255,255,255,0.9);
-}
-
-.cardAmount {
-  font-size: 18px;
-  font-weight: 700;
-  color: #ff2fcf;
-}
-
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.cardInvoice { font-size: 14px; color: rgba(255,255,255,0.7); }
+.cardAmount { font-size: 16px; font-weight: bold; color: #D900A9; }
 
 .cardRow {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  margin-bottom: 8px;
 }
- 
-.cardLabel {
-  color: rgba(255,255,255,0.65);
-  font-size: 13px;
+.cardLabel { font-size: 12px; color: rgba(255,255,255,0.5); }
+.cardValue { font-size: 14px; color: #fff; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .inner { padding: 16px; }
+  .filterActions { width: 100%; justify-content: flex-start; overflow-x: auto; padding-bottom: 8px; min-height: 50px; }
+  .tableContainer { display: none; }
+  .searchInput { margin-bottom: 16px; }
+  .filterPopup { left: 0; right: 0; min-width: auto; width: 100%; position: fixed; top: auto; bottom: 0; margin: 0; border-radius: 20px 20px 0 0; z-index: 1000; animation: slideUp 0.3s; }
 }
 
-.cardValue {
-  color: rgba(255,255,255,0.95);
-  font-size: 14px;
-  text-align: left;
-}
-
-.cardAction {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 8px;
-}
-
-/* center helper */
-.center {
-  padding: 36px;
-  text-align: center;
-  color: rgba(255,255,255,0.9);
-}
-
-/* responsive tweaks */
-@media (min-width: 768px) {
-  .inner { padding: 28px; }
-}
-
-@media (max-width: 767px) {
-  .statCard { min-height: 80px; padding: 12px; }
-  .searchInput { font-size: 14px; }
-  .sortWrap .form-select { min-width: 130px; }
-  .tableWrap { display: none; } /* hide table on mobile (use cards) */
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }

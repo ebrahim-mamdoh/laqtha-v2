@@ -10,22 +10,12 @@ function parseAmount(val) {
   return typeof val === "number" ? val : parseFloat(String(val).replace(/[^0-9.-]+/g, "")) || 0;
 }
 
-function withinLastDays(dateStr, days) {
-  try {
-    const d = new Date(dateStr);
-    if (isNaN(d)) return false;
-    return Date.now() - d.getTime() <= days * 24 * 60 * 60 * 1000;
-  } catch {
-    return false;
-  }
-}
-
-// Fetch function - can be reused for prefetching
+// Fetch function
 const fetchBills = async () => {
   const res = await fetch("/data/bills.json");
   if (!res.ok) throw new Error("خطأ في تحميل البيانات");
   const data = await res.json();
-  
+
   return data.map((item, idx) => ({
     id: item.id ?? idx,
     invoiceNumber: item.invoiceNumber ?? item.id ?? `inv-${idx}`,
@@ -38,12 +28,11 @@ const fetchBills = async () => {
 };
 
 export function useBillsLogic() {
-  // ✅ Replace useEffect + fetch with React Query
   const { data: bills = [], isLoading: loading, error: queryError } = useQuery({
     queryKey: queryKeys.bills,
     queryFn: fetchBills,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
 
@@ -51,14 +40,31 @@ export function useBillsLogic() {
 
   // UI state
   const [search, setSearch] = useState("");
-  const [lessThan1000, setLessThan1000] = useState(false);
-  const [last90Days, setLast90Days] = useState(false);
   const [sortBy, setSortBy] = useState("newest");
+
+  // Comprehensive Filter State
+  const [filters, setFilters] = useState({
+    price: "all",      // all, less_1000, more_1000
+    date: "all",       // all, last_month, last_90_days, last_year
+    status: "all",     // all, completed, not_completed
+    type: "all",       // all, reservation, purchase
+  });
+
+  // Helper to update a single filter
+  const setFilter = (key, value) => {
+    setFilters(prev => {
+      // Toggle logic: if clicking active filter, set to 'all' (optional, but good UX)
+      // Actually screenshot has explicit "All" buttons, so maybe just set directly.
+      // Let's stick to direct set for now.
+      return { ...prev, [key]: value };
+    });
+  };
 
   /** Filtering + Sorting */
   const filteredBills = useMemo(() => {
     let list = [...bills];
 
+    // 1. Search
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       list = list.filter(
@@ -69,9 +75,52 @@ export function useBillsLogic() {
       );
     }
 
-    if (lessThan1000) list = list.filter((b) => b.amount < 1000);
-    if (last90Days) list = list.filter((b) => withinLastDays(b.date, 90));
+    // 2. Price Filter
+    if (filters.price === "less_1000") {
+      list = list.filter((b) => b.amount < 1000);
+    } else if (filters.price === "more_1000") {
+      list = list.filter((b) => b.amount >= 1000);
+    }
 
+    // 3. Date Filter
+    if (filters.date !== "all") {
+      const now = new Date();
+      list = list.filter((b) => {
+        const d = new Date(b.date);
+        if (isNaN(d.getTime())) return false; // invalid date
+
+        switch (filters.date) {
+          case "last_month":
+            return (now - d) <= 30 * 24 * 60 * 60 * 1000;
+          case "last_90_days":
+            return (now - d) <= 90 * 24 * 60 * 60 * 1000;
+          case "last_year":
+            return (now - d) <= 365 * 24 * 60 * 60 * 1000;
+          default:
+            return true;
+        }
+      });
+    }
+
+    // 4. Status Filter
+    if (filters.status !== "all") {
+      list = list.filter((b) => {
+        if (filters.status === "completed") return b.status === "مكتمل";
+        if (filters.status === "not_completed") return b.status !== "مكتمل";
+        return true;
+      });
+    }
+
+    // 5. Type Filter
+    if (filters.type !== "all") {
+      list = list.filter((b) => {
+        if (filters.type === "purchase") return b.type === "شراء";
+        if (filters.type === "reservation") return b.type === "حجز";
+        return true;
+      });
+    }
+
+    // 6. Sorting
     list.sort((a, b) => {
       switch (sortBy) {
         case "newest":
@@ -88,7 +137,7 @@ export function useBillsLogic() {
     });
 
     return list;
-  }, [bills, search, lessThan1000, last90Days, sortBy]);
+  }, [bills, search, filters, sortBy]);
 
   /** Stats */
   const stats = useMemo(() => {
@@ -116,13 +165,11 @@ export function useBillsLogic() {
     loading,
     error,
 
-    // UI State
+    // UI
     search,
     setSearch,
-    lessThan1000,
-    setLessThan1000,
-    last90Days,
-    setLast90Days,
+    filters,
+    setFilter,
     sortBy,
     setSortBy,
   };
