@@ -1,12 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import styles from "./ChatHeader.module.css";
+import NotificationPopup from "../NotificationPopup/NotificationPopup";
 
 export default function ChatHeader({ isOpen, onToggleSidebar }) {
   const { user } = useAuth() || {};
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
 
   return (
     <header className={styles.header}>
@@ -27,8 +33,13 @@ export default function ChatHeader({ isOpen, onToggleSidebar }) {
 
         {/* يسار: الأزرار / الأيقونات */}
         <div className={styles.left}>
-          <Image src="/icons/chat_svg/Color_Mode.svg" alt="الوضع الليلي" width={34} height={34} />
-          <Image src="/icons/chat_svg/Bell_pin.svg" alt="الإشعارات" width={34} height={34} />
+          <button className={styles.iconBtn}>
+            <Image src="/icons/chat_svg/Color_Mode.svg" alt="الوضع الليلي" width={34} height={34} />
+          </button>
+
+          <button className={styles.iconBtn} onClick={toggleNotifications}>
+            <Image src="/icons/chat_svg/Bell_pin.svg" alt="الإشعارات" width={34} height={34} />
+          </button>
         </div>
       </div>
 
@@ -52,12 +63,15 @@ export default function ChatHeader({ isOpen, onToggleSidebar }) {
         </div>
 
         {/* اليسار: أيقونة الجرس */}
-        <button className={styles.bellBtn}>
+        <button className={styles.bellBtn} onClick={toggleNotifications}>
           <Image src="/icons/chat_svg/Bell_pin.svg" alt="الإشعارات" width={28} height={28} />
         </button>
       </div>
 
-      
+      {/* Notification Popup */}
+      {showNotifications && (
+        <NotificationPopup onClose={() => setShowNotifications(false)} />
+      )}
     </header>
   );
 }
