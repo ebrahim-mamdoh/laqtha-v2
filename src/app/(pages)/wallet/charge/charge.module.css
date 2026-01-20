@@ -1,0 +1,170 @@
+.pageContainer {
+  min-height: 80vh;
+  padding: 60px 80px;
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-main);
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 32px;
+  text-align: right;
+}
+
+.optionsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.optionCard {
+  background-color: var(--color-walletCard);
+  border: 1px solid transparent; /* 2px -> 1px for refinement */
+  border-radius: 14px;
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 90px;
+}
+
+.optionCard:hover {
+  background-color: #2b145a; /* Slightly lighter on hover */
+}
+
+.optionCard.selected {
+  border-color: #702DE7; 
+  background-color: #2a1255; 
+  box-shadow: 0 4px 20px rgba(112, 45, 231, 0.15);
+}
+
+.optionCard.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+  pointer-events: none;
+}
+
+/* RTL: radioWrapper is on the Right */
+.radioWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* The visual radio button */
+.radioCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #6e6e6e;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+
+.optionCard.selected .radioCircle {
+  border-color: #fff;
+  background-color: transparent;
+}
+
+.radioInner {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #fff;
+  transform: scale(0);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.optionCard.selected .radioInner {
+  transform: scale(1);
+}
+
+.labelInfo {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelText {
+  font-family: var(--font-main);
+  font-size: 16px; 
+  font-weight: 600;
+  color: #fff;
+}
+
+.subText {
+  font-family: var(--font-main);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 4px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.9;
+}
+
+.submitBtn {
+  margin-top: 48px;
+  float: left; /* Button is on the left in RTL? Image shows it on Left-side of the container (which is End in RTL?) Wait. */
+  /* In RTL, Left is End. Image shows button on the LEFT side of the form? 
+     Let's look at image again. 
+     Sidebar is Right. Main Content is Left of Sidebar.
+     Title "Select Payment Method" is Right aligned.
+     Cards are filling width.
+     Button is on the Bottom Left? Or Bottom Right?
+     In the image 'uploaded_image_1768838885980.png', the button 'اختار' is on the Left side relative to the form width? 
+     No, looks like it's on the Left side.
+     Arabic text acts RTL. 'Start' is Right. 'End' is Left.
+     Usually buttons are at the 'End' of the form. So Left.
+  */
+  min-width: 140px;
+  height: 48px;
+  border-radius: 8px; /* Matches visuals */
+  border: none;
+  background: #702DE7; /* Fallback */
+  background: linear-gradient(270deg, #7F3BFF 0%, #9F2BFF 100%); /* Adjusted to match purple vibe */
+  color: #fff;
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.submitBtn:hover {
+  opacity: 0.95;
+}
+
+.submitBtn:active {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 30px 20px;
+  }
+
+  .submitBtn {
+      width: 100%;
+      float: none;
+  }
+}
