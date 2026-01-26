@@ -321,7 +321,7 @@ function BillsClient() {
                           <thead>
                             <tr>
                               <th>رقم الفاتورة</th>
-                              <th></th>
+                              <th>اسم العملية</th>
                               <th>قيمة العملية</th>
                               <th>حالة العملية</th>
                               <th>تاريخ العملية</th>

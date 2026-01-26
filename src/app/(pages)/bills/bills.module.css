@@ -1,9 +1,14 @@
 /* Bills.module.css */
 
 /* PAGE WRAP */
+/* PAGE WRAP */
 .pageWrap {
   min-height: 100vh;
-  /* background-image is handled globally or via main-bg, but we ensure text is white */
+  /* Background from Chat Page */
+  background-image: url('/images/main-bg.png');
+  background-size: cover;
+  background-position: center;    
+  background-repeat: no-repeat;
   color: #fff;
   padding: 0px 0 !important;
   font-family: inherit; /* Use global font */
@@ -82,7 +87,7 @@
 .filterActions {
   display: flex;
   gap: 12px;
-  justify-content: flex-end; /* Align to the right in LTR, left in RTL context? Screenshot has search on Left, Filters on Right. */
+  justify-content: flex-start; 
   align-items: center;
   flex-wrap: wrap;
   position: relative; /* For popup anchor */

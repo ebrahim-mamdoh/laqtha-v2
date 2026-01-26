@@ -1,0 +1,53 @@
+.pageContainer {
+  height: calc(100vh - 80px);
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  
+  background-image: url('/images/main-bg.png');
+  background-size: cover;
+  background-position: center;    
+  background-repeat: no-repeat;
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-main);
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 60px;
+}
+
+.imageContainer {
+  margin-bottom: 80px;
+  /* Add a subtle glow or effect if needed, but per request just the image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submitBtn {
+  width: 100%;
+  max-width: 400px;
+  height: 52px;
+  border-radius: 8px;
+  border: none;
+  background: #7F3BFF; /* Brighter purple for success */
+  color: #fff;
+  font-family: var(--font-main);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.submitBtn:hover {
+  opacity: 0.9;
+}

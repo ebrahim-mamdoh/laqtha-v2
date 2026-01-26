@@ -17,11 +17,7 @@ export default function ChargeClient() {
 
     const handleSubmit = () => {
         if (selectedMethod === 'card') {
-            // Navigate to the next step, e.g., payment details
-            // Since specific route isn't defined, we'll assume a sub-route or query
-            // For now, let's keep it safe. 
-            console.log('Navigating to card payment');
-            // router.push('/wallet/charge/payment'); 
+            router.push('/wallet/charge/card');
         }
     };
 
