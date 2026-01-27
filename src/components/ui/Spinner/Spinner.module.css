@@ -1,0 +1,137 @@
+/* ============================================================================
+   Spinner Component Styles
+   ============================================================================ */
+
+.spinner {
+  display: inline-block;
+  border-radius: 50%;
+  border-style: solid;
+  border-top-color: transparent !important;
+  border-right-color: transparent !important;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================================
+   Sizes
+   ============================================================================ */
+
+.size-xs {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-width: 2px;
+}
+
+.size-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 2px;
+}
+
+.size-md {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-width: 2px;
+}
+
+.size-lg {
+  width: 2rem;
+  height: 2rem;
+  border-width: 3px;
+}
+
+.size-xl {
+  width: 3rem;
+  height: 3rem;
+  border-width: 4px;
+}
+
+/* ============================================================================
+   Colors
+   ============================================================================ */
+
+.color-primary {
+  border-color: var(--color-primary, #3b82f6);
+}
+
+.color-secondary {
+  border-color: var(--color-secondary, #6b7280);
+}
+
+.color-white {
+  border-color: #ffffff;
+}
+
+.color-current {
+  border-color: currentColor;
+}
+
+/* ============================================================================
+   Loading Overlay
+   ============================================================================ */
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 50;
+}
+
+.fullScreen {
+  position: fixed;
+  z-index: 9999;
+}
+
+.blur {
+  backdrop-filter: blur(2px);
+}
+
+.overlayContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.overlayText {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--color-text, #374151);
+}
+
+/* ============================================================================
+   Loading Page
+   ============================================================================ */
+
+.loadingPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg, #ffffff);
+}
+
+.loadingPageContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.loadingPageText {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text-muted, #6b7280);
+}

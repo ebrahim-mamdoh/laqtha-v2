@@ -1,0 +1,416 @@
+/* ============================================================================
+   Partner Status Page Styles
+   ============================================================================ */
+
+.statusPage {
+  padding: var(--spacing-6);
+  background: var(--color-gray-50);
+  min-height: 100%;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+/* ============================================================================
+   Loading & Error States
+   ============================================================================ */
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-12);
+  gap: var(--spacing-4);
+  min-height: 50vh;
+  color: var(--color-text-secondary);
+}
+
+/* ============================================================================
+   Status Card
+   ============================================================================ */
+
+.statusCard {
+  padding: var(--spacing-8);
+  text-align: center;
+}
+
+.statusIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-6);
+}
+
+.statusIcon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.statusIcon.success {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--color-success);
+}
+
+.statusIcon.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--color-warning);
+}
+
+.statusIcon.danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-danger);
+}
+
+.statusIcon.info {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--color-primary);
+}
+
+.statusContent {
+  margin-bottom: var(--spacing-6);
+}
+
+.statusHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.statusHeader h1 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.statusDescription {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 500px;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+.additionalInfo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  margin: var(--spacing-3) 0 0 0;
+}
+
+.statusActions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+/* ============================================================================
+   Notes Card
+   ============================================================================ */
+
+.notesCard {
+  padding: var(--spacing-5);
+  border-color: var(--color-warning);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.notesHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-4);
+  color: var(--color-warning-dark);
+}
+
+.notesHeader svg {
+  width: 20px;
+  height: 20px;
+}
+
+.notesHeader h3 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  margin: 0;
+}
+
+.notesContent p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.notesContent p + p {
+  margin-top: var(--spacing-2);
+}
+
+/* ============================================================================
+   Timeline Card
+   ============================================================================ */
+
+.timelineCard {
+  padding: var(--spacing-6);
+}
+
+.timelineCard h2 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-6) 0;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.timelineItem {
+  position: relative;
+  display: flex;
+  gap: var(--spacing-4);
+  padding-bottom: var(--spacing-6);
+}
+
+.timelineItem:last-child {
+  padding-bottom: 0;
+}
+
+.timelineDot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-gray-200);
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.timelineDot svg {
+  width: 14px;
+  height: 14px;
+}
+
+.timelineItem.completed .timelineDot {
+  background: var(--color-success);
+  box-shadow: 0 0 0 2px var(--color-success);
+  color: white;
+}
+
+.timelineItem.current .timelineDot {
+  background: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px var(--color-primary);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+  }
+}
+
+.timelineItem.pending .timelineDot {
+  background: var(--color-gray-200);
+  box-shadow: 0 0 0 2px var(--color-gray-200);
+}
+
+.timelineLine {
+  position: absolute;
+  top: 24px;
+  inset-inline-start: 11px;
+  width: 2px;
+  height: calc(100% - 24px);
+  background: var(--color-gray-200);
+  z-index: 1;
+}
+
+.timelineItem.completed .timelineLine {
+  background: var(--color-success);
+}
+
+.timelineContent {
+  flex: 1;
+  padding-top: 2px;
+}
+
+.timelineDate {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  display: block;
+  margin-bottom: var(--spacing-1);
+}
+
+.timelineTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.timelineItem.pending .timelineTitle {
+  color: var(--color-text-secondary);
+}
+
+.timelineDescription {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: var(--spacing-1) 0 0 0;
+}
+
+/* ============================================================================
+   Info Card
+   ============================================================================ */
+
+.infoCard {
+  padding: var(--spacing-6);
+}
+
+.infoCard h2 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-5) 0;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+}
+
+@media (max-width: 640px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.infoLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.infoValue {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+/* ============================================================================
+   Help Card
+   ============================================================================ */
+
+.helpCard {
+  padding: var(--spacing-5);
+  text-align: center;
+  background: var(--color-gray-100);
+}
+
+.helpCard h3 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.helpCard p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+.helpLinks {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-6);
+  flex-wrap: wrap;
+}
+
+.helpLinks a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.helpLinks a:hover {
+  color: var(--color-primary-dark);
+}
+
+.helpLinks a svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .statusPage {
+    padding: var(--spacing-4);
+  }
+
+  .statusCard {
+    padding: var(--spacing-6);
+  }
+
+  .statusIcon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .statusIcon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .statusHeader h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  .statusActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .statusActions button,
+  .statusActions a {
+    width: 100%;
+  }
+
+  .helpLinks {
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+}

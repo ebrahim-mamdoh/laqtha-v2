@@ -1,0 +1,538 @@
+/* ============================================================================
+   Partner Registration Page Styles
+   ============================================================================ */
+
+.registerPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: var(--spacing-8) var(--spacing-4);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.logo {
+  display: inline-block;
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-bottom: var(--spacing-4);
+}
+
+.header h1 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* ============================================================================
+   Progress Steps
+   ============================================================================ */
+
+.progressContainer {
+  margin-bottom: var(--spacing-8);
+  padding: 0 var(--spacing-4);
+}
+
+.progressSteps {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+}
+
+.progressStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  max-width: 150px;
+}
+
+.stepNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-gray-200);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-2);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.stepNumber svg {
+  width: 20px;
+  height: 20px;
+}
+
+.progressStep.active .stepNumber {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.progressStep.completed .stepNumber {
+  background: var(--color-success);
+  color: white;
+}
+
+.stepLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.progressStep.active .stepLabel,
+.progressStep.completed .stepLabel {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.stepConnector {
+  position: absolute;
+  top: 20px;
+  inset-inline-start: calc(50% + 24px);
+  width: calc(100% - 48px);
+  height: 2px;
+  background: var(--color-gray-200);
+  z-index: 1;
+}
+
+.progressStep.completed .stepConnector {
+  background: var(--color-success);
+}
+
+/* ============================================================================
+   Step Card
+   ============================================================================ */
+
+.stepCard {
+  padding: var(--spacing-8);
+}
+
+.stepContent {
+  /* Content container */
+}
+
+.stepHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.stepHeader h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.stepHeader p {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ============================================================================
+   Step Actions
+   ============================================================================ */
+
+.stepActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-8);
+  padding-top: var(--spacing-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.backLink {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   Loading & Empty States
+   ============================================================================ */
+
+.loadingContainer,
+.emptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-12);
+  gap: var(--spacing-4);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================================================
+   Service Type Selection (Step 1)
+   ============================================================================ */
+
+.serviceTypeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.serviceTypeCard {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  text-align: center;
+  padding: var(--spacing-6);
+}
+
+.serviceTypeCard:hover {
+  border-color: var(--color-primary);
+}
+
+.serviceTypeCard.selected {
+  border-color: var(--color-primary);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.serviceTypeIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-4);
+  font-size: 24px;
+}
+
+.serviceTypeCard h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.serviceTypeDescription {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-3) 0;
+  line-height: 1.5;
+}
+
+.serviceTypeMeta {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-2);
+}
+
+.selectedIndicator {
+  position: absolute;
+  top: var(--spacing-3);
+  inset-inline-end: var(--spacing-3);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectedIndicator svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ============================================================================
+   Business Info (Step 2)
+   ============================================================================ */
+
+.formSection {
+  margin-bottom: var(--spacing-8);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-4) 0;
+  padding-bottom: var(--spacing-2);
+  border-bottom: 2px solid var(--color-primary);
+  display: inline-block;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+}
+
+@media (max-width: 640px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.formField label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.formField input {
+  padding: var(--spacing-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formField input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.formField input.inputError {
+  border-color: var(--color-danger);
+}
+
+.formField input.inputError:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.fieldError {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+}
+
+/* ============================================================================
+   Confirmation (Step 3)
+   ============================================================================ */
+
+.confirmationSections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.confirmationCard {
+  padding: var(--spacing-5);
+}
+
+.confirmationCard h3 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-4) 0;
+  padding-bottom: var(--spacing-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.confirmationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+}
+
+@media (max-width: 640px) {
+  .confirmationGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.confirmationItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.confirmationItem .label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.confirmationItem .value {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.termsSection {
+  margin-top: var(--spacing-6);
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--color-primary);
+}
+
+.checkboxLabel a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.checkboxLabel a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   OTP Verification (Step 4)
+   ============================================================================ */
+
+.otpIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-4);
+}
+
+.otpIcon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.otpContainer {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.otpInputs {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-6);
+  direction: ltr;
+}
+
+.otpInput {
+  width: 48px;
+  height: 56px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  text-align: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.otpInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.otpInput:disabled {
+  background: var(--color-gray-100);
+  color: var(--color-text-secondary);
+}
+
+.resendSection {
+  text-align: center;
+  margin-top: var(--spacing-6);
+}
+
+.resendSection p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .registerPage {
+    padding: var(--spacing-4) var(--spacing-2);
+  }
+
+  .stepCard {
+    padding: var(--spacing-5);
+  }
+
+  .progressSteps {
+    gap: 0;
+  }
+
+  .stepLabel {
+    font-size: 10px;
+  }
+
+  .stepConnector {
+    width: calc(100% - 40px);
+    inset-inline-start: calc(50% + 20px);
+  }
+
+  .serviceTypeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .stepActions {
+    flex-direction: column-reverse;
+    gap: var(--spacing-3);
+  }
+
+  .stepActions button {
+    width: 100%;
+  }
+
+  .stepActions .backLink {
+    order: 1;
+  }
+
+  .otpInput {
+    width: 40px;
+    height: 48px;
+    font-size: var(--font-size-lg);
+  }
+}

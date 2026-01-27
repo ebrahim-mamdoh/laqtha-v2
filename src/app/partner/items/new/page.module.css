@@ -1,0 +1,186 @@
+/* ============================================================================
+   New/Edit Item Page Styles
+   ============================================================================ */
+
+.newItemPage {
+  padding: var(--spacing-6);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ============================================================================
+   Breadcrumb
+   ============================================================================ */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-6);
+  font-size: var(--font-size-sm);
+}
+
+.breadcrumb a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--color-primary);
+}
+
+.breadcrumb span:not(.separator) {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.breadcrumb .separator {
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-6);
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+.headerText h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.headerText p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ============================================================================
+   Loading & Error States
+   ============================================================================ */
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-12);
+  gap: var(--spacing-4);
+  text-align: center;
+}
+
+.loadingContainer p {
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.errorContainer h2 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.errorContainer p {
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ============================================================================
+   Form Card
+   ============================================================================ */
+
+.formCard {
+  padding: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+/* ============================================================================
+   Help Card
+   ============================================================================ */
+
+.helpCard {
+  padding: var(--spacing-5);
+  background: var(--color-gray-50);
+}
+
+.helpCard h3 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+.helpCard ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.helpCard li {
+  position: relative;
+  padding-inline-start: var(--spacing-6);
+  margin-bottom: var(--spacing-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.helpCard li:last-child {
+  margin-bottom: 0;
+}
+
+.helpCard li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background: var(--color-primary);
+  border-radius: 50%;
+}
+
+.helpCard li strong {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .newItemPage {
+    padding: var(--spacing-4);
+  }
+
+  .breadcrumb {
+    font-size: var(--font-size-xs);
+    flex-wrap: wrap;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header button {
+    align-self: flex-start;
+  }
+
+  .formCard {
+    padding: var(--spacing-4);
+  }
+}

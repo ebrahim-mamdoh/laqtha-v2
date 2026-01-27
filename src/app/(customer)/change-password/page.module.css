@@ -1,0 +1,165 @@
+/* ============================================================================
+   Change Password Page Styles
+   ============================================================================ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.backLink {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, #6b7280);
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: var(--color-primary, #8b5cf6);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #1a1a2e);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0;
+}
+
+/* ============================================================================
+   Success State
+   ============================================================================ */
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: var(--color-background, #fff);
+  border-radius: 16px;
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  background: var(--color-success-light, #ecfdf5);
+  color: var(--color-success, #10b981);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.success h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-success, #10b981);
+  margin: 0;
+}
+
+.success p {
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+/* ============================================================================
+   Alert
+   ============================================================================ */
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: var(--color-danger-light, #fef2f2);
+  border: 1px solid var(--color-danger-border, #fecaca);
+  border-radius: 12px;
+  color: var(--color-danger, #ef4444);
+  font-size: 0.875rem;
+}
+
+.alertIcon {
+  flex-shrink: 0;
+}
+
+/* ============================================================================
+   Card
+   ============================================================================ */
+
+.card {
+  background: var(--color-background, #fff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+/* ============================================================================
+   Form
+   ============================================================================ */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.divider {
+  height: 1px;
+  background: var(--color-border, #e5e7eb);
+  margin: 0.5rem 0;
+}
+
+.formActions {
+  padding-top: 0.5rem;
+}
+
+/* ============================================================================
+   Info Box
+   ============================================================================ */
+
+.infoBox {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--color-info-light, #eff6ff);
+  border: 1px solid var(--color-info-border, #bfdbfe);
+  border-radius: 12px;
+}
+
+.infoIcon {
+  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+.infoBox p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-info-text, #1e40af);
+  line-height: 1.5;
+}

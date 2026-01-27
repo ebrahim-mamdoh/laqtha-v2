@@ -1,0 +1,238 @@
+/* ============================================================================
+   Modal Component Styles
+   ============================================================================ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 2rem);
+  background-color: var(--color-bg, #ffffff);
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: slideIn 0.2s ease;
+  overflow: hidden;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ============================================================================
+   Sizes
+   ============================================================================ */
+
+.sm {
+  width: 100%;
+  max-width: 24rem;
+}
+
+.md {
+  width: 100%;
+  max-width: 32rem;
+}
+
+.lg {
+  width: 100%;
+  max-width: 48rem;
+}
+
+.xl {
+  width: 100%;
+  max-width: 64rem;
+}
+
+.full {
+  width: calc(100vw - 2rem);
+  height: calc(100vh - 2rem);
+  max-width: none;
+  max-height: none;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0.375rem;
+  color: var(--color-text-muted, #6b7280);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: var(--color-gray-100, #f3f4f6);
+  color: var(--color-text, #111827);
+}
+
+/* ============================================================================
+   Body
+   ============================================================================ */
+
+.body {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+/* ============================================================================
+   Footer
+   ============================================================================ */
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--color-border, #e5e7eb);
+}
+
+/* ============================================================================
+   Confirm Modal
+   ============================================================================ */
+
+.confirmContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.confirmIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.confirmTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.confirmMessage {
+  margin: 0 0 1.5rem;
+  color: var(--color-text-muted, #6b7280);
+  line-height: 1.6;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.cancelBtn,
+.confirmBtn {
+  flex: 1;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelBtn {
+  background-color: var(--color-gray-100, #f3f4f6);
+  border: 1px solid var(--color-border, #e5e7eb);
+  color: var(--color-text, #374151);
+}
+
+.cancelBtn:hover:not(:disabled) {
+  background-color: var(--color-gray-200, #e5e7eb);
+}
+
+.confirmBtn {
+  border: none;
+  color: white;
+}
+
+.confirmBtn.danger {
+  background-color: var(--color-danger, #ef4444);
+}
+
+.confirmBtn.danger:hover:not(:disabled) {
+  background-color: var(--color-danger-dark, #dc2626);
+}
+
+.confirmBtn.warning {
+  background-color: var(--color-warning, #f59e0b);
+}
+
+.confirmBtn.warning:hover:not(:disabled) {
+  background-color: var(--color-warning-dark, #d97706);
+}
+
+.confirmBtn.success {
+  background-color: var(--color-success, #22c55e);
+}
+
+.confirmBtn.success:hover:not(:disabled) {
+  background-color: var(--color-success-dark, #16a34a);
+}
+
+.confirmBtn.info {
+  background-color: var(--color-primary, #3b82f6);
+}
+
+.confirmBtn.info:hover:not(:disabled) {
+  background-color: var(--color-primary-dark, #2563eb);
+}
+
+.cancelBtn:disabled,
+.confirmBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

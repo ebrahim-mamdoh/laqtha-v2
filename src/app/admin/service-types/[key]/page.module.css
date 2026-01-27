@@ -1,0 +1,327 @@
+/* ============================================================================
+   Service Type Detail Page Styles
+   ============================================================================ */
+
+.page {
+  padding: var(--spacing-6);
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: var(--spacing-4);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================================================
+   Breadcrumb
+   ============================================================================ */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-6);
+  flex-wrap: wrap;
+}
+
+.breadcrumb a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbSeparator {
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbSeparator svg {
+  width: 16px;
+  height: 16px;
+}
+
+.breadcrumbCurrent {
+  color: var(--color-text-secondary);
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-6);
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+.headerInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.typeIcon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.headerText h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.typeKey {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  font-family: monospace;
+}
+
+.headerActions {
+  display: flex;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.headerActions button svg,
+.headerActions a button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================================================
+   Content Grid
+   ============================================================================ */
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+@media (max-width: 1024px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================================
+   Cards
+   ============================================================================ */
+
+.infoCard,
+.statsCard,
+.fieldsCard {
+  padding: 0;
+  overflow: hidden;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-4) var(--spacing-5);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-gray-50);
+}
+
+.cardHeader h2 {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.fieldCount {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-gray-100);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+}
+
+/* ============================================================================
+   Info Grid
+   ============================================================================ */
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+  padding: var(--spacing-5);
+}
+
+@media (max-width: 640px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.infoLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.infoValue {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+/* ============================================================================
+   Stats Card
+   ============================================================================ */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+  padding: var(--spacing-5);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-4);
+  background: var(--color-gray-50);
+  border-radius: var(--radius-md);
+}
+
+.statValue {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: var(--spacing-2);
+}
+
+.statLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================================================
+   Fields Table
+   ============================================================================ */
+
+.fieldsCard {
+  margin-bottom: var(--spacing-6);
+}
+
+.fieldsTable {
+  overflow-x: auto;
+}
+
+.fieldsTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fieldsTable th {
+  padding: var(--spacing-3) var(--spacing-4);
+  text-align: start;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  background: var(--color-gray-50);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fieldsTable td {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fieldsTable tr:last-child td {
+  border-bottom: none;
+}
+
+.fieldsTable tr:hover {
+  background: var(--color-gray-50);
+}
+
+.fieldKey {
+  font-family: monospace;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.checkIcon {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.crossIcon {
+  color: var(--color-text-tertiary);
+}
+
+.noFields {
+  padding: var(--spacing-8);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.noFields p {
+  margin: 0;
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .page {
+    padding: var(--spacing-4);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .headerInfo {
+    flex-wrap: wrap;
+  }
+
+  .headerActions {
+    flex-direction: column;
+  }
+
+  .headerActions button,
+  .headerActions a {
+    width: 100%;
+  }
+
+  .headerActions a button {
+    width: 100%;
+    justify-content: center;
+  }
+}

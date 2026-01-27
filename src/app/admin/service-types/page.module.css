@@ -1,0 +1,348 @@
+/* ============================================================================
+   Admin Service Types Page Styles
+   ============================================================================ */
+
+.page {
+  padding: var(--spacing-6);
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-6);
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+.headerText h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.headerText p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.header button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ============================================================================
+   Stats Grid
+   ============================================================================ */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statsSkeleton {
+  height: 100px;
+  background: var(--color-gray-100);
+  border-radius: var(--radius-md);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.successStat {
+  --stats-card-icon-bg: rgba(34, 197, 94, 0.1);
+  --stats-card-icon-color: var(--color-success);
+}
+
+.warningStat {
+  --stats-card-icon-bg: rgba(245, 158, 11, 0.1);
+  --stats-card-icon-color: var(--color-warning);
+}
+
+/* ============================================================================
+   Filters
+   ============================================================================ */
+
+.filtersCard {
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.filters {
+  display: flex;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 250px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  inset-inline-start: var(--spacing-3);
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--spacing-3);
+  padding-inline-start: var(--spacing-10);
+  padding-inline-end: var(--spacing-10);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.clearSearch {
+  position: absolute;
+  inset-inline-end: var(--spacing-3);
+  background: none;
+  border: none;
+  padding: var(--spacing-1);
+  cursor: pointer;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clearSearch:hover {
+  color: var(--color-text-secondary);
+}
+
+.clearSearch svg {
+  width: 18px;
+  height: 18px;
+}
+
+.filterSelect {
+  padding: var(--spacing-3);
+  padding-inline-end: var(--spacing-8);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  background: white;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ============================================================================
+   Table
+   ============================================================================ */
+
+.tableCard {
+  padding: 0;
+  overflow: hidden;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-12);
+  gap: var(--spacing-4);
+  color: var(--color-text-secondary);
+}
+
+.typeIcon {
+  font-size: var(--font-size-2xl);
+}
+
+.typeLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  text-decoration: none;
+}
+
+.typeName {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.typeLink:hover .typeName {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.typeKey {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  font-family: monospace;
+}
+
+.commission {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* ============================================================================
+   Action Menu
+   ============================================================================ */
+
+.actionMenu {
+  position: relative;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  padding: var(--spacing-2);
+  cursor: pointer;
+  color: var(--color-text-tertiary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.actionButton:hover {
+  background: var(--color-gray-100);
+  color: var(--color-text-primary);
+}
+
+.actionButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.actionDropdown {
+  position: absolute;
+  top: 100%;
+  inset-inline-end: 0;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 150px;
+  z-index: 50;
+  padding: var(--spacing-1);
+}
+
+.actionDropdown button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  background: none;
+  border: none;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s ease;
+}
+
+.actionDropdown button:hover {
+  background: var(--color-gray-100);
+}
+
+.actionDropdown button svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-tertiary);
+}
+
+.actionDropdown .deleteAction {
+  color: var(--color-danger);
+}
+
+.actionDropdown .deleteAction svg {
+  color: var(--color-danger);
+}
+
+/* ============================================================================
+   Pagination
+   ============================================================================ */
+
+.paginationContainer {
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: center;
+}
+
+.resultsInfo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-top: var(--spacing-4);
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .page {
+    padding: var(--spacing-4);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .searchBox {
+    min-width: auto;
+  }
+
+  .filterSelect {
+    width: 100%;
+  }
+
+  .tableCard {
+    overflow-x: auto;
+  }
+}

@@ -1,0 +1,128 @@
+/* ============================================================================
+   Auth Layout Styles
+   Centered card layout with decorative background
+   ============================================================================ */
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2rem 1rem;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  text-align: center;
+}
+
+.logo {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.logoText {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary, #8b5cf6);
+  letter-spacing: -0.02em;
+}
+
+/* ============================================================================
+   Main Content
+   ============================================================================ */
+
+.main {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* ============================================================================
+   Footer
+   ============================================================================ */
+
+.footer {
+  text-align: center;
+}
+
+.footerText {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0 0 0.5rem;
+}
+
+.footerNav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.footerNav a {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary, #6b7280);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerNav a:hover {
+  color: var(--color-primary, #8b5cf6);
+}
+
+/* ============================================================================
+   Background
+   ============================================================================ */
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #faf5ff 100%);
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b5cf6' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.8;
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+
+@media (max-width: 576px) {
+  .layout {
+    padding: 1rem;
+  }
+
+  .main {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  .logoText {
+    font-size: 2rem;
+  }
+}

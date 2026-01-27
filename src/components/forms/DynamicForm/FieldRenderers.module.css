@@ -1,0 +1,253 @@
+/* ============================================================================
+   Field Renderers Styles
+   ============================================================================ */
+
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fieldLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text, #374151);
+}
+
+.required {
+  color: var(--color-danger, #ef4444);
+  margin-inline-start: 0.25rem;
+}
+
+.helperText {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #6b7280);
+}
+
+.errorText {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-danger, #ef4444);
+}
+
+.input {
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 0.5rem;
+  background-color: var(--color-bg, #ffffff);
+  font-size: 0.9375rem;
+  color: var(--color-text, #374151);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input:disabled {
+  background-color: var(--color-gray-50, #f9fafb);
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+   Price Field
+   ============================================================================ */
+
+.priceField {
+  position: relative;
+}
+
+.currencySymbol {
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #6b7280);
+  font-weight: 500;
+}
+
+/* ============================================================================
+   Boolean Field - Checkbox
+   ============================================================================ */
+
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 1.125rem;
+  height: 1.125rem;
+  cursor: pointer;
+  accent-color: var(--color-primary, #3b82f6);
+}
+
+.checkboxLabel {
+  font-size: 0.9375rem;
+  color: var(--color-text, #374151);
+  user-select: none;
+}
+
+/* ============================================================================
+   Boolean Field - Switch
+   ============================================================================ */
+
+.switchLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text, #374151);
+  margin-bottom: 0.25rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.5rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-gray-300, #d1d5db);
+  transition: 0.3s;
+  border-radius: 1.5rem;
+}
+
+.switchSlider::before {
+  position: absolute;
+  content: '';
+  height: 1.125rem;
+  width: 1.125rem;
+  left: 0.1875rem;
+  bottom: 0.1875rem;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.switch input:checked + .switchSlider {
+  background-color: var(--color-primary, #3b82f6);
+}
+
+.switch input:checked + .switchSlider::before {
+  transform: translateX(1.5rem);
+}
+
+.switch input:disabled + .switchSlider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* RTL Support */
+[dir="rtl"] .switchSlider::before {
+  left: auto;
+  right: 0.1875rem;
+}
+
+[dir="rtl"] .switch input:checked + .switchSlider::before {
+  transform: translateX(-1.5rem);
+}
+
+/* ============================================================================
+   Boolean Field - Radio
+   ============================================================================ */
+
+.radioGroup {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  color: var(--color-text, #374151);
+}
+
+.radioLabel input {
+  width: 1.125rem;
+  height: 1.125rem;
+  cursor: pointer;
+  accent-color: var(--color-primary, #3b82f6);
+}
+
+/* ============================================================================
+   Time Range Field
+   ============================================================================ */
+
+.timeRangeInputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.timeRangeInput {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.timeLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #6b7280);
+}
+
+.timeRangeSeparator {
+  color: var(--color-text-muted, #6b7280);
+  padding-bottom: 0.625rem;
+}
+
+/* ============================================================================
+   Rating Field
+   ============================================================================ */
+
+.ratingStars {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.star {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-gray-300, #d1d5db);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.star:hover {
+  transform: scale(1.1);
+}
+
+.star:disabled {
+  cursor: not-allowed;
+}
+
+.starFilled {
+  color: var(--color-warning, #f59e0b);
+}
+
+.ratingValue {
+  margin-inline-start: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #6b7280);
+}

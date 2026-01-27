@@ -1,0 +1,404 @@
+/* ============================================================================
+   Search Results Page Styles
+   Two-column layout with filters sidebar and results grid
+   ============================================================================ */
+
+.page {
+  min-height: calc(100vh - 200px);
+  padding: 1.5rem 0 4rem;
+  background-color: var(--color-bg-primary, #fafafa);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #1a1a2e);
+  margin: 0 0 0.25rem;
+}
+
+.resultCount {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0;
+}
+
+/* ============================================================================
+   Content Layout
+   ============================================================================ */
+
+.content {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ============================================================================
+   Filters Sidebar
+   ============================================================================ */
+
+.filtersSidebar {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.filtersForm {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filterLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #1a1a2e);
+}
+
+.filterInput,
+.filterSelect {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  background: #ffffff;
+  color: var(--color-text-primary, #1a1a2e);
+  transition: border-color 0.2s ease;
+}
+
+.filterInput:focus,
+.filterSelect:focus {
+  outline: none;
+  border-color: var(--color-primary, #8b5cf6);
+}
+
+.filterCheckboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-primary, #1a1a2e);
+  cursor: pointer;
+}
+
+.filterCheckbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary, #8b5cf6);
+}
+
+.filterButton {
+  width: 100%;
+  padding: 0.875rem;
+  background: var(--color-primary, #8b5cf6);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.filterButton:hover {
+  background: var(--color-primary-dark, #7c3aed);
+}
+
+.clearFilters {
+  display: block;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, #6b7280);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.clearFilters:hover {
+  color: var(--color-primary, #8b5cf6);
+}
+
+/* ============================================================================
+   Results Grid
+   ============================================================================ */
+
+.results {
+  min-height: 400px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.itemCard {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.itemCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.itemImagePlaceholder {
+  height: 140px;
+  background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.itemImageIcon {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.itemContent {
+  padding: 1rem;
+}
+
+.itemTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #1a1a2e);
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.itemPartner {
+  font-size: 0.8125rem;
+  color: var(--color-primary, #8b5cf6);
+  margin: 0 0 0.25rem;
+}
+
+.itemCity {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #6b7280);
+  margin-bottom: 0.5rem;
+}
+
+.itemDescription {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+}
+
+.itemFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border, #e5e7eb);
+}
+
+.itemPrice {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-success, #10b981);
+}
+
+.itemAction {
+  font-size: 0.75rem;
+  color: var(--color-primary, #8b5cf6);
+  font-weight: 500;
+}
+
+/* ============================================================================
+   Pagination
+   ============================================================================ */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.paginationLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 0.75rem;
+  background: #ffffff;
+  color: var(--color-text-primary, #1a1a2e);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.paginationLink:hover {
+  background: var(--color-bg-hover, #f3f4f6);
+}
+
+.paginationActive {
+  background: var(--color-primary, #8b5cf6);
+  color: #ffffff;
+}
+
+.paginationActive:hover {
+  background: var(--color-primary-dark, #7c3aed);
+}
+
+/* ============================================================================
+   Empty State
+   ============================================================================ */
+
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.emptyTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #1a1a2e);
+  margin: 0 0 0.5rem;
+}
+
+.emptyDescription {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0 0 1.5rem;
+}
+
+.emptyLink {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary, #8b5cf6);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.emptyLink:hover {
+  background: var(--color-primary-dark, #7c3aed);
+}
+
+/* ============================================================================
+   Skeleton Loading
+   ============================================================================ */
+
+.skeletonCard {
+  height: 280px;
+  background: linear-gradient(90deg, #e5e7eb 0%, #f3f4f6 50%, #e5e7eb 100%);
+  background-size: 200% 100%;
+  animation: skeleton 1.5s ease-in-out infinite;
+  border-radius: 16px;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ============================================================================
+   Responsive Styles
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .filtersSidebar {
+    position: static;
+    order: -1;
+  }
+
+  .filtersForm {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .filterGroup:nth-child(1) {
+    grid-column: span 2;
+  }
+
+  .filterButton {
+    grid-column: span 2;
+  }
+
+  .clearFilters {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .filtersForm {
+    grid-template-columns: 1fr;
+  }
+
+  .filterGroup:nth-child(1),
+  .filterButton,
+  .clearFilters {
+    grid-column: span 1;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

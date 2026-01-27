@@ -1,0 +1,114 @@
+/* ============================================================================
+   EmptyState Component Styles
+   ============================================================================ */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+/* ============================================================================
+   Variants
+   ============================================================================ */
+
+.default {
+  min-height: 300px;
+}
+
+.compact {
+  padding: 2rem 1rem;
+  min-height: 200px;
+}
+
+.inline {
+  flex-direction: row;
+  text-align: start;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: auto;
+}
+
+.inline .content {
+  align-items: flex-start;
+}
+
+.inline .icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0;
+}
+
+.inline .icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.inline .title {
+  font-size: 1rem;
+}
+
+.inline .description {
+  font-size: 0.8125rem;
+}
+
+/* ============================================================================
+   Icon
+   ============================================================================ */
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-gray-300, #d1d5db);
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================================================
+   Content
+   ============================================================================ */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 400px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text, #374151);
+}
+
+.description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #6b7280);
+  line-height: 1.5;
+}
+
+/* ============================================================================
+   Action
+   ============================================================================ */
+
+.action {
+  margin-top: 1.5rem;
+}
+
+.inline .action {
+  margin-top: 0;
+  margin-inline-start: auto;
+}

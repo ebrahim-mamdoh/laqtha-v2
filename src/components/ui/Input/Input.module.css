@@ -1,0 +1,159 @@
+/* ============================================================================
+   Input Component Styles
+   RTL-Compatible Form Inputs
+   ============================================================================ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+/* ============================================================================
+   Label
+   ============================================================================ */
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text, #374151);
+}
+
+.required {
+  color: var(--color-danger, #ef4444);
+  margin-inline-start: 0.25rem;
+}
+
+/* ============================================================================
+   Input Wrapper
+   ============================================================================ */
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================================================
+   Input & Textarea
+   ============================================================================ */
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text, #374151);
+  background-color: var(--color-bg, #ffffff);
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 0.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-primary, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-placeholder, #9ca3af);
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ============================================================================
+   Icons
+   ============================================================================ */
+
+.leftIcon,
+.rightIcon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted, #6b7280);
+  pointer-events: none;
+}
+
+.leftIcon {
+  inset-inline-start: 0.75rem;
+}
+
+.rightIcon {
+  inset-inline-end: 0.75rem;
+}
+
+button.rightIcon {
+  cursor: pointer;
+  pointer-events: auto;
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  color: var(--color-text-muted, #6b7280);
+}
+
+button.rightIcon:hover {
+  color: var(--color-text, #374151);
+}
+
+.hasLeftIcon {
+  padding-inline-start: 2.5rem;
+}
+
+.hasRightIcon {
+  padding-inline-end: 2.5rem;
+}
+
+/* ============================================================================
+   Error State
+   ============================================================================ */
+
+.hasError .input,
+.hasError .textarea {
+  border-color: var(--color-danger, #ef4444);
+}
+
+.hasError .input:focus,
+.hasError .textarea:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error {
+  font-size: 0.75rem;
+  color: var(--color-danger, #ef4444);
+  margin: 0;
+}
+
+/* ============================================================================
+   Helper Text
+   ============================================================================ */
+
+.helperText {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #6b7280);
+  margin: 0;
+}
+
+/* ============================================================================
+   Disabled State
+   ============================================================================ */
+
+.disabled .input,
+.disabled .textarea {
+  background-color: var(--color-gray-100, #f3f4f6);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.disabled .label {
+  opacity: 0.7;
+}

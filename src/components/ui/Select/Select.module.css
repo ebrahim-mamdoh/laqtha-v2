@@ -1,0 +1,162 @@
+/* ============================================================================
+   Select Component Styles
+   RTL-Compatible Dropdown
+   ============================================================================ */
+
+.container,
+.multiSelectContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+/* ============================================================================
+   Label
+   ============================================================================ */
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text, #374151);
+}
+
+.required {
+  color: var(--color-danger, #ef4444);
+  margin-inline-start: 0.25rem;
+}
+
+/* ============================================================================
+   Select Wrapper
+   ============================================================================ */
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  width: 100%;
+  padding: 0.625rem 2.5rem 0.625rem 0.875rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text, #374151);
+  background-color: var(--color-bg, #ffffff);
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 0.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* RTL adjustment */
+[dir='rtl'] .select {
+  padding: 0.625rem 0.875rem 0.625rem 2.5rem;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-primary, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.arrow {
+  position: absolute;
+  inset-inline-end: 0.75rem;
+  font-size: 0.625rem;
+  color: var(--color-text-muted, #6b7280);
+  pointer-events: none;
+}
+
+/* ============================================================================
+   Error State
+   ============================================================================ */
+
+.hasError .select {
+  border-color: var(--color-danger, #ef4444);
+}
+
+.hasError .select:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error {
+  font-size: 0.75rem;
+  color: var(--color-danger, #ef4444);
+  margin: 0;
+}
+
+/* ============================================================================
+   Helper Text
+   ============================================================================ */
+
+.helperText {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #6b7280);
+  margin: 0;
+}
+
+/* ============================================================================
+   Disabled State
+   ============================================================================ */
+
+.disabled .select {
+  background-color: var(--color-gray-100, #f3f4f6);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.disabled .label {
+  opacity: 0.7;
+}
+
+/* ============================================================================
+   Multi-Select (Checkbox Grid)
+   ============================================================================ */
+
+.optionsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.checkboxLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 0.5rem;
+  background-color: var(--color-bg, #ffffff);
+  transition: all 0.2s ease;
+}
+
+.checkboxLabel:hover {
+  background-color: var(--color-gray-50, #f9fafb);
+  border-color: var(--color-primary, #3b82f6);
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--color-primary, #3b82f6);
+  cursor: pointer;
+}
+
+.checkboxText {
+  font-size: 0.875rem;
+  color: var(--color-text, #374151);
+}
+
+.optionDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.optionDisabled .checkbox {
+  cursor: not-allowed;
+}

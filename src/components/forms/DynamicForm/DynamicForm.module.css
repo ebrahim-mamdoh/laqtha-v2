@@ -1,0 +1,181 @@
+/* ============================================================================
+   Dynamic Form Styles
+   ============================================================================ */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ============================================================================
+   Layout Variants
+   ============================================================================ */
+
+.layout-vertical {
+  /* Default layout */
+}
+
+.layout-horizontal .fieldContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.layout-horizontal .fieldContainer label {
+  min-width: 120px;
+  padding-top: 0.625rem;
+}
+
+.layout-inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.layout-inline .fieldContainer {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ============================================================================
+   Column Layouts
+   ============================================================================ */
+
+.fieldsGrid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.columns-1 .fieldsGrid {
+  grid-template-columns: 1fr;
+}
+
+.columns-2 .fieldsGrid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.columns-3 .fieldsGrid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.columns-4 .fieldsGrid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 768px) {
+  .columns-3 .fieldsGrid,
+  .columns-4 .fieldsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .columns-2 .fieldsGrid,
+  .columns-3 .fieldsGrid,
+  .columns-4 .fieldsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================================
+   Sections
+   ============================================================================ */
+
+.section {
+  background-color: var(--color-bg, #ffffff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+}
+
+.sectionTitleWrapper {
+  flex: 1;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.sectionDescription {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #6b7280);
+}
+
+.collapseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: none;
+  color: var(--color-text-muted, #6b7280);
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.collapseButton:hover {
+  background-color: var(--color-gray-100, #f3f4f6);
+  color: var(--color-text, #374151);
+}
+
+.sectionFields {
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* ============================================================================
+   Field Container
+   ============================================================================ */
+
+.fieldContainer {
+  width: 100%;
+}
+
+/* Full width fields */
+.fieldContainer[data-full-width="true"] {
+  grid-column: 1 / -1;
+}
+
+/* ============================================================================
+   Form Actions
+   ============================================================================ */
+
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border, #e5e7eb);
+  margin-top: 0.5rem;
+}
+
+.formActions button {
+  min-width: 120px;
+}
+
+@media (max-width: 480px) {
+  .formActions {
+    flex-direction: column;
+  }
+
+  .formActions button {
+    width: 100%;
+  }
+}
