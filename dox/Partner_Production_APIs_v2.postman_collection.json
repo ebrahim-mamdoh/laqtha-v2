@@ -1,0 +1,774 @@
+{
+	"info": {
+		"_postman_id": "partner-production-apis-v2",
+		"name": "Partner_Production_APIs_v2",
+		"description": "Partner Production APIs v2 - Complete API collection for Partner onboarding, authentication, profile management, media uploads, and service items.\n\nBase URL: {{baseUrl}}/api/v2/partners\nService Items: {{baseUrl}}/api/partner/items",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5002",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refreshToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "partnerItemId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "mediaId",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"description": "Partner authentication endpoints - registration, OTP verification, login, logout, and password management",
+			"item": [
+				{
+					"name": "Register Partner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"partner@example.com\",\n  \"password\": \"SecurePass123!\",\n  \"businessName\": \"فندق النخيل\",\n  \"businessType\": \"hotel\",\n  \"contactPerson\": {\n    \"firstName\": \"أحمد\",\n    \"lastName\": \"محمد\"\n  },\n  \"phone\": \"+966501234567\",\n  \"address\": {\n    \"country\": \"السعودية\",\n    \"city\": \"الرياض\",\n    \"street\": \"شارع الملك فهد\",\n    \"postalCode\": \"12345\"\n  },\n  \"description\": \"فندق فاخر في قلب الرياض\",\n  \"website\": \"https://example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "register"]
+						},
+						"description": "Register a new partner with business identity data. businessType is a simple category selector. Service-specific fields are handled separately in Service Items module."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"partner@example.com\",\n  \"otp\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/verify-otp",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "verify-otp"]
+						},
+						"description": "Verify email with 4-digit OTP. Transitions partner state from pending_otp to pending_approval."
+					},
+					"response": []
+				},
+				{
+					"name": "Resend OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"partner@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/resend-otp",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "resend-otp"]
+						},
+						"description": "Resend OTP verification code to partner's email. Only works in pending_otp state."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.success && jsonData.data && jsonData.data.tokens) {",
+									"    pm.collectionVariables.set('accessToken', jsonData.data.tokens.accessToken);",
+									"    pm.collectionVariables.set('refreshToken', jsonData.data.tokens.refreshToken);",
+									"    console.log('Tokens saved to collection variables');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"partner@example.com\",\n  \"password\": \"SecurePass123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "login"]
+						},
+						"description": "Partner login. Returns access token (15m) and refresh token (7d). Tokens are automatically saved to collection variables."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "logout"]
+						},
+						"description": "Partner logout. Invalidates the refresh token."
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.success && jsonData.data) {",
+									"    pm.collectionVariables.set('accessToken', jsonData.data.accessToken);",
+									"    pm.collectionVariables.set('refreshToken', jsonData.data.refreshToken);",
+									"    console.log('Tokens refreshed and saved');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/refresh-token",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "refresh-token"]
+						},
+						"description": "Refresh access token using refresh token. Returns new access and refresh tokens."
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"partner@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/forgot-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "forgot-password"]
+						},
+						"description": "Request password reset OTP. Sends OTP to registered email if exists."
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"partner@example.com\",\n  \"otp\": \"1234\",\n  \"newPassword\": \"NewSecurePass123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/reset-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "reset-password"]
+						},
+						"description": "Reset password using OTP. Password must be 8+ chars with uppercase, lowercase, number, and special character."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Partner Context",
+			"description": "Partner self-service endpoints - status, profile, service type management",
+			"item": [
+				{
+					"name": "Get Current Partner",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me"]
+						},
+						"description": "Get current authenticated partner's basic information."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Partner Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "status"]
+						},
+						"description": "Get partner status including state, permissions, and any pending changes required."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Partner Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "profile"]
+						},
+						"description": "Get full partner profile including business details, service type, and permissions."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Partner Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contactPerson\": {\n    \"firstName\": \"أحمد\",\n    \"lastName\": \"السعود\"\n  },\n  \"phone\": \"+966509876543\",\n  \"description\": \"فندق فاخر ومميز في قلب الرياض\",\n  \"website\": \"https://updated-example.com\",\n  \"serviceTypeData\": {\n    \"star_rating\": \"5\",\n    \"total_rooms\": 100\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "profile"]
+						},
+						"description": "Update partner profile. Note: businessName and address cannot be changed after approval."
+					},
+					"response": []
+				},
+				{
+					"name": "Change Service Type",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"serviceTypeKey\": \"restaurant\",\n  \"serviceTypeData\": {\n    \"cuisine_type\": \"arabic\",\n    \"seating_capacity\": 100\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/service-type",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "service-type"]
+						},
+						"description": "Change service type before approval. Not allowed after partner is approved."
+					},
+					"response": []
+				},
+				{
+					"name": "Resubmit Application",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"updatedFields\": {\n    \"description\": \"وصف محدث بعد معالجة الملاحظات\",\n    \"serviceTypeData\": {\n      \"total_rooms\": 75\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/resubmit",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "resubmit"]
+						},
+						"description": "Resubmit application after addressing required changes. Only works in changes_required state."
+					},
+					"response": []
+				},
+				{
+					"name": "Get State History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/state-history",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "state-history"]
+						},
+						"description": "Get partner's state transition history."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Media (Cloudinary)",
+			"description": "Partner media management - Cloudinary direct upload with server-side signature",
+			"item": [
+				{
+					"name": "Get Upload Signature",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/media/signature?type=logo",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "media", "signature"],
+							"query": [
+								{
+									"key": "type",
+									"value": "logo",
+									"description": "Media type: logo, image, or document"
+								},
+								{
+									"key": "publicId",
+									"value": "custom_id",
+									"description": "Optional custom public ID",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get Cloudinary upload signature for frontend direct upload. Returns signature, timestamp, cloudName, apiKey, folder, and uploadUrl."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Partner Media",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/media",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "media"]
+						},
+						"description": "Get all partner media (logo, images, documents)."
+					},
+					"response": []
+				},
+				{
+					"name": "Save Media Metadata",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"logo\",\n  \"url\": \"https://res.cloudinary.com/demo/image/upload/v1234567890/partners/logos/partner_123_logo.jpg\",\n  \"publicId\": \"partners/logos/partner_123_logo\",\n  \"title\": \"شعار المنشأة\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/media",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "media"]
+						},
+						"description": "Save media metadata after successful Cloudinary upload. Type: logo, image, or document. Max 10 images, 5 documents."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Media",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"logo\",\n  \"publicId\": \"partners/logos/partner_123_logo\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/partners/me/media",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "partners", "me", "media"]
+						},
+						"description": "Delete media by type and publicId. Removes metadata from partner record."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Service Items",
+			"description": "Partner service item management - CRUD operations for service listings",
+			"item": [
+				{
+					"name": "Get Item Fields",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/partner/items/fields",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "partner", "items", "fields"]
+						},
+						"description": "Get dynamic field definitions for partner's service type. Used to build item creation forms."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Items Summary",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/partner/items/summary",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "partner", "items", "summary"]
+						},
+						"description": "Get summary statistics for partner's items (total, active, inactive, draft, hidden, archived)."
+					},
+					"response": []
+				},
+				{
+					"name": "List Service Items",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/partner/items?page=1&limit=20&sortBy=sortOrder&sortOrder=asc",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "partner", "items"],
+							"query": [
+								{
+									"key": "state",
+									"value": "active",
+									"description": "Filter by state: draft, active, inactive, hidden, archived",
+									"disabled": true
+								},
+								{
+									"key": "includeArchived",
+									"value": "false",
+									"description": "Include archived items",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Items per page"
+								},
+								{
+									"key": "sortBy",
+									"value": "sortOrder",
+									"description": "Sort field: sortOrder, createdAt, updatedAt, name"
+								},
+								{
+									"key": "sortOrder",
+									"value": "asc",
+									"description": "Sort direction: asc, desc"
+								}
+							]
+						},
+						"description": "List partner's service items with pagination and filtering."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Service Item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.success && jsonData.data && jsonData.data._id) {",
+									"    pm.collectionVariables.set('partnerItemId', jsonData.data._id);",
+									"    console.log('Item ID saved:', jsonData.data._id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": {\n    \"ar\": \"غرفة ديلوكس\",\n    \"en\": \"Deluxe Room\"\n  },\n  \"description\": {\n    \"ar\": \"غرفة واسعة مع إطلالة رائعة\",\n    \"en\": \"Spacious room with great view\"\n  },\n  \"attributes\": {\n    \"room_type\": \"deluxe\",\n    \"bed_type\": \"king\",\n    \"max_guests\": 2,\n    \"price_per_night\": 500\n  },\n  \"state\": \"draft\",\n  \"sortOrder\": 1,\n  \"isFeatured\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/partner/items",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "partner", "items"]
+						},
+						"description": "Create new service item. Requires approved partner status. Item ID is automatically saved to collection variable."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Service Item",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/partner/items/{{partnerItemId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "partner", "items", "{{partnerItemId}}"]
+						},
+						"description": "Get service item details by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Service Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": {\n    \"ar\": \"غرفة ديلوكس محدثة\",\n    \"en\": \"Updated Deluxe Room\"\n  },\n  \"description\": {\n    \"ar\": \"غرفة واسعة ومميزة مع إطلالة بانورامية\",\n    \"en\": \"Spacious and luxurious room with panoramic view\"\n  },\n  \"attributes\": {\n    \"price_per_night\": 600\n  },\n  \"sortOrder\": 2,\n  \"isFeatured\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/partner/items/{{partnerItemId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "partner", "items", "{{partnerItemId}}"]
+						},
+						"description": "Update service item. Cannot update hidden or archived items."
+					},
+					"response": []
+				},
+				{
+					"name": "Change Item State",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"publish\",\n  \"reason\": \"جاهز للنشر\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/partner/items/{{partnerItemId}}/state",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "partner", "items", "{{partnerItemId}}", "state"]
+						},
+						"description": "Change item state. Actions: publish (to active), unpublish (to inactive), archive, restore (to inactive)."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Service Item",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/partner/items/{{partnerItemId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "partner", "items", "{{partnerItemId}}"]
+						},
+						"description": "Delete (archive) service item. Can be restored within 30 days."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	}
+}
