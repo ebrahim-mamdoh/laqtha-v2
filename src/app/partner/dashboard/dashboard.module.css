@@ -17,6 +17,12 @@
   position: sticky;
   top: 0;
   height: 100vh;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden; /* Prevent text overflow during transition */
+}
+
+.sidebarCollapsed {
+  width: 80px;
 }
 
 .mainContent {
@@ -47,6 +53,18 @@
 .userInfo {
   padding: 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: nowrap; /* Prevent wrap */
+  transition: opacity 0.2s;
+}
+
+.sidebarCollapsed .userInfo {
+  padding: 30px 10px; /* Reduced vertical padding */
+  display: flex;
+  justify-content: center;
+}
+
+.sidebarCollapsed .userInfoText {
+  display: none;
 }
 
 .nav {
@@ -72,6 +90,15 @@
 .navItem:hover {
   color: #fff;
   background: rgba(255, 255, 255, 0.03);
+}
+
+.sidebarCollapsed .navItem {
+  justify-content: center;
+  padding: 15px;
+}
+
+.sidebarCollapsed .navLabel {
+  display: none;
 }
 
 .navItemActive {
@@ -101,7 +128,50 @@
     justify-content: center;
     gap: 10px;
     font-weight: 600;
+    transition: all 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
 }
+
+.sidebarCollapsed .logoutBtn {
+    padding: 12px;
+    margin: 20px 10px;
+    width: auto;
+    border-radius: 50%; /* Circle button */
+    aspect-ratio: 1;
+}
+
+.sidebarCollapsed .logoutText {
+  display: none;
+}
+
+.toggleBtn {
+  position: absolute;
+  top: 20px;
+  left: -15px; /* Stick out slightly or overlap border */
+  width: 30px;
+  height: 30px;
+  background: #f500a2;
+  border-radius: 50%;
+  border: 4px solid #0d0115; /* Same as main bg to look cut out */
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 100;
+  transition: transform 0.3s;
+}
+
+.toggleBtn:hover {
+    background: #d900b9;
+}
+
+.sidebarCollapsed .toggleBtn {
+   transform: rotate(180deg);
+}
+
 
 .footerLinks {
     padding: 20px;
@@ -259,4 +329,27 @@
 .colWide {
     flex: 2;
     text-align: right;
+}
+
+@media (max-width: 768px) {
+  .sidebarWrapper {
+    width: 80px; /* Default collapsed on mobile */
+  }
+  .sidebarWrapper:not(.sidebarCollapsed) {
+     width: 280px; 
+     position: fixed; /* Overlay on mobile if expanded? Or just push? User asked to close to icons */
+     /* If user wants "close to icons", then default width 80px is fine, expand to 280px */
+     z-index: 50; 
+  }
+  
+  .navLabel, .logoutText, .userInfoText {
+      display: none; /* Hide by default on mobile if we start collapsed */
+  }
+
+  /* When expanded on mobile, show them */
+  .sidebarExpanded .navLabel, 
+  .sidebarExpanded .logoutText,
+  .sidebarExpanded .userInfoText {
+      display: block; 
+  }
 }

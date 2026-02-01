@@ -54,6 +54,7 @@ const MENU_ITEMS = [
 export default function Sidebar() {
     const pathname = usePathname();
     const router = useRouter();
+    const [isCollapsed, setIsCollapsed] = React.useState(false);
 
     const handleLogout = () => {
         // Clear cookies
@@ -64,17 +65,10 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className={styles.sidebarWrapper}>
-            {/* User Info / Brand - Screenshot implies a dark header or user area? */}
-            <div className={styles.userInfo}>
-                {/* Placeholder for sidebar Header - maybe just spacing or search */}
-                <div style={{ padding: '0 0 20px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '20px' }}>
-                    <div style={{ background: 'rgba(255,255,255,0.1)', height: '40px', borderRadius: '8px', display: 'flex', alignItems: 'center', padding: '0 10px', color: '#888', fontSize: '0.9rem' }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '10px' }}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        لوحة التحكم
-                    </div>
-                </div>
-            </div>
+        <aside className={`${styles.sidebarWrapper} ${isCollapsed ? styles.sidebarCollapsed : ''}`}>
+
+
+
 
             <nav className={styles.nav}>
                 {MENU_ITEMS.map((item) => {
@@ -84,20 +78,27 @@ export default function Sidebar() {
                             key={item.href}
                             href={item.href}
                             className={`${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
+                            title={item.label}
+                            onClick={(e) => {
+                                if (isActive) {
+                                    e.preventDefault();
+                                    setIsCollapsed(!isCollapsed);
+                                }
+                            }}
                         >
                             <span className={styles.navIcon}>{item.icon}</span>
-                            <span>{item.label}</span>
+                            <span className={styles.navLabel}>{item.label}</span>
                         </Link>
                     );
                 })}
             </nav>
 
-            <button onClick={handleLogout} className={styles.logoutBtn}>
+            <button onClick={handleLogout} className={styles.logoutBtn} title="تسجيل الدخول">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                تسجيل الخروج
+                <span className={styles.logoutText}>تسجيل الخروج</span>
             </button>
 
-            <div className={styles.footerLinks}>
+            <div className={`${styles.footerLinks} ${isCollapsed ? styles.navLabel : ''}`}>
                 <Link href="/privacy" className={styles.footerLink}>سياسة الخصوصية</Link>
                 <Link href="/terms" className={styles.footerLink}>شروط الاستخدام</Link>
             </div>
