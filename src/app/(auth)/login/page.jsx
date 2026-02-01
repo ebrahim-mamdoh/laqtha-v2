@@ -58,19 +58,19 @@ export default function LoginPage() {
               isAccountVerified: user.isAccountVerified,
             },
           });
+          console.log("✅ Auth data saved successfully");
+        } else {
+          console.error("❌ auth.setAuth is not available");
         }
 
-        // ✅ التوجيه بناءً على حالة التحقق من الحساب
-        if (!user.isAccountVerified) {
-          router.replace("/chat");
-          return;
-        }
-
-        router.replace("/chat");
+        // ✅ تسجيل الدخول ناجح - التوجيه إلى صفحة الدردشة
+        console.log("✅ Login successful, redirecting to chat...");
+        setSubmitting(false);
+        router.push("/chat");
+        return;
       } catch (err) {
         console.error("❌ login error:", err);
         alert(err.message || "حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
-      } finally {
         setSubmitting(false);
       }
     },
