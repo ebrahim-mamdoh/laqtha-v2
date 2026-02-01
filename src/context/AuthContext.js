@@ -33,6 +33,10 @@ export function AuthProvider({ children }) {
     setUser(preparedUser);
     localStorage.setItem("laqtaha_token", newToken);
     localStorage.setItem("laqtaha_user", JSON.stringify(preparedUser));
+    
+    // ✅ حفظ في الكوكيز للـ middleware
+    document.cookie = `laqtaha_token=${newToken}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
+    document.cookie = `laqtaha_user=${encodeURIComponent(JSON.stringify(preparedUser))}; path=/; max-age=${60 * 60 * 24 * 7}`;
   }
 
   // ✅ تحديث بيانات المستخدم في أي وقت (مثلاً بعد تعديل الاسم أو الصورة)
@@ -61,6 +65,10 @@ export function AuthProvider({ children }) {
     setUser(null);
     localStorage.removeItem("laqtaha_token");
     localStorage.removeItem("laqtaha_user");
+    
+    // ✅ حذف الكوكيز
+    document.cookie = "laqtaha_token=; path=/; max-age=0";
+    document.cookie = "laqtaha_user=; path=/; max-age=0";
   }
 
   // ✅ تحقق اختياري من الجلسة مع الباك إند (يمكن ربطه لاحقًا بـ axios أو React Query)

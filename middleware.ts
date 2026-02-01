@@ -1,10 +1,19 @@
 import { NextResponse } from "next/server";
 
 export function middleware(req) {
-  const token = req.cookies.get("laqtaha_token") || null;
-  const user = req.cookies.get("laqtaha_user")
-    ? JSON.parse(req.cookies.get("laqtaha_user"))
-    : null;
+  const tokenCookie = req.cookies.get("laqtaha_token");
+  const userCookie = req.cookies.get("laqtaha_user");
+  
+  const token = tokenCookie?.value || null;
+  let user = null;
+  
+  try {
+    if (userCookie?.value) {
+      user = JSON.parse(decodeURIComponent(userCookie.value));
+    }
+  } catch (e) {
+    console.error("Failed to parse user cookie:", e);
+  }
 
   const { pathname } = req.nextUrl;
 
