@@ -13,6 +13,8 @@ export default function RegisterPage() {
   const auth = useAuth?.() || null;
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState(null); // ✅ لإظهار الخطأ من السيرفر
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // ✅ regex مطابق للتحقق المستخدم في backend
   const phoneRegex = /^(?:\+9665\d{8}|05\d{8})$/;
@@ -42,7 +44,7 @@ export default function RegisterPage() {
     onSubmit: async (values) => {
       setSubmitting(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/auth/register`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -198,37 +200,65 @@ export default function RegisterPage() {
             </div>
 
             <div className="mb-3">
-              <input
-                name="password"
-                type="password"
-                placeholder="كلمة المرور"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`${styles.input} ${formik.touched.password && formik.errors.password
-                  ? styles.invalid
-                  : ""
-                  }`}
-              />
+              <div className={styles.passwordWrapper}>
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="كلمة المرور"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`${styles.input} ${formik.touched.password && formik.errors.password
+                    ? styles.invalid
+                    : ""
+                    }`}
+                />
+                <button
+                  type="button"
+                  className={styles.toggleBtn}
+                  onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
+                >
+                  {showPassword ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                  )}
+                </button>
+              </div>
               {formik.touched.password && formik.errors.password && (
                 <div className={styles.err}>{formik.errors.password}</div>
               )}
             </div>
 
             <div className="mb-3">
-              <input
-                name="confirmPassword"
-                type="password"
-                placeholder="تأكيد كلمة المرور"
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`${styles.input} ${formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                  ? styles.invalid
-                  : ""
-                  }`}
-              />
+              <div className={styles.passwordWrapper}>
+                <input
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="تأكيد كلمة المرور"
+                  value={formik.values.confirmPassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`${styles.input} ${formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword
+                    ? styles.invalid
+                    : ""
+                    }`}
+                />
+                <button
+                  type="button"
+                  className={styles.toggleBtn}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  tabIndex={-1}
+                >
+                  {showConfirmPassword ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                  )}
+                </button>
+              </div>
               {formik.touched.confirmPassword &&
                 formik.errors.confirmPassword && (
                   <div className={styles.err}>

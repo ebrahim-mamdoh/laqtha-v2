@@ -66,7 +66,7 @@ export function useChatLogic() {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         };
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/chat/send`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chat/send`, {
           method: "POST",
           headers,
           body: JSON.stringify(body),

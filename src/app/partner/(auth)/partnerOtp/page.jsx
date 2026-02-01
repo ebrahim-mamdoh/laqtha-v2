@@ -7,7 +7,8 @@ export const metadata = {
     description: 'أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لإكمال التسجيل.',
 };
 
-export default function OtpPage({ searchParams }) {
+export default async function OtpPage(props) {
+    const searchParams = await props.searchParams;
     const email = searchParams?.email || '';
 
     return (

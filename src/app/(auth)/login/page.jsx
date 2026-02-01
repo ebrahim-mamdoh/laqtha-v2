@@ -25,7 +25,7 @@ export default function LoginPage() {
     onSubmit: async (values) => {
       setSubmitting(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/auth/login`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
