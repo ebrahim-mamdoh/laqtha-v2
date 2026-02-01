@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import styles from '../register.module.css';
 
 const BUSINESS_TYPES = [
@@ -331,8 +332,21 @@ export default function RegisterForm() {
                 className={styles.submitBtn}
                 disabled={loading}
             >
-                {loading ? 'جاري التسجيل...' : 'التالي'}
+                {loading ? 'جاري التسجيل...' : 'انشاء حساب'}
             </button>
+
+            <p style={{ marginTop: '15px', fontSize: '0.8rem', color: '#a0a0b0', textAlign: 'center', lineHeight: '1.5' }}>
+                بمجرد الضغط على زر انشاء الحساب فانت توافق تلقائيا على <Link href="/privacy" className={styles.link}>سياسة الخصوصية</Link> و <Link href="/terms" className={styles.link}>شروط الاستخدام</Link>
+            </p>
+
+            <div className={styles.footerLinks}>
+                <span>
+                    لديك حساب بالفعل؟{' '}
+                    <Link href="/partner/login" className={styles.link}>
+                        تسجيل الدخول
+                    </Link>
+                </span>
+            </div>
         </form>
     );
 }
