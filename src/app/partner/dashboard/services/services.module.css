@@ -1,0 +1,223 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.header {
+  text-align: right;
+  margin-bottom: 20px;
+}
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.subtitle {
+  color: #a0a0b0;
+  font-size: 0.95rem;
+}
+
+/* Stats Cards */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+}
+
+.statLabel {
+  color: #a0a0b0;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+.statValue {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Actions Bar */
+.actionsBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap; /* Handle mobile */
+}
+
+.searchGroup {
+  flex-grow: 1;
+  position: relative;
+  max-width: 400px;
+}
+
+.searchInput {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 15px 12px 40px; /* Space for icon on left/right depending on direction */
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  outline: none;
+  direction: rtl;
+}
+.searchInput:focus {
+  border-color: #f500a2;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a0a0b0;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.primaryBtn {
+  background: #f500a2;
+  color: white;
+}
+.primaryBtn:hover {
+  background: #d900b9;
+}
+
+.secondaryBtn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #a0a0b0; /* Assuming white text or light grey */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.secondaryBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Table */
+.tableContainer {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.tableHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 10px;
+    color: #a0a0b0;
+    font-size: 0.9rem;
+}
+
+.tableRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+    transition: background 0.2s;
+}
+.tableRow:last-child {
+    border-bottom: none;
+}
+.tableRow:hover {
+    background: rgba(255,255,255,0.02);
+}
+
+.col {
+    flex: 1;
+    text-align: center;
+}
+.colWide {
+    flex: 2;
+    text-align: right;
+}
+
+/* Badges */
+.statusBadge {
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 80px;
+}
+.active {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+}
+.pending {
+  background: rgba(241, 196, 15, 0.2);
+  color: #f1c40f; /* Yellowish */
+}
+.rejected {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c; /* Red */
+}
+.suspended {
+    background: rgba(243, 156, 18, 0.2);
+    color: #f39c12; /* Orange */
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.pageBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #a0a0b0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pageBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.pageBtnActive {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}

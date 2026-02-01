@@ -78,6 +78,18 @@
   border-color: #d900b9;
   box-shadow: 0 0 0 1px #d900b9;
   background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Fix Autofill Styles */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover, 
+.input:-webkit-autofill:focus, 
+.input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #22022b inset !important; /* Match adjacent bg or slightly darker/lighter */
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .select {

@@ -16,7 +16,8 @@ const BUSINESS_TYPES = [
 export default function RegisterForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState(''); // Global error
+    const [fieldErrors, setFieldErrors] = useState({}); // Field-level errors
     const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -44,6 +45,13 @@ export default function RegisterForm() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        // Clear specific field error when user types
+        setFieldErrors(prev => ({
+            ...prev,
+            [name]: undefined
+        }));
+
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -54,6 +62,7 @@ export default function RegisterForm() {
         e.preventDefault();
         setLoading(true);
         setError('');
+        setFieldErrors({});
 
         // Prepare API Payload structure
         const payload = {
@@ -73,7 +82,7 @@ export default function RegisterForm() {
                 postalCode: formData.postalCode
             },
             description: formData.description,
-            website: formData.website || undefined // Send undefined if empty to avoid empty string validation issues
+            website: formData.website || undefined
         };
 
         try {
@@ -89,12 +98,16 @@ export default function RegisterForm() {
             const data = await res.json();
 
             if (!res.ok) {
+                // Handle Backend Validation Errors
+                if (data.errors) {
+                    setFieldErrors(data.errors);
+                }
+
+                // Fallback to global message if no field errors or accompanying message
                 throw new Error(data.message || 'فشل التسجيل. يرجى التحقق من البيانات.');
             }
 
             if (data.success) {
-                // Redirect to OTP page
-                // Assuming OTP page is at /partner/otp and takes email as query param
                 router.push(`/partner/partnerOtp?email=${encodeURIComponent(formData.email)}`);
             } else {
                 throw new Error(data.message || 'حدث خطأ غير متوقع');
@@ -107,8 +120,12 @@ export default function RegisterForm() {
         }
     };
 
+    // Helper for error style
+    const errorStyle = { color: '#ff3b30', fontSize: '0.8rem', marginTop: '4px', display: 'block' };
+
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
+            {/* Global Error Display */}
             {error && <div className={styles.error}>{error}</div>}
 
             {/* 1. Account Info */}
@@ -129,6 +146,7 @@ export default function RegisterForm() {
                         onChange={handleChange}
                         required
                     />
+                    {fieldErrors.email && <span style={errorStyle}>{fieldErrors.email}</span>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -157,6 +175,7 @@ export default function RegisterForm() {
                             )}
                         </button>
                     </div>
+                    {fieldErrors.password && <span style={errorStyle}>{fieldErrors.password}</span>}
                     <span className={styles.helperText}>كلمة المرور يجب أن تحتوي على 8 حروف انجليزية، أرقام، ورموز</span>
                 </div>
             </section>
@@ -179,6 +198,7 @@ export default function RegisterForm() {
                         onChange={handleChange}
                         required
                     />
+                    {fieldErrors.businessName && <span style={errorStyle}>{fieldErrors.businessName}</span>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -195,6 +215,7 @@ export default function RegisterForm() {
                             <option key={type.value} value={type.value}>{type.label}</option>
                         ))}
                     </select>
+                    {fieldErrors.businessType && <span style={errorStyle}>{fieldErrors.businessType}</span>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -208,6 +229,7 @@ export default function RegisterForm() {
                         onChange={handleChange}
                         required
                     />
+                    {fieldErrors.description && <span style={errorStyle}>{fieldErrors.description}</span>}
                 </div>
 
                 <div className={styles.inputGroup}>
@@ -220,6 +242,7 @@ export default function RegisterForm() {
                         value={formData.website}
                         onChange={handleChange}
                     />
+                    {fieldErrors.website && <span style={errorStyle}>{fieldErrors.website}</span>}
                 </div>
             </section>
 
@@ -242,6 +265,7 @@ export default function RegisterForm() {
                             onChange={handleChange}
                             required
                         />
+                        {fieldErrors.firstName && <span style={errorStyle}>{fieldErrors.firstName}</span>}
                     </div>
                     <div className={styles.inputGroup}>
                         <label className={styles.label}>الاسم الأخير</label>
@@ -254,6 +278,7 @@ export default function RegisterForm() {
                             onChange={handleChange}
                             required
                         />
+                        {fieldErrors.lastName && <span style={errorStyle}>{fieldErrors.lastName}</span>}
                     </div>
                 </div>
 
@@ -270,6 +295,7 @@ export default function RegisterForm() {
                         dir="ltr"
                         style={{ textAlign: 'right' }}
                     />
+                    {fieldErrors.phone && <span style={errorStyle}>{fieldErrors.phone}</span>}
                 </div>
 
                 <div className={styles.grid}>
@@ -284,6 +310,7 @@ export default function RegisterForm() {
                             onChange={handleChange}
                             required
                         />
+                        {fieldErrors.country && <span style={errorStyle}>{fieldErrors.country}</span>}
                     </div>
                     <div className={styles.inputGroup}>
                         <label className={styles.label}>المدينة</label>
@@ -296,6 +323,7 @@ export default function RegisterForm() {
                             onChange={handleChange}
                             required
                         />
+                        {fieldErrors.city && <span style={errorStyle}>{fieldErrors.city}</span>}
                     </div>
                 </div>
 
@@ -311,6 +339,7 @@ export default function RegisterForm() {
                             onChange={handleChange}
                             required
                         />
+                        {fieldErrors.street && <span style={errorStyle}>{fieldErrors.street}</span>}
                     </div>
                     <div className={styles.inputGroup}>
                         <label className={styles.label}>الرمز البريدي</label>
@@ -323,6 +352,7 @@ export default function RegisterForm() {
                             onChange={handleChange}
                             required
                         />
+                        {fieldErrors.postalCode && <span style={errorStyle}>{fieldErrors.postalCode}</span>}
                     </div>
                 </div>
             </section>

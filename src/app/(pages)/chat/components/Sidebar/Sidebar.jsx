@@ -135,7 +135,7 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
               <img src="/icons/Chat.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}> الأسئلة الشائعة</span>
             </Link>
-             <Link href="/partner" className={styles.SupportLink}>
+             <Link href="/partner/register" className={styles.SupportLink}>
               <img src="/icons/Chat.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}>انضمام كشريك</span>
             </Link>
