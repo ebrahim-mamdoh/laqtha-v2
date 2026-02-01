@@ -66,7 +66,7 @@ export function useChatLogic() {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         };
 
-        const response = await fetch("http://localhost:8000/api/chat/send", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/chat/send`, {
           method: "POST",
           headers,
           body: JSON.stringify(body),
@@ -133,7 +133,7 @@ export function useChatLogic() {
             mediaStreamRef.current.getTracks().forEach((t) => t.stop());
             mediaStreamRef.current = null;
           }
-        } catch {}
+        } catch { }
       };
 
       mr.start();
@@ -290,21 +290,21 @@ export function useChatLogic() {
     // User data
     user,
     token,
-    
+
     // UI State
     isMobile,
     messages,
     input,
     showSuggestions,
     suggestionsUsed,
-    
+
     // Recording State
     isRecording,
     recordError,
-    
+
     // Refs
     messagesEndRef,
-    
+
     // Handlers
     setInput,
     setShowSuggestions,

@@ -12,19 +12,19 @@ export default function Otp() {
   const [email, setEmail] = useState("");
 
   // 📩 قراءة الإيميل من localStorage عند تحميل الصفحة
- useEffect(() => {
-  try {
-    const userData = localStorage.getItem("laqtaha_user");
-    if (userData) {
-      const parsed = JSON.parse(userData);
-      if (parsed.email) setEmail(parsed.email);
-    } else {
-      console.warn("⚠️ لم يتم العثور على laqtaha_user في localStorage");
+  useEffect(() => {
+    try {
+      const userData = localStorage.getItem("laqtaha_user");
+      if (userData) {
+        const parsed = JSON.parse(userData);
+        if (parsed.email) setEmail(parsed.email);
+      } else {
+        console.warn("⚠️ لم يتم العثور على laqtaha_user في localStorage");
+      }
+    } catch (err) {
+      console.error("❌ خطأ في قراءة بيانات المستخدم من localStorage", err);
     }
-  } catch (err) {
-    console.error("❌ خطأ في قراءة بيانات المستخدم من localStorage", err);
-  }
-}, []);
+  }, []);
 
 
   // 🧩 التحكم في حقول OTP
@@ -50,7 +50,7 @@ export default function Otp() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5002/api/auth/verify-account", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-account`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -65,7 +65,7 @@ export default function Otp() {
       if (!res.ok || !data.success) {
         setError(
           data?.message?.ar ||
-            "فشل التحقق من الرمز، تأكد من صحته أو أعد المحاولة لاحقًا."
+          "فشل التحقق من الرمز، تأكد من صحته أو أعد المحاولة لاحقًا."
         );
         return;
       }
@@ -134,7 +134,7 @@ export default function Otp() {
                 {error && <p className={styles.errorText}>{error}</p>}
 
                 <p className={styles.resendText}>لم يصلك الرمز؟</p>
-                <button className={styles.resendLink}onClick={() => alert("سيتم إرسال الكود مجددًا")}
+                <button className={styles.resendLink} onClick={() => alert("سيتم إرسال الكود مجددًا")}
                 >
                   إعادة إرسال رمز التحقق
                 </button>
@@ -148,27 +148,27 @@ export default function Otp() {
                 </button>
               </>
             ) : (
-                <>
+              <>
                 <div className={styles.sccessWrapper}>
-                <h2 className={styles.heading}>
-                  تم التحقق من البريد الإلكتروني بنجاح!!
-                  <br />
-                  لنقم بإعداد التطبيق من أجلك
-                </h2>
+                  <h2 className={styles.heading}>
+                    تم التحقق من البريد الإلكتروني بنجاح!!
+                    <br />
+                    لنقم بإعداد التطبيق من أجلك
+                  </h2>
 
-                <div className={styles.successIcon}>
-                  <img
-                    src="/images/success-check.svg"
-                    alt="Success"
-                    width="300"
-                    height="300"
-                  />
-                </div>
+                  <div className={styles.successIcon}>
+                    <img
+                      src="/images/success-check.svg"
+                      alt="Success"
+                      width="300"
+                      height="300"
+                    />
+                  </div>
 
-                {/* ✅ تم استبدال الـ alert بالتوجيه */}
-                <button onClick={handleNext} className={styles.primaryBtn}>
-                  التالي
-                </button>
+                  {/* ✅ تم استبدال الـ alert بالتوجيه */}
+                  <button onClick={handleNext} className={styles.primaryBtn}>
+                    التالي
+                  </button>
                 </div>
               </>
             )}

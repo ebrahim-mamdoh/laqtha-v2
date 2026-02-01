@@ -25,7 +25,7 @@ export default function LoginPage() {
     onSubmit: async (values) => {
       setSubmitting(true);
       try {
-        const res = await fetch("http://localhost:8000/api/auth/login", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
@@ -38,7 +38,7 @@ export default function LoginPage() {
         if (!res.ok || !data.success) {
           throw new Error(data?.message?.ar || "فشل تسجيل الدخول، تحقق من البيانات");
         }
-        
+
         // ✅ استخراج البيانات المطلوبة من الاستجابة
         const { user, accessToken, refreshToken, timezone, currency } = data.data;
 
@@ -112,9 +112,8 @@ export default function LoginPage() {
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`${styles.input} ${
-                    formik.touched.email && formik.errors.email ? styles.invalid : ""
-                  }`}
+                  className={`${styles.input} ${formik.touched.email && formik.errors.email ? styles.invalid : ""
+                    }`}
                 />
                 {formik.touched.email && formik.errors.email && (
                   <div className={styles.err}>{formik.errors.email}</div>
@@ -129,9 +128,8 @@ export default function LoginPage() {
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`${styles.input} ${
-                    formik.touched.password && formik.errors.password ? styles.invalid : ""
-                  }`}
+                  className={`${styles.input} ${formik.touched.password && formik.errors.password ? styles.invalid : ""
+                    }`}
                 />
                 {formik.touched.password && formik.errors.password && (
                   <div className={styles.err}>{formik.errors.password}</div>

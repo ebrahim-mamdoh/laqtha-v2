@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./register.module.css";
-import axios from "axios"; // ✅ أضف هذا
+
 import { useAuth } from "@/context/AuthContext";
 
 export default function RegisterPage() {
@@ -39,58 +39,58 @@ export default function RegisterPage() {
         .required("رقم الهاتف مطلوب"),
     }),
 
- onSubmit: async (values) => {
-  setSubmitting(true);
-  try {
-    const res = await fetch("http://localhost:8000/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: `${values.firstName} ${values.lastName}`,
-        email: values.email,
-        password: values.password,
-        phone: "055487921", // مؤقتاً
-        role: "customer",
-      }),
-    });
-
-    const data = await res.json();
-    console.log("REGISTER RESPONSE:", data);
-
-    if (!res.ok || data.success === false) {
-      // ✅ لو فيه قائمة أخطاء من السيرفر (errors array)
-      if (data.errors && Array.isArray(data.errors)) {
-        const newErrors = {};
-        data.errors.forEach((err) => {
-          newErrors[err.field] = err.message;
+    onSubmit: async (values) => {
+      setSubmitting(true);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/auth/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: `${values.firstName} ${values.lastName}`,
+            email: values.email,
+            password: values.password,
+            phone: "055487921", // مؤقتاً
+            role: "customer",
+          }),
         });
 
-        // نحدّث أخطاء Formik لعرضها تحت كل حقل
-        formik.setErrors(newErrors);
-      } else {
-        // أو نعرض رسالة عامة لو مفيش تفاصيل حقول
-        alert(data.message?.ar || "حدث خطأ أثناء التسجيل");
+        const data = await res.json();
+        console.log("REGISTER RESPONSE:", data);
+
+        if (!res.ok || data.success === false) {
+          // ✅ لو فيه قائمة أخطاء من السيرفر (errors array)
+          if (data.errors && Array.isArray(data.errors)) {
+            const newErrors = {};
+            data.errors.forEach((err) => {
+              newErrors[err.field] = err.message;
+            });
+
+            // نحدّث أخطاء Formik لعرضها تحت كل حقل
+            formik.setErrors(newErrors);
+          } else {
+            // أو نعرض رسالة عامة لو مفيش تفاصيل حقول
+            alert(data.message?.ar || "حدث خطأ أثناء التسجيل");
+          }
+          return;
+        }
+
+        // ✅ نجاح التسجيل
+        if (auth && typeof auth.setAuth === "function") {
+          auth.setAuth({ token: "server-token", user: data.data });
+        } else {
+          localStorage.setItem("laqtaha_token", "server-token");
+          localStorage.setItem("laqtaha_user", JSON.stringify(data.data));
+        }
+
+        alert(data.message?.ar || "تم التسجيل بنجاح!");
+        router.replace("/otp");
+      } catch (err) {
+        console.error("REGISTER ERROR:", err);
+        alert("فشل الاتصال بالخادم أو حدث خطأ غير متوقع");
+      } finally {
+        setSubmitting(false);
       }
-      return;
-    }
-
-    // ✅ نجاح التسجيل
-    if (auth && typeof auth.setAuth === "function") {
-      auth.setAuth({ token: "server-token", user: data.data });
-    } else {
-      localStorage.setItem("laqtaha_token", "server-token");
-      localStorage.setItem("laqtaha_user", JSON.stringify(data.data));
-    }
-
-    alert(data.message?.ar || "تم التسجيل بنجاح!");
-    router.replace("/otp");
-  } catch (err) {
-    console.error("REGISTER ERROR:", err);
-    alert("فشل الاتصال بالخادم أو حدث خطأ غير متوقع");
-  } finally {
-    setSubmitting(false);
-  }
-},
+    },
 
   });
 
@@ -132,11 +132,10 @@ export default function RegisterPage() {
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`${styles.input} ${
-                    formik.touched.firstName && formik.errors.firstName
-                      ? styles.invalid
-                      : ""
-                  }`}
+                  className={`${styles.input} ${formik.touched.firstName && formik.errors.firstName
+                    ? styles.invalid
+                    : ""
+                    }`}
                 />
                 {formik.touched.firstName && formik.errors.firstName && (
                   <div className={styles.err}>{formik.errors.firstName}</div>
@@ -150,11 +149,10 @@ export default function RegisterPage() {
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`${styles.input} ${
-                    formik.touched.lastName && formik.errors.lastName
-                      ? styles.invalid
-                      : ""
-                  }`}
+                  className={`${styles.input} ${formik.touched.lastName && formik.errors.lastName
+                    ? styles.invalid
+                    : ""
+                    }`}
                 />
                 {formik.touched.lastName && formik.errors.lastName && (
                   <div className={styles.err}>{formik.errors.lastName}</div>
@@ -170,11 +168,10 @@ export default function RegisterPage() {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`${styles.input} ${
-                  formik.touched.email && formik.errors.email
-                    ? styles.invalid
-                    : ""
-                }`}
+                className={`${styles.input} ${formik.touched.email && formik.errors.email
+                  ? styles.invalid
+                  : ""
+                  }`}
               />
               {formik.touched.email && formik.errors.email && (
                 <div className={styles.err}>{formik.errors.email}</div>
@@ -190,11 +187,10 @@ export default function RegisterPage() {
                 value={formik.values.phone}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`${styles.input} ${
-                  formik.touched.phone && formik.errors.phone
-                    ? styles.invalid
-                    : ""
-                }`}
+                className={`${styles.input} ${formik.touched.phone && formik.errors.phone
+                  ? styles.invalid
+                  : ""
+                  }`}
               />
               {formik.touched.phone && formik.errors.phone && (
                 <div className={styles.err}>{formik.errors.phone}</div>
@@ -209,11 +205,10 @@ export default function RegisterPage() {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`${styles.input} ${
-                  formik.touched.password && formik.errors.password
-                    ? styles.invalid
-                    : ""
-                }`}
+                className={`${styles.input} ${formik.touched.password && formik.errors.password
+                  ? styles.invalid
+                  : ""
+                  }`}
               />
               {formik.touched.password && formik.errors.password && (
                 <div className={styles.err}>{formik.errors.password}</div>
@@ -228,12 +223,11 @@ export default function RegisterPage() {
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`${styles.input} ${
-                  formik.touched.confirmPassword &&
+                className={`${styles.input} ${formik.touched.confirmPassword &&
                   formik.errors.confirmPassword
-                    ? styles.invalid
-                    : ""
-                }`}
+                  ? styles.invalid
+                  : ""
+                  }`}
               />
               {formik.touched.confirmPassword &&
                 formik.errors.confirmPassword && (
@@ -259,16 +253,16 @@ export default function RegisterPage() {
             </button>
 
             <p className={`${styles.hint} text-center`} style={{ marginTop: 8 }}>
-                 لديك حساب بالفعل؟{" "}
-                <button
-                  type="button"
-                  className={styles.linkBtn}
-                  onClick={() => router.push("/login")}
-                >
-                  سجل الدخول
-                </button>
-              </p>
-              
+              لديك حساب بالفعل؟{" "}
+              <button
+                type="button"
+                className={styles.linkBtn}
+                onClick={() => router.push("/login")}
+              >
+                سجل الدخول
+              </button>
+            </p>
+
 
             <p className={`${styles.terms} text-center`}>
               بالضغط على إنشاء الحساب فأنت توافق تلقائياً على{" "}
