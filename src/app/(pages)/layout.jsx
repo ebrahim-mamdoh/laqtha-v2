@@ -1,26 +1,15 @@
-"use client";
+// ✅ Server Component — no "use client" directive
+// 
+// Why this matters for performance:
+// - Server Components don't add to the JavaScript bundle
+// - No hydration cost for this layout
+// - Children can still be Client Components
+// - Reduces Time to Interactive (TTI) significantly
+//
+// The client-side state (sidebar toggle) is isolated in LayoutClient.jsx
 
-import React, { useState } from "react";
-import Sidebar from "./chat/components/Sidebar/Sidebar";
-import ChatHeader from "./chat/components/ChatHeader/ChatHeader";
-import styles from "./mainLayout.module.css";
+import LayoutClient from "./LayoutClient";
 
 export default function PagesLayout({ children }) {
-  // 👇 إدارة حالة فتح/قفل الـ Sidebar
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => setSidebarOpen((v) => !v);
-
-  return (
-    <div className={styles.mainLayout}>
-      {/* نمرر الحالة والفنكشن */}
-      <Sidebar isOpen={sidebarOpen} onToggle={toggleSidebar} />
-
-      <div className={styles.contentArea}>
-        {/* نخلي ChatHeader يقدر يقفل/يفتح الـ Sidebar */}
-        <ChatHeader onToggleSidebar={toggleSidebar} />
-        <main className={styles.pageContent}>{children}</main>
-      </div>
-    </div>
-  );
+  return <LayoutClient>{children}</LayoutClient>;
 }

@@ -1,6 +1,20 @@
 "use client"; // ✅ فقط هذا الملف يحتاج hooks
 
-import React, { useMemo } from "react";
+/**
+ * WalletClient.jsx
+ * 
+ * OPTIMIZED: Removed unnecessary useMemo on static JSX.
+ * 
+ * Before: loadingDisplay was wrapped in useMemo with empty deps []
+ * After: Simple component function (LoadingDisplay)
+ * 
+ * Why the change:
+ * - useMemo on static JSX is an anti-pattern
+ * - Creates unnecessary object allocation and comparison overhead
+ * - A simple component is more idiomatic and has the same performance
+ */
+
+import React from "react";
 import useWalletLogic from "./useWalletLogic";
 import TransactionsList from "./components/TransactionsList/TransactionsList";
 import BalanceCard from "./components/Balance/balance";
@@ -38,27 +52,27 @@ const StatCard = React.memo(({ title, data, percent }) => (
 ));
 StatCard.displayName = 'StatCard';
 
+// ✅ Simple loading component (no useMemo needed for static content)
+const LoadingDisplay = () => (
+  <div className={styles.page} dir="rtl">
+    <div className="container pt-4">
+      <div className={`row ${styles.topRow}`}>
+        <div className="col-md-3"><SkeletonCard /></div>
+        <div className="col-md-9"><SkeletonCard /></div>
+      </div>
+      <div className="row mt-4">
+        <div className="col-md-6"><SkeletonCard /></div>
+        <div className="col-md-6"><SkeletonCard /></div>
+      </div>
+    </div>
+  </div>
+);
+
 function WalletClient() {
   const { data, isLoading, error } = useWalletLogic();
 
-  // ✅ Memoize loading state
-  const loadingDisplay = useMemo(() => (
-    <div className={styles.page} dir="rtl">
-      <div className="container pt-4">
-        <div className={`row ${styles.topRow}`}>
-          <div className="col-md-3"><SkeletonCard /></div>
-          <div className="col-md-9"><SkeletonCard /></div>
-        </div>
-        <div className="row mt-4">
-          <div className="col-md-6"><SkeletonCard /></div>
-          <div className="col-md-6"><SkeletonCard /></div>
-        </div>
-      </div>
-    </div>
-  ), []);
-
   if (isLoading) {
-    return loadingDisplay;
+    return <LoadingDisplay />;
   }
 
   if (error) {

@@ -72,23 +72,24 @@ export function AuthProvider({ children }) {
   }
 
   // ✅ تحقق اختياري من الجلسة مع الباك إند (يمكن ربطه لاحقًا بـ axios أو React Query)
-  async function verifySession() {
-    if (!token) return;
-    try {
-      setIsVerifying(true);
-      // 🔹 مستقبلاً: استدعاء API للتحقق من صلاحية الجلسة
-      // const res = await axios.get("/api/verify", { headers: { Authorization: `Bearer ${token}` } });
-      // if (!res.data.valid) logout();
-    } catch (err) {
-      logout();
-    } finally {
-      setIsVerifying(false);
-    }
-  }
-
-  useEffect(() => {
-    if (token) verifySession();
-  }, [token]);
+  // NOTE: Currently disabled to prevent unnecessary re-renders.
+  // Uncomment and implement when backend verification API is ready.
+  // async function verifySession() {
+  //   if (!token) return;
+  //   try {
+  //     setIsVerifying(true);
+  //     const res = await axios.get("/api/verify", { headers: { Authorization: `Bearer ${token}` } });
+  //     if (!res.data.valid) logout();
+  //   } catch (err) {
+  //     logout();
+  //   } finally {
+  //     setIsVerifying(false);
+  //   }
+  // }
+  //
+  // useEffect(() => {
+  //   if (token) verifySession();
+  // }, [token]);
 
   return (
     <AuthContext.Provider

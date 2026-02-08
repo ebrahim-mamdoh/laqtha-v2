@@ -1,7 +1,7 @@
 // sidebar.jsx
 "use client";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -23,13 +23,21 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
   const router = useRouter();
   const { user, logout } = useAuth(); // ✅ استدعاء user من الكونتكست
   const queryClient = useQueryClient(); // ✅ Get query client for prefetching
+  const prefetchTimeoutRef = useRef(null); // ✅ Debounce ref for prefetch
 
-  // ✅ Prefetch handler with useCallback for performance
+  // ✅ Debounced prefetch handler to prevent excessive calls on rapid hover
   const handlePrefetch = useCallback((href) => {
-    const prefetchFn = prefetchByRoute[href];
-    if (prefetchFn) {
-      prefetchFn(queryClient);
+    // Clear any pending prefetch
+    if (prefetchTimeoutRef.current) {
+      clearTimeout(prefetchTimeoutRef.current);
     }
+    // Debounce by 150ms
+    prefetchTimeoutRef.current = setTimeout(() => {
+      const prefetchFn = prefetchByRoute[href];
+      if (prefetchFn) {
+        prefetchFn(queryClient);
+      }
+    }, 150);
   }, [queryClient]);
 
   const handleLogout = async (e) => {
