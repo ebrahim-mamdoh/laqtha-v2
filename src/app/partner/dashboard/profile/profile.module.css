@@ -1,0 +1,195 @@
+.pageContainer {
+  padding: 20px;
+  direction: rtl; /* Should inherit from body usually, but explicit is fine */
+  color: var(--color-white, #fff);
+  font-family: var(--font-main, sans-serif);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 992px) {
+  .layoutGrid {
+    grid-template-columns: 1fr 3.5fr; /* Sidebar (Right/Start) Narrow, Content (Left/End) Wide */
+  }
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+/* Sections in the Left Column */
+.sectionCard {
+  background: #15091c;
+  border-radius: var(--radius-main, 14px);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+/* Form Styles */
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm, 8px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--color-accent, #FF00C8);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(255, 0, 200, 0.2);
+}
+
+.input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Right Column Profile Card */
+.profileCard {
+  background: #15091c;
+  border-radius: var(--radius-main, 14px);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: sticky;
+  top: 20px;
+}
+
+.avatarWrapper {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  background: var(--color-bg-2, #180626);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.avatarIcon {
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cameraButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--color-white, #fff);
+  color: var(--color-deep, #120616);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+
+.cameraButton:hover {
+  transform: scale(1.1);
+}
+
+.profileName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.profileMetaBox {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm, 8px);
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.saveButton {
+  width: 100%;
+  background: var(--color-accent, #FF00C8); /* Purple/Pink accent */
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: var(--radius-md, 12px);
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.saveButton:hover {
+  background: #d900ab;
+}
+
+.saveButton:active {
+  transform: translateY(1px);
+}
+
+.saveButton:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
