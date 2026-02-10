@@ -5,12 +5,12 @@ import ResetPasswordForm from './_components/ResetPasswordForm.client';
 import styles from '../../login/login.module.css';
 
 export const metadata = {
-    title: 'تعيين كلمة المرور الجديدة | لقطها',
+    title: 'تعيين | لقطها',
     description: 'قم بتعيين كلمة مرور جديدة لحسابك.',
 };
 
-export default function ConfirmResetPage({ searchParams }) {
-    const email = searchParams?.email || '';
+export default async function ConfirmResetPage({ searchParams }) {
+    const { email } = await searchParams;
 
     return (
         <div className={styles.pageWrapper}>
