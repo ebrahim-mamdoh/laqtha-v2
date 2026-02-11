@@ -1,0 +1,208 @@
+.pageContainer {
+  padding: 20px;
+  direction: rtl;
+  color: var(--color-white, #fff);
+  font-family: var(--font-main, sans-serif);
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.titleGroup {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.subTitle {
+  font-size: 1rem;
+  color: #ccc;
+  font-weight: normal;
+}
+
+/* Tabs */
+.tabsContainer {
+  display: flex;
+  justify-content: flex-start; /* Align Right in RTL */
+  gap: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 1rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  position: relative;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tabActive {
+  color: #fff;
+  font-weight: bold;
+}
+
+.tabActive::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ccc;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Comment Card */
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.commentCard {
+  background: #15091c;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.commentCard::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 15%;
+    bottom: 15%;
+    width: 4px;
+    background: #fff;
+    border-radius: 4px 0 0 4px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: flex-start; /* Align Right in RTL */
+  align-items: center;
+  gap: 12px;
+}
+
+.userInfo {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.userName {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.ratingInfo {
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+.stars {
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.userAvatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.commentBody {
+    text-align: right;
+    color: #ddd;
+    font-size: 0.95rem;
+    padding-right: 60px;
+}
+
+.cardActions {
+    display: flex;
+    justify-content: flex-end; /* Align Left in RTL */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.actionBtn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.05);
+    color: #ccc;
+    padding: 8px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    width: 100px;
+    text-align: center;
+}
+
+.actionBtn:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 40px;
+    direction: ltr; /* Keeping buttons LTR for standard logic */
+}
+
+.pageBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.05);
+    color: #888;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.pageBtnActive {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border-color: rgba(255,255,255,0.2);
+}

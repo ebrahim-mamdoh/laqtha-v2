@@ -3,7 +3,7 @@ import styles from './dashboard.module.css';
 import Sidebar from './_components/Sidebar.client';
 
 export const metadata = {
-    title: 'لوحة التحكم - شريك لقطة',
+    title: 'لوحة التحكم - شريك لقطها',
     description: 'لوحة تحكم الشركاء لادارة الخدمات والطلبات'
 };
 
@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }) {
                         </div>
                     </div>
 
-                    <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>شريك لقطة</div>
+                    <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>شريك لقطها</div>
                 </header>
 
                 <div className={styles.pageContent}>

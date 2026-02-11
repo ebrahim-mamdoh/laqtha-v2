@@ -3,7 +3,7 @@ import styles from './services.module.css';
 import ServicesFilter from './_components/ServicesFilter.client';
 
 export const metadata = {
-    title: 'خدماتي | شريك لقطة',
+    title: 'خدماتي | شريك لقطها',
     description: 'ادارة ومتابعة الخدمات'
 };
 
