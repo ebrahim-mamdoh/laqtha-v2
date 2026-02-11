@@ -28,6 +28,11 @@
   color: #888;
 }
 
+.filterWrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .filterButton {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -40,11 +45,64 @@
   gap: 10px;
   transition: background 0.2s;
   font-family: inherit;
+  font-size: 1rem;
 }
 
 .filterButton:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+
+/* Filter Popover */
+.filterPopover {
+  position: absolute;
+  top: 100%;
+  left: 0; 
+  /* In RTL left is visually to the left in LTR perspective, but here it aligns with the button. 
+     If we want alignment to the left edge of the button (which is on the left side of page in RTL usually? No. 
+     Wait. RTL layout: Start is Right. Usually filter button is on Left side? 
+     Let's look at the header: "titleGroup" text-align: right. "justify-content: space-between".
+     So Title on Right, Filter Button on Left.
+     So popover should align to left: 0. CORRECT. */
+  margin-top: 10px;
+  background: #180626; 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  width: 380px; /* Slightly wider to fit buttons */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 10px;
+}
+
+.filterOptionBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: #ccc;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1 1 calc(50% - 10px); /* Two columns mostly */
+  text-align: center;
+}
+
+.filterOptionBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.filterOptionActive {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
 
 /* Summary Cards Grid */
 .summaryGrid {
@@ -170,7 +228,7 @@
 }
 
 .statusPending {
-  background: rgba(128, 0, 128, 0.2); /* Using a purple/pinkish generic for pending based on image */
+  background: rgba(128, 0, 128, 0.2); 
   color: #ff00c8;
   border: 1px solid rgba(255, 0, 200, 0.2);
 }
