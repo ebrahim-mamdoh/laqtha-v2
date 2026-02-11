@@ -39,6 +39,7 @@
   align-items: center;
   gap: 10px;
   transition: background 0.2s;
+  font-family: inherit;
 }
 
 .filterButton:hover {
@@ -72,10 +73,6 @@
   transition: transform 0.2s;
 }
 
-.summaryCard:hover {
-  transform: translateY(-2px);
-}
-
 .cardHeader {
   display: flex;
   justify-content: space-between;
@@ -97,110 +94,42 @@
   color: #00ff88;
 }
 
-.growthNegative {
-  color: #ff0055;
-}
-
 .cardValue {
   font-size: 2.5rem;
   font-weight: bold;
   margin: 10px 0;
   color: #fff;
+  direction: ltr; /* Numbers usually look better LTR or just ensure they display correctly */
+  text-align: right;
 }
 
-.cardFooter {
-  font-size: 0.85rem;
-  color: #888;
-}
-
-
-/* Main 2-Column layout */
-.contentGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-@media (min-width: 992px) {
-  .contentGrid {
-    grid-template-columns: 1.5fr 1fr ; /* Chart narrower, Table wider */
-  }
-}
-
-.chartSection {
-  background: #15091c;
-  border-radius: var(--radius-main, 14px);
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  flex-direction: column;
-  min-height: 400px;
-}
-
-.sectionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.sectionTitle {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #fff;
-}
-.sectionSub {
-  font-size: 0.9rem;
-  color: #888;
-  margin-top: 5px;
-}
 
 /* Orders Table Section */
-.ordersSection {
+.tableSection {
   background: #15091c;
   border-radius: var(--radius-main, 14px);
-  padding: 24px;
+  padding: 20px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   overflow-x: auto;
 }
 
-.tableHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.tableActions {
-    display: flex;
-    gap: 10px;
-}
-
-.filterIconBtn {
-  background: rgba(255,255,255,0.05);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: inherit;
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
 }
 
 .table {
   width: 100%;
   border-collapse: separate; 
   border-spacing: 0 10px;
-  min-width: 600px;
+  min-width: 900px;
 }
 
 .table th {
   text-align: right;
   color: #ccc;
   font-weight: normal;
-  padding: 10px;
+  padding: 15px 10px;
   font-size: 0.9rem;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -209,6 +138,8 @@
   padding: 15px 10px;
   background: rgba(255, 255, 255, 0.02);
   font-size: 0.95rem;
+  vertical-align: middle;
+  color: #fff;
 }
 
 .table tr td:first-child {
@@ -218,28 +149,60 @@
   border-radius: 10px 0 0 10px;
 }
 
+/* Checkbox specific */
+.checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #FF00C8;
+  cursor: pointer;
+}
+
+/* Badge colors */
 .statusBadge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 0.8rem;
-  text-align: center;
-  min-width: 100px;
+  min-width: 90px;
   font-weight: bold;
 }
 
-/* Badge colors matching image */
-.statusConfirmed {
-  background: rgba(181, 23, 158, 0.2); /* Purple/Pinkish */
-  color: #d633c7; 
-}
-
 .statusPending {
-  background: rgba(23, 90, 181, 0.2); /* Blue */
-  color: #3378d6;
+  background: rgba(128, 0, 128, 0.2); /* Using a purple/pinkish generic for pending based on image */
+  color: #ff00c8;
+  border: 1px solid rgba(255, 0, 200, 0.2);
 }
 
 .statusCompleted {
-  background: rgba(181, 23, 23, 0.2); /* Redish */
+  background: rgba(181, 23, 23, 0.2); 
   color: #d63333;
+  border: 1px solid rgba(181, 23, 23, 0.2);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.actionBtn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #888;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
 }

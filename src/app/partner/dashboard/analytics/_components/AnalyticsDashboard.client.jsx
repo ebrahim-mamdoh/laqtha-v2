@@ -54,22 +54,11 @@ export default function AnalyticsDashboard({ initialData }) {
                     <div className={styles.cardValue}>{summary.totalPayments} <span style={{ fontSize: '1rem' }}>رس</span></div>
                     <div className={styles.cardFooter}>المعاملات المالية داخل التطبيق</div>
                 </div>
-            </div>
+            </div>  
 
             {/* Chart and Orders Layout */}
             <div className={styles.contentGrid}>
-                {/* Financial Chart Section */}
-                <div className={styles.chartSection}>
-                    <div className={styles.sectionHeader}>
-                        <div>
-                            <div className={styles.sectionTitle}>المعاملات المالية</div>
-                            <div className={styles.sectionSub}>الواردات والارباح في اخر 6 اشهر</div>
-                        </div>
-                    </div>
-                    <RevenueChart data={chartData} />
-                </div>
-
-                {/* Recent Orders Section */}
+ {/* Recent Orders Section */}
                 <div className={styles.ordersSection}>
                     <div className={styles.tableHeader}>
                         <div className={styles.sectionTitle}>الطلبات الاخيرة</div>
@@ -113,6 +102,20 @@ export default function AnalyticsDashboard({ initialData }) {
                         </table>
                     </div>
                 </div>
+                
+                {/* Financial Chart Section */}
+                <div className={styles.chartSection}>
+                    <div className={styles.sectionHeader}>
+                        <div>
+                            <div className={styles.sectionTitle}>المعاملات المالية</div>
+                            <div className={styles.sectionSub}>الواردات والارباح في اخر 6 اشهر</div>
+                        </div>
+                    </div>
+                    <RevenueChart data={chartData} />
+                </div>
+
+               
+
             </div>
         </div>
     );
