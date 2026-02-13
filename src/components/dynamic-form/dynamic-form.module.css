@@ -1,0 +1,169 @@
+.fieldContainer {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.input:focus {
+  border-color: #d633c7; /* Primary accent color */
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.inputError {
+  border-color: #ff4d4f;
+}
+
+.errorText {
+  color: #ff4d4f;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.helpText {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 4px;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  width: 20px;
+  height: 20px;
+  accent-color: #d633c7;
+  cursor: pointer;
+}
+
+.select {
+  width: 100%;
+  padding: 12px;
+  background: #1e1e2d; /* Darker bg for select options visibility */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: #d633c7;
+  outline: none;
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Complex Field Layouts */
+.complexFieldRow {
+  display: flex;
+  gap: 15px;
+}
+
+.complexFieldItem {
+  flex: 1;
+}
+
+/* Form Layout */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fullWidth {
+    grid-column: span 2;
+  }
+}
+
+.submitBtn {
+  background: #d633c7;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: background 0.2s;
+}
+
+.submitBtn:hover {
+  background: #b5179e;
+}
+
+.draftBtn {
+  background: transparent;
+  color: #ccc;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+
+.draftBtn:hover {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+}
+
+.requiredMark {
+  color: #ff4d4f;
+  margin-right: 4px;
+}
+
+/* RTL Specifics handled by global dir=rtl context but good to ensure text alignment */
+.rtlInput {
+  text-align: right;
+  direction: rtl;
+}
+
+.fileInput {
+    padding: 20px;
+    border: 2px dashed rgba(255,255,255,0.1);
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(255,255,255,0.02);
+}
+.fileInput:hover {
+    border-color: #d633c7;
+    background: rgba(255,255,255,0.05);
+}
