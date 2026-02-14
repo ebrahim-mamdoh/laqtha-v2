@@ -5,13 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../register.module.css';
 
-const BUSINESS_TYPES = [
-    { value: 'hotel', label: 'فندق (Hotel)' },
-    { value: 'restaurant', label: 'مطعم (Restaurant)' },
-    { value: 'cafe', label: 'مقهى (Cafe)' },
-    { value: 'resort', label: 'منتجع (Resort)' },
-    { value: 'other', label: 'أخرى (Other)' },
-];
+
 
 export default function RegisterForm() {
     const router = useRouter();
@@ -42,6 +36,24 @@ export default function RegisterForm() {
         street: '',
         postalCode: ''
     });
+
+    const [businessTypes, setBusinessTypes] = useState([]);
+
+    React.useEffect(() => {
+        const fetchBusinessTypes = async () => {
+            try {
+                const response = await fetch('http://188.137.245.42:5002/api/service-types');
+                const result = await response.json();
+                if (result.success && Array.isArray(result.data)) {
+                    setBusinessTypes(result.data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch business types:', error);
+            }
+        };
+
+        fetchBusinessTypes();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -211,9 +223,13 @@ export default function RegisterForm() {
                         required
                     >
                         <option value="" disabled>اختر المجال</option>
-                        {BUSINESS_TYPES.map(type => (
-                            <option key={type.value} value={type.value}>{type.label}</option>
-                        ))}
+                        {businessTypes.length > 0 ? (
+                            businessTypes.map(type => (
+                                <option key={type.key} value={type.key}>{type.label}</option>
+                            ))
+                        ) : (
+                            <option value="" disabled>جاري تحميل المجالات...</option>
+                        )}
                     </select>
                     {fieldErrors.businessType && <span style={errorStyle}>{fieldErrors.businessType}</span>}
                 </div>
