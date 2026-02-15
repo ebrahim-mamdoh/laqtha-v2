@@ -80,7 +80,7 @@ export default function OtpForm({ email }) {
         setSuccess('');
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/partners/verify-otp`;
+            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/partners/verify-otp`;
             const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: {

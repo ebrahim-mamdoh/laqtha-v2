@@ -21,7 +21,7 @@ export default function RegisterForm() {
 
         // Business
         businessName: '',
-        businessType: '',
+        serviceTypeKey: '',
         description: '',
         website: '',
 
@@ -37,22 +37,22 @@ export default function RegisterForm() {
         postalCode: ''
     });
 
-    const [businessTypes, setBusinessTypes] = useState([]);
+    const [serviceTypes, setServiceTypes] = useState([]);
 
     React.useEffect(() => {
-        const fetchBusinessTypes = async () => {
+        const fetchServiceTypes = async () => {
             try {
-                const response = await fetch('http://188.137.245.42:5002/api/service-types');
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/service-types`);
                 const result = await response.json();
                 if (result.success && Array.isArray(result.data)) {
-                    setBusinessTypes(result.data);
+                    setServiceTypes(result.data);
                 }
             } catch (error) {
-                console.error('Failed to fetch business types:', error);
+                console.error('Failed to fetch service types:', error);
             }
         };
 
-        fetchBusinessTypes();
+        fetchServiceTypes();
     }, []);
 
     const handleChange = (e) => {
@@ -81,7 +81,7 @@ export default function RegisterForm() {
             email: formData.email,
             password: formData.password,
             businessName: formData.businessName,
-            businessType: formData.businessType,
+            serviceTypeKey: formData.serviceTypeKey,
             contactPerson: {
                 firstName: formData.firstName,
                 lastName: formData.lastName
@@ -98,7 +98,7 @@ export default function RegisterForm() {
         };
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/partners/register`;
+            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/partners/register`;
             const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
@@ -183,7 +183,7 @@ export default function RegisterForm() {
                             {showPassword ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                             ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             )}
                         </button>
                     </div>
@@ -216,22 +216,22 @@ export default function RegisterForm() {
                 <div className={styles.inputGroup}>
                     <label className={styles.label}>مجال المشروع</label>
                     <select
-                        name="businessType"
+                        name="serviceTypeKey"
                         className={`${styles.input} ${styles.select}`}
-                        value={formData.businessType}
+                        value={formData.serviceTypeKey}
                         onChange={handleChange}
                         required
                     >
                         <option value="" disabled>اختر المجال</option>
-                        {businessTypes.length > 0 ? (
-                            businessTypes.map(type => (
+                        {serviceTypes.length > 0 ? (
+                            serviceTypes.map(type => (
                                 <option key={type.key} value={type.key}>{type.label}</option>
                             ))
                         ) : (
                             <option value="" disabled>جاري تحميل المجالات...</option>
                         )}
                     </select>
-                    {fieldErrors.businessType && <span style={errorStyle}>{fieldErrors.businessType}</span>}
+                    {fieldErrors.serviceTypeKey && <span style={errorStyle}>{fieldErrors.serviceTypeKey}</span>}
                 </div>
 
                 <div className={styles.inputGroup}>

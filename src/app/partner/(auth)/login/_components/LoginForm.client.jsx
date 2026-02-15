@@ -31,7 +31,7 @@ export default function LoginForm() {
         setError('');
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/partners/login`;
+            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/partners/login`;
             const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
