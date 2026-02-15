@@ -6,6 +6,9 @@ import Link from 'next/link';
 import Cookie from 'js-cookie'; // Assuming js-cookie is installed or we use standard document.cookie
 import styles from '../login.module.css';
 
+
+import apiClient from '@/lib/api';
+
 export default function LoginForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -31,20 +34,8 @@ export default function LoginForm() {
         setError('');
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/partners/login`;
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.message || 'فشل تسجيل الدخول. تأكد من صحة البيانات.');
-            }
+            const response = await apiClient.post('/partners/login', formData);
+            const data = response.data;
 
             if (data.success && data.data?.tokens) {
                 // Securely store tokens (HttpOnly cookies would be better server-side, but client-side is often needed for simple JWT flows)
@@ -71,7 +62,8 @@ export default function LoginForm() {
 
         } catch (err) {
             console.error(err);
-            setError(err.message);
+            const errorMessage = err.response?.data?.message || err.message || 'فشل تسجيل الدخول. تأكد من صحة البيانات.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

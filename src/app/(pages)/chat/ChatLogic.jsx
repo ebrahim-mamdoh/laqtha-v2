@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
 import Loading from "./components/loading/Loading";
+import apiClient from '@/lib/api';
 
 /**
  * Custom Hook: useChatLogic
@@ -47,6 +48,9 @@ export function useChatLogic() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages]);
 
+
+
+
   // ====== API Call Function ======
   const sendChatMessage = useCallback(
     async (message, retryCount = 0) => {
@@ -66,30 +70,23 @@ export function useChatLogic() {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         };
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chat/send`, {
-          method: "POST",
-          headers,
-          body: JSON.stringify(body),
-        });
+        const response = await apiClient.post('/chat/send', body, { headers });
+        return response.data;
 
-        const responseData = await response.json();
-
-        if (!response.ok) {
-          if (response.status === 401) {
-            throw new Error("UNAUTHORIZED");
-          }
-          throw new Error(`Server error: ${response.status}`);
+      } catch (error) {
+        // Handle 401 specifically
+        if (error.response?.status === 401) {
+          throw new Error("UNAUTHORIZED");
         }
 
-        return responseData;
-      } catch (error) {
-        // Single retry for network errors
-        if (retryCount === 0 && error.message !== "UNAUTHORIZED") {
+        // Single retry for network errors (not auth errors)
+        if (retryCount === 0) {
           console.log("Retrying request...");
           await new Promise((resolve) => setTimeout(resolve, 600));
           return sendChatMessage(message, 1);
         }
-        throw error;
+
+        throw new Error(`Server error: ${error.response?.status || error.message}`);
       }
     },
     [sessionId, token]

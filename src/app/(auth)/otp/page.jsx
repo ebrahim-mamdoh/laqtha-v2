@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // ✅ استيراد router من App Router
 import styles from "./otp.module.css";
 
+
+import apiClient from '@/lib/api';
+
 export default function Otp() {
   const router = useRouter(); // ✅ تهيئة الـ router
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -50,19 +53,15 @@ export default function Otp() {
     setError("");
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-account`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          otp: code,
-        }),
+      const response = await apiClient.post('/auth/verify-account', {
+        email,
+        otp: code,
       });
 
-      const data = await res.json();
+      const data = response.data;
 
       // ⚠️ فحص النتيجة
-      if (!res.ok || !data.success) {
+      if (!data.success) {
         setError(
           data?.message?.ar ||
           "فشل التحقق من الرمز، تأكد من صحته أو أعد المحاولة لاحقًا."
@@ -76,16 +75,11 @@ export default function Otp() {
       localStorage.removeItem("registerEmail");
     } catch (err) {
       console.error("Verification error:", err);
-      setError("حدث خطأ أثناء الاتصال بالخادم، حاول مجددًا.");
+      const errorMessage = err.response?.data?.message?.ar || "حدث خطأ أثناء الاتصال بالخادم، حاول مجددًا.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
-
-    // ✅ منطق مؤقت لعرض شاشة النجاح مباشرة (بدون تحقق)
-    setTimeout(() => {
-      setVerified(true);
-      setLoading(false);
-    }, 600);
   };
 
   // ✅ منطق الانتقال بعد التحقق بنجاح

@@ -4,6 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../otp.module.css';
 
+
+import apiClient from '@/lib/api';
+
 export default function OtpForm({ email }) {
     const router = useRouter();
     const [otp, setOtp] = useState(['', '', '', '']);
@@ -80,20 +83,8 @@ export default function OtpForm({ email }) {
         setSuccess('');
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/partners/verify-otp`;
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, otp: otpValue }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.message || 'فشل التحقق من الرمز.');
-            }
+            const response = await apiClient.post('/partners/verify-otp', { email, otp: otpValue });
+            const data = response.data;
 
             if (data.success) {
                 setSuccess(data.message);
@@ -105,7 +96,8 @@ export default function OtpForm({ email }) {
                 throw new Error(data.message || 'حدث خطأ غير متوقع');
             }
         } catch (err) {
-            setError(err.message);
+            const errorMessage = err.response?.data?.message || err.message || 'فشل التحقق من الرمز.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -119,16 +111,8 @@ export default function OtpForm({ email }) {
         setSuccess('');
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/partners/resend-otp`;
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email }),
-            });
-
-            const data = await res.json();
+            const response = await apiClient.post('/v2/partners/resend-otp', { email });
+            const data = response.data;
 
             if (data.success) {
                 setSuccess(data.message || 'تم إرسال الرمز بنجاح');
@@ -137,7 +121,8 @@ export default function OtpForm({ email }) {
                 throw new Error(data.message || 'فشل إرسال الرمز');
             }
         } catch (err) {
-            setError(err.message);
+            const errorMessage = err.response?.data?.message || err.message || 'فشل إرسال الرمز';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

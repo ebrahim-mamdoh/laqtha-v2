@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import styles from "./register.module.css";
 
 import { useAuth } from "@/context/AuthContext";
+import apiClient from '@/lib/api';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // ✅ regex مطابق للتحقق المستخدم في backend
-  const phoneRegex = /^(?:\+9665\d{8}|05\d{8})$/;
+  const phoneRegex = /^(?:\+9665\d{7,8}|05\d{7,8})$/;
 
   const formik = useFormik({
     initialValues: {
@@ -37,41 +38,38 @@ export default function RegisterPage() {
         .oneOf([Yup.ref("password")], "كلمة المرور غير متطابقة")
         .required("مطلوب"),
       phone: Yup.string()
-        .matches(phoneRegex, "يجب أن يبدأ بـ +966 أو 05 ويحتوي على 10 أرقام")
+        .matches(phoneRegex, "يجب أن يبدأ بـ +966 أو 05 ويحتوي على 9 أو 10 أرقام")
         .required("رقم الهاتف مطلوب"),
     }),
 
+
+
+
     onSubmit: async (values) => {
       setSubmitting(true);
+      setServerError(null); // Reset server error
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: `${values.firstName} ${values.lastName}`,
-            email: values.email,
-            password: values.password,
-            phone: "055487921", // مؤقتاً
-            role: "customer",
-          }),
+        const response = await apiClient.post('/auth/register', {
+          name: `${values.firstName} ${values.lastName}`,
+          email: values.email,
+          password: values.password,
+          phone: values.phone || "055487921", // phone is now in values, fallback if needed
+          role: "customer",
         });
 
-        const data = await res.json();
+        const data = response.data;
         console.log("REGISTER RESPONSE:", data);
 
-        if (!res.ok || data.success === false) {
-          // ✅ لو فيه قائمة أخطاء من السيرفر (errors array)
+        if (data.success === false) {
+          // Handle logical errors even if status is 200
           if (data.errors && Array.isArray(data.errors)) {
             const newErrors = {};
             data.errors.forEach((err) => {
               newErrors[err.field] = err.message;
             });
-
-            // نحدّث أخطاء Formik لعرضها تحت كل حقل
             formik.setErrors(newErrors);
           } else {
-            // أو نعرض رسالة عامة لو مفيش تفاصيل حقول
-            alert(data.message?.ar || "حدث خطأ أثناء التسجيل");
+            setServerError(data.message?.ar || "حدث خطأ أثناء التسجيل");
           }
           return;
         }
@@ -84,11 +82,26 @@ export default function RegisterPage() {
           localStorage.setItem("laqtaha_user", JSON.stringify(data.data));
         }
 
-        alert(data.message?.ar || "تم التسجيل بنجاح!");
+        // alert(data.message?.ar || "تم التسجيل بنجاح!"); // Optional: prefer UI notification
         router.replace("/otp");
+
       } catch (err) {
         console.error("REGISTER ERROR:", err);
-        alert("فشل الاتصال بالخادم أو حدث خطأ غير متوقع");
+        const data = err.response?.data;
+
+        if (data) {
+          if (data.errors && Array.isArray(data.errors)) {
+            const newErrors = {};
+            data.errors.forEach((err) => {
+              newErrors[err.field] = err.message;
+            });
+            formik.setErrors(newErrors);
+          } else {
+            setServerError(data.message?.ar || "حدث خطأ أثناء التسجيل");
+          }
+        } else {
+          setServerError("فشل الاتصال بالخادم أو حدث خطأ غير متوقع");
+        }
       } finally {
         setSubmitting(false);
       }

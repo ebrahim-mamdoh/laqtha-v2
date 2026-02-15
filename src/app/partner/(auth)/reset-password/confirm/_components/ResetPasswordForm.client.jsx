@@ -4,6 +4,9 @@ import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../login/login.module.css'; // Reusing login styles
 
+
+import apiClient from '@/lib/api';
+
 export default function ResetPasswordForm({ email }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -64,24 +67,12 @@ export default function ResetPasswordForm({ email }) {
         setSuccess('');
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/partners/reset-password`;
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: formData.email,
-                    otp: otpValue,
-                    newPassword: formData.newPassword
-                }),
+            const response = await apiClient.post('/v2/partners/reset-password', {
+                email: formData.email,
+                otp: otpValue,
+                newPassword: formData.newPassword
             });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.message || 'فشل إعادة تعيين كلمة المرور');
-            }
+            const data = response.data;
 
             if (data.success) {
                 setSuccess(data.message);
@@ -93,7 +84,8 @@ export default function ResetPasswordForm({ email }) {
             }
 
         } catch (err) {
-            setError(err.message);
+            const errorMessage = err.response?.data?.message || err.message || 'فشل إعادة تعيين كلمة المرور';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

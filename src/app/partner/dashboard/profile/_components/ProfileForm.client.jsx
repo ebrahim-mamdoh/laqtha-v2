@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import styles from '../profile.module.css';
+import apiClient from '@/lib/api';
 
 export default function ProfileForm({ initialData }) {
     const [formData, setFormData] = useState({
@@ -41,32 +42,20 @@ export default function ProfileForm({ initialData }) {
         updateField(name, value);
     };
 
+
     const handleSave = async () => {
         setLoading(true);
         setMessage(null);
         try {
-            // Using env var for API URL
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-            const token = localStorage.getItem('partner_token');
+            const response = await apiClient.put('/v2/partners/me', formData.data.partner);
 
-            const response = await fetch(`${apiUrl}/api/v2/partners/me`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token ? `Bearer ${token}` : ''
-                },
-                body: JSON.stringify(formData.data.partner),
-            });
-
-            if (response.ok) {
+            if (response.status === 200 || response.status === 201) {
                 setMessage({ type: 'success', text: 'تم حفظ التغييرات بنجاح' });
-            } else {
-                const errorData = await response.json();
-                setMessage({ type: 'error', text: errorData.message || 'فشل الحفظ' });
             }
         } catch (error) {
             console.error('Save error:', error);
-            setMessage({ type: 'error', text: 'حدث خطأ أثناء الحفظ' });
+            const errorText = error.response?.data?.message || 'فشل الحفظ';
+            setMessage({ type: 'error', text: errorText });
         } finally {
             setLoading(false);
         }

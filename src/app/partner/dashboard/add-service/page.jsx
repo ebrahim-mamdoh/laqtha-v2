@@ -3,6 +3,9 @@ import { cookies } from 'next/headers';
 import DynamicServiceForm from '../../../../components/dynamic-form/DynamicServiceForm.client';
 import styles from '../../../../components/dynamic-form/dynamic-form.module.css';
 
+
+import apiClient from '@/lib/api';
+
 // 1. Fetch Logic (Mocked for Demo if real API fails, but written as Real)
 async function getServiceMetadata() {
     const cookieStore = await cookies();
@@ -18,8 +21,6 @@ async function getServiceMetadata() {
         },
         fields: [
             {
-                key: "itemName", // Wait, core name is handled separately. attributes only.
-                // Looking at contract fields example:
                 key: "room_type", label: { ar: "نوع الغرفة", en: "Room Type" }, type: "select", required: true,
                 options: [{ value: "single", label: { ar: "غرفة فردية" } }, { value: "double", label: { ar: "غرفة مزدوجة" } }],
                 displayOrder: 1, groupKey: "basic"
@@ -48,34 +49,28 @@ async function getServiceMetadata() {
     };
 
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002'; // Adjust port
-        const res = await fetch(`${apiUrl}/api/partner/items/fields`, {
+        const response = await apiClient.get('/partner/items/fields', {
             headers: {
                 'Authorization': `Bearer ${token?.value}`,
-                'Content-Type': 'application/json'
-            },
-            cache: 'no-store'
+                // Forward cookies if needed for session based auth
+                'Cookie': cookieStore.toString()
+            }
         });
 
-        if (!res.ok) {
-            console.warn("Failed to fetch fields from backend. Using Contract Mock Data for demonstration.");
-            // In production, throw error or handle gracefully.
-            // For this task, returning mock data ensures UI is visible.
+        // Check if response data exists
+        if (!response.data || !response.data.data) {
+            console.warn("Backend returned empty or invalid structure. Using Mock Data.");
             return mockData;
         }
 
-        const json = await res.json();
-        if (!json.data || !json.data.fields || json.data.fields.length === 0) {
-            console.warn("Backend returned empty fields or invalid structure. Using Mock Data.");
-            return mockData;
-        }
-        return json.data;
+        return response.data.data;
 
     } catch (e) {
-        console.error("Error fetching service metadata:", e);
+        console.error("Error fetching service metadata:", e.message);
         return mockData; // Fallback to ensure task completion
     }
 }
+
 
 export const metadata = {
     title: 'اضافة خدمة جديدة',

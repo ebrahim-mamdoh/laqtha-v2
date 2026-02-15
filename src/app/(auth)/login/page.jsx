@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import styles from "./login.module.css";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
+import apiClient from '@/lib/api';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,23 +23,19 @@ export default function LoginPage() {
       email: Yup.string().email("بريد إلكتروني غير صالح").required("مطلوب"),
       password: Yup.string().min(6, "على الأقل 6 أحرف").required("مطلوب"),
     }),
+
+
+
     onSubmit: async (values) => {
       setSubmitting(true);
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      console.log("🔹 API URL:", apiUrl);
-      
-      try {
-        const res = await fetch(`${apiUrl}/api/auth/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
-        });
 
-        const data = await res.json();
+      try {
+        const response = await apiClient.post('/auth/login', values);
+        const data = response.data;
         console.log("🔹 Login Response:", data);
 
         // ❌ في حالة فشل الطلب أو رسالة خطأ من السيرفر
-        if (!res.ok || !data.success) {
+        if (!data.success) {
           throw new Error(data?.message?.ar || "فشل تسجيل الدخول، تحقق من البيانات");
         }
 
@@ -73,7 +70,8 @@ export default function LoginPage() {
         return;
       } catch (err) {
         console.error("❌ login error:", err);
-        alert(err.message || "حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
+        const message = err.response?.data?.message?.ar || err.message || "حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.";
+        alert(message);
         setSubmitting(false);
       }
     },

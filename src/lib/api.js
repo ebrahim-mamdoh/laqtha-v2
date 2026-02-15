@@ -8,7 +8,13 @@
 import axios from 'axios';
 
 // Base API URL from environment variable
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002';
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!baseURL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not defined");
+}
+
+export const API_BASE_URL = baseURL;
 
 /**
  * Axios instance configured for API requests
@@ -17,7 +23,7 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost
  * - Sets default headers
  */
 export const apiClient = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: `${baseURL}/api`, // Updated to match user request requirement
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -30,22 +36,22 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // Check for user token (customer auth)
-    const userToken = typeof window !== 'undefined' 
-      ? localStorage.getItem('laqtaha_token') 
+    const userToken = typeof window !== 'undefined'
+      ? localStorage.getItem('laqtaha_token')
       : null;
-    
+
     // Check for partner token
-    const partnerToken = typeof window !== 'undefined' 
-      ? localStorage.getItem('partner_token') 
+    const partnerToken = typeof window !== 'undefined'
+      ? localStorage.getItem('partner_token')
       : null;
 
     // Use partner token if on partner routes, otherwise use user token
     const token = partnerToken || userToken;
-    
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -68,12 +74,16 @@ apiClient.interceptors.response.use(
 
 /**
  * Helper function to build API endpoints
- * @param {string} path - The API path (e.g., '/api/auth/login')
+ * @param {string} path - The API path (e.g., '/auth/login') NO /api prefix needed if usage is consistent
  * @returns {string} - Full API URL
  */
 export const getApiUrl = (path) => {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${API_BASE_URL}${cleanPath}`;
+  // Remove /api if it's already in the base URL, or handle it carefully.
+  // The user asked for baseURL: `${baseURL}/api`, so endpoints should NOT have /api prefix usually.
+  // But legacy code might pass /api/...
+  // Let's make it robust.
+  return `${baseURL}/api${cleanPath.replace(/^\/api/, '')}`;
 };
 
 /**
@@ -86,7 +96,7 @@ export const getApiUrl = (path) => {
  */
 export const apiFetch = async (endpoint, options = {}) => {
   const url = getApiUrl(endpoint);
-  
+
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };

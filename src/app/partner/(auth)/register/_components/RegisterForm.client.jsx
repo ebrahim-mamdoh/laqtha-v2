@@ -7,6 +7,9 @@ import styles from '../register.module.css';
 
 
 
+
+import apiClient from '@/lib/api';
+
 export default function RegisterForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -42,8 +45,8 @@ export default function RegisterForm() {
     React.useEffect(() => {
         const fetchServiceTypes = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/service-types`);
-                const result = await response.json();
+                const response = await apiClient.get('/service-types');
+                const result = response.data;
                 if (result.success && Array.isArray(result.data)) {
                     setServiceTypes(result.data);
                 }
@@ -98,26 +101,8 @@ export default function RegisterForm() {
         };
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/partners/register`;
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                // Handle Backend Validation Errors
-                if (data.errors) {
-                    setFieldErrors(data.errors);
-                }
-
-                // Fallback to global message if no field errors or accompanying message
-                throw new Error(data.message || 'فشل التسجيل. يرجى التحقق من البيانات.');
-            }
+            const response = await apiClient.post('/partners/register', payload);
+            const data = response.data;
 
             if (data.success) {
                 router.push(`/partner/partnerOtp?email=${encodeURIComponent(formData.email)}`);
@@ -126,7 +111,16 @@ export default function RegisterForm() {
             }
 
         } catch (err) {
-            setError(err.message);
+            const data = err.response?.data;
+            if (data) {
+                // Handle Backend Validation Errors
+                if (data.errors) {
+                    setFieldErrors(data.errors);
+                }
+                setError(data.message || 'فشل التسجيل. يرجى التحقق من البيانات.');
+            } else {
+                setError(err.message || 'حدث خطأ في الاتصال');
+            }
         } finally {
             setLoading(false);
         }

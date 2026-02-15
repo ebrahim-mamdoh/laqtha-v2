@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../../login/login.module.css'; // Reusing login styles
 
+
+import apiClient from '@/lib/api';
+
 export default function ForgotPasswordForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -19,20 +22,8 @@ export default function ForgotPasswordForm() {
         setSuccess('');
 
         try {
-            const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/partners/forgot-password`;
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.message || 'حدث خطأ أثناء إرسال الطلب');
-            }
+            const response = await apiClient.post('/v2/partners/forgot-password', { email });
+            const data = response.data;
 
             if (data.success) {
                 setSuccess(data.message);
@@ -45,7 +36,8 @@ export default function ForgotPasswordForm() {
             }
 
         } catch (err) {
-            setError(err.message);
+            const errorMessage = err.response?.data?.message || err.message || 'حدث خطأ أثناء إرسال الطلب';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

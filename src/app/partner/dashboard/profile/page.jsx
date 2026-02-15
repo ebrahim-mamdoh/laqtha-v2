@@ -2,37 +2,30 @@ import React from 'react';
 import ProfileForm from './_components/ProfileForm.client';
 import { cookies } from 'next/headers';
 
+
+import apiClient from '@/lib/api';
+
 async function getProfileData() {
     // Attempt to fetch from the API side
     const cookieStore = await cookies();
     const token = cookieStore.get('partner_accessToken');
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002';
-
     try {
-        const res = await fetch(`${apiUrl}/api/v2/partners/me`, {
-            method: 'GET',
+        const res = await apiClient.get('/v2/partners/me', {
             headers: {
                 'Authorization': `Bearer ${token?.value}`,
-                'Content-Type': 'application/json',
                 // Forward cookies if needed for session based auth
                 'Cookie': cookieStore.toString()
-            },
-            cache: 'no-store' // ensure fresh data
+            }
         });
 
-        if (!res.ok) {
-            console.error('Failed to fetch profile:', res.status, res.statusText);
-            // Fallback or throw
-            return null;
-        }
-
-        return await res.json();
+        return res.data;
     } catch (e) {
-        console.error('Error fetching profile:', e);
+        console.error('Error fetching profile:', e.message); // Cleaned up error logging
         return null;
     }
 }
+
 
 export default async function ProfilePage() {
     const data = await getProfileData();
