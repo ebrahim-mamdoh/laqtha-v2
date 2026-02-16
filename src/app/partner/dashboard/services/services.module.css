@@ -123,46 +123,70 @@
     color: #fff;
 }
 
-/* Table */
-.tableContainer {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 20px;
+/* Cards List */
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.tableHeader {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    margin-bottom: 10px;
-    color: #a0a0b0;
-    font-size: 0.9rem;
+.serviceCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: background 0.2s;
 }
 
-.tableRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.02);
-    transition: background 0.2s;
-}
-.tableRow:last-child {
-    border-bottom: none;
-}
-.tableRow:hover {
-    background: rgba(255,255,255,0.02);
+.serviceCard:hover {
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.col {
-    flex: 1;
-    text-align: center;
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.colWide {
-    flex: 2;
-    text-align: right;
+
+.cardTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.cardPrice {
+  color: #a0a0b0;
+  font-size: 0.9rem;
+}
+
+.cardActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.actionBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ccc;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.actionBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Status Badge Positioning if needed */
+.cardStatus {
+  align-self: flex-start; /* Top left */
 }
 
 /* Badges */

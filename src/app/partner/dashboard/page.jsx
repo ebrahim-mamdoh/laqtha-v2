@@ -70,68 +70,68 @@ export default function DashboardPage() {
 
             <div className={styles.tableContainer}>
                 <div className={styles.tableHeader}>
-                    <div className={styles.col}>الاجراءات</div>
-                    <div className={styles.col}>حالة الخدمة</div>
-                    <div className={styles.col}>موقع الخدمة</div>
-                    <div className={styles.col}>تقييم الخدمة</div>
-                    <div className={styles.colWide}>اسم الخدمة</div>
                     <div className={styles.col} style={{ width: '50px', flex: 'none' }}>الترتيب</div>
+                    <div className={styles.col}>اسم الخدمة</div>
+                    <div className={styles.col}>تقييم الخدمة</div>
+                    <div className={styles.col}>موقع الخدمة</div>
+                    <div className={styles.col}>حالة الخدمة</div>
+                    <div className={styles.col}>الاجراءات</div>
                 </div>
 
                 {/* Row 1 */}
                 <div className={styles.tableRow}>
+                    <div className={styles.col} style={{ width: '50px', flex: 'none' }}>01</div>
+                    <div className={styles.col}>VOLUVULUS CASTLE</div>
+                    <div className={styles.col}>5 نجوم</div>
+                    <div className={styles.col}>المغرب، مكناس</div>
+                    <div className={styles.col}><span className={`${styles.statusBadge} ${styles.statusActive}`}>نشطة</span></div>
                     <div className={styles.col} style={{ display: 'flex', gap: '10px', justifyContent: 'center', color: '#888' }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </div>
-                    <div className={styles.col}><span className={`${styles.statusBadge} ${styles.statusActive}`}>نشطة</span></div>
-                    <div className={styles.col}>المغرب، مكناس</div>
-                    <div className={styles.col}>5 نجوم</div>
-                    <div className={styles.colWide}>VOLUVULUS CASTLE</div>
-                    <div className={styles.col} style={{ width: '50px', flex: 'none' }}>01</div>
                 </div>
 
                 {/* Row 2 */}
                 <div className={styles.tableRow}>
+                    <div className={styles.col} style={{ width: '50px', flex: 'none' }}>02</div>
+                    <div className={styles.col}>VOLUVULUS HOME</div>
+                    <div className={styles.col}>5 نجوم</div>
+                    <div className={styles.col}>المغرب، أكادير</div>
+                    <div className={styles.col}><span className={`${styles.statusBadge} ${styles.statusActive}`}>نشطة</span></div>
                     <div className={styles.col} style={{ display: 'flex', gap: '10px', justifyContent: 'center', color: '#888' }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </div>
-                    <div className={styles.col}><span className={`${styles.statusBadge} ${styles.statusActive}`}>نشطة</span></div>
-                    <div className={styles.col}>المغرب، أكادير</div>
-                    <div className={styles.col}>5 نجوم</div>
-                    <div className={styles.colWide}>VOLUVULUS HOME</div>
-                    <div className={styles.col} style={{ width: '50px', flex: 'none' }}>02</div>
                 </div>
 
                 {/* Row 3 */}
                 <div className={styles.tableRow}>
+                    <div className={styles.col} style={{ width: '50px', flex: 'none' }}>03</div>
+                    <div className={styles.col}>VOLUVULUS GROUP</div>
+                    <div className={styles.col}>5 نجوم</div>
+                    <div className={styles.col}>المغرب، طنجة</div>
+                    <div className={styles.col}><span className={`${styles.statusBadge} ${styles.statusActive}`}>نشطة</span></div>
                     <div className={styles.col} style={{ display: 'flex', gap: '10px', justifyContent: 'center', color: '#888' }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </div>
-                    <div className={styles.col}><span className={`${styles.statusBadge} ${styles.statusActive}`}>نشطة</span></div>
-                    <div className={styles.col}>المغرب، طنجة</div>
-                    <div className={styles.col}>5 نجوم</div>
-                    <div className={styles.colWide}>VOLUVULUS GROUP</div>
-                    <div className={styles.col} style={{ width: '50px', flex: 'none' }}>03</div>
                 </div>
 
                 {/* Row 4 */}
                 <div className={styles.tableRow}>
+                    <div className={styles.col} style={{ width: '50px', flex: 'none' }}>04</div>
+                    <div className={styles.col}>VOLUVULUS PALAS</div>
+                    <div className={styles.col}>5 نجوم</div>
+                    <div className={styles.col}>المغرب، الحسيمة</div>
+                    <div className={styles.col}><span className={`${styles.statusBadge} ${styles.statusPending}`}>معلقة</span></div>
                     <div className={styles.col} style={{ display: 'flex', gap: '10px', justifyContent: 'center', color: '#888' }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </div>
-                    <div className={styles.col}><span className={`${styles.statusBadge} ${styles.statusPending}`}>معلقة</span></div>
-                    <div className={styles.col}>المغرب، الحسيمة</div>
-                    <div className={styles.col}>5 نجوم</div>
-                    <div className={styles.colWide}>VOLUVULUS PALAS</div>
-                    <div className={styles.col} style={{ width: '50px', flex: 'none' }}>04</div>
                 </div>
 
             </div>
