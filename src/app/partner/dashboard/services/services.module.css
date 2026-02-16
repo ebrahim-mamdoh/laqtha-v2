@@ -214,6 +214,18 @@
     background: rgba(243, 156, 18, 0.2);
     color: #f39c12; /* Orange */
 }
+.draft {
+    background: rgba(243, 156, 18, 0.2);
+    color: #f39c12; /* Orange */
+}
+.hidden {
+    background: rgba(189, 195, 199, 0.2);
+    color: #bdc3c7; /* Gray */
+}
+.archived {
+    background: rgba(52, 73, 94, 0.2);
+    color: #34495e; /* Dark */
+}
 
 /* Pagination */
 .pagination {
