@@ -47,7 +47,7 @@ export default function ProfileForm({ initialData }) {
         setLoading(true);
         setMessage(null);
         try {
-            const response = await apiClient.put('/v2/partners/me', formData.data.partner);
+            const response = await apiClient.put('/partners/me', formData.data.partner);
 
             if (response.status === 200 || response.status === 201) {
                 setMessage({ type: 'success', text: 'تم حفظ التغييرات بنجاح' });

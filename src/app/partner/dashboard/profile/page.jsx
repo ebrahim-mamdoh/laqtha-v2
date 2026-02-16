@@ -11,7 +11,7 @@ async function getProfileData() {
     const token = cookieStore.get('partner_accessToken');
 
     try {
-        const res = await apiClient.get('/v2/partners/me', {
+        const res = await apiClient.get('/partners/me', {
             headers: {
                 'Authorization': `Bearer ${token?.value}`,
                 // Forward cookies if needed for session based auth
