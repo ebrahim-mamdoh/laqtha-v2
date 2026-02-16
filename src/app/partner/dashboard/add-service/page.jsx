@@ -49,6 +49,7 @@ async function getServiceMetadata() {
     };
 
     try {
+        console.log("Fetching service metadata from API...");
         const response = await apiClient.get('/partner/items/fields', {
             headers: {
                 'Authorization': `Bearer ${token?.value}`,
@@ -57,17 +58,35 @@ async function getServiceMetadata() {
             }
         });
 
-        // Check if response data exists
+        console.log("API Response Status:", response.status);
+        // console.log("API RAW Response Data:", JSON.stringify(response.data, null, 2)); // Uncomment for full dump if needed
+
+        // Check if response data exists and has the expected structure
+        // The API is expected to return { success: true, data: { serviceType: ..., fields: ... } }
         if (!response.data || !response.data.data) {
-            console.warn("Backend returned empty or invalid structure. Using Mock Data.");
-            return mockData;
+            console.warn("Backend returned empty or invalid structure. Using Mock Data.", response.data);
+            return {
+                ...mockData,
+                _source: 'MOCK_INVALID_RESPONSE',
+                _debug_info: 'Response structure mismatch'
+            };
         }
 
-        return response.data.data;
+        return {
+            ...response.data.data,
+            _source: 'REAL_API'
+        };
 
     } catch (e) {
         console.error("Error fetching service metadata:", e.message);
-        return mockData; // Fallback to ensure task completion
+        if (e.response) {
+            console.error("API Error Details:", e.response.status, e.response.data);
+        }
+        return {
+            ...mockData,
+            _source: 'MOCK_ERROR',
+            _error: e.message
+        };
     }
 }
 
@@ -101,6 +120,8 @@ export default async function AddServicePage() {
                     <DynamicServiceForm
                         fields={sortedFields}
                         serviceType={data.serviceType}
+                        source={data._source}
+                        debugError={data._error}
                     />
                 </div>
             </div>

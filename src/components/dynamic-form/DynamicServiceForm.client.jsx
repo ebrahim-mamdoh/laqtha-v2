@@ -6,10 +6,14 @@ import styles from './dynamic-form.module.css';
 import generateSchema from './utils/validationGenerator';
 import { FieldRenderer } from './FieldRenderer.client';
 
-export default function DynamicServiceForm({ fields = [], serviceType, initialData = null }) {
+import apiClient from '@/lib/api';
+import { useRouter } from 'next/navigation';
+
+export default function DynamicServiceForm({ fields = [], serviceType, initialData = null, source, debugError }) {
+    const router = useRouter();
     const [submitError, setSubmitError] = useState(null);
     const [submitSuccess, setSubmitSuccess] = useState(null);
-    const [submissionState, setSubmissionState] = useState('draft'); // 'draft' or 'publish' (which is just submit validation logic)
+    const [submissionState, setSubmissionState] = useState('draft');
 
     // 1. Initial Values Generation
     const initialValues = useMemo(() => {
@@ -18,16 +22,14 @@ export default function DynamicServiceForm({ fields = [], serviceType, initialDa
         const defaults = {
             name: { ar: '', en: '' },
             description: { ar: '', en: '' },
-            state: 'draft', // Default state
+            state: 'draft',
             attributes: {},
         };
 
         fields.forEach(field => {
-            // Respect field defaultValue or set sensible defaults
             if (field.defaultValue !== undefined && field.defaultValue !== null) {
                 defaults.attributes[field.key] = field.defaultValue;
             } else {
-                // Type-safe nulls/empties
                 if (field.type === 'boolean') defaults.attributes[field.key] = false;
                 else if (field.type === 'price') defaults.attributes[field.key] = { amount: '' };
                 else if (field.type === 'multiselect' || field.type === 'gallery') defaults.attributes[field.key] = [];
@@ -37,13 +39,7 @@ export default function DynamicServiceForm({ fields = [], serviceType, initialDa
         return defaults;
     }, [fields, initialData]);
 
-    // 2. Schema Generation
     const validationSchema = useMemo(() => {
-        // Generate schema based on 'submissionState'
-        // If user clicks "Save Draft" -> submissionState = 'draft', required fields are relaxed
-        // If user clicks "Publish/Add" -> submissionState = 'active' (implied not draft), required fields enforced
-        // Contract says: "Attributes validation... Required Field Check: If field.required === true and state is NOT draft"
-        // So we pass 'submissionState === draft' to generator.
         return generateSchema(fields, submissionState === 'draft');
     }, [fields, submissionState]);
 
@@ -53,31 +49,49 @@ export default function DynamicServiceForm({ fields = [], serviceType, initialDa
         setSubmitError(null);
         setSubmitSuccess(null);
 
-        // Ensure state is set correctly in payload
-        const payload = { ...values, state: submissionState };
+        // Prepare attributes: Ensure empty strings for numbers are converted nicely or kept as per requirement.
+        // Also handling boolean types if needed.
+        const formattedAttributes = { ...values.attributes };
+
+        fields.forEach(field => {
+            const val = formattedAttributes[field.key];
+            if (field.type === 'number' && val !== '' && val !== null && val !== undefined) {
+                formattedAttributes[field.key] = Number(val);
+            }
+            if (field.type === 'boolean') {
+                formattedAttributes[field.key] = Boolean(val);
+            }
+            // Add other type conversions if needed
+        });
+
+        // Construct Final Payload
+        const payload = {
+            name: values.name,
+            description: values.description,
+            attributes: formattedAttributes,
+            state: submissionState, // Trust the local state which is updated by button click
+            sortOrder: 1, // Default as requested
+            isFeatured: false // Default as requested
+        };
 
         try {
-            // REAL API CALL
-            // const token = Cookies.get('partner_token'); ... 
-            // Mocking the call since I cannot hit real API from here, but this is the logic:
+            const response = await apiClient.post('/partner/items', payload);
 
-            /*
-            const res = await fetch('/api/partner/items', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            if (!res.ok) throw await res.json();
-            */
+            if (response.data.success) {
+                setSubmitSuccess(response.data.message || 'تم إنشاء العنصر بنجاح');
+                console.log("Created successfully:", response.data.data);
 
-            // Simulate Success
-            console.log("Submitting Payload:", payload);
-            await new Promise(r => setTimeout(r, 1000));
-            setSubmitSuccess(submissionState === 'draft' ? 'تم حفظ المسودة بنجاح' : 'تم اضافة الخدمة بنجاح');
+                // Optional: Redirect after short delay or show a "Go to List" button
+                // For now, keeping the success message visible.
+                // router.push('/partner/dashboard/services'); 
+            } else {
+                setSubmitError(response.data.message || 'فشل في إنشاء العنصر');
+            }
 
         } catch (error) {
             console.error(error);
-            setSubmitError(error.message || 'حدث خطأ غير متوقع');
+            const msg = error.response?.data?.message || error.message || 'حدث خطأ غير متوقع';
+            setSubmitError(msg);
         } finally {
             setSubmitting(false);
         }
@@ -89,6 +103,50 @@ export default function DynamicServiceForm({ fields = [], serviceType, initialDa
 
     return (
         <div className={styles.formWrapper}>
+            {/* Status Indicator */}
+            <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '8px 16px',
+                background: source === 'REAL_API' ? 'rgba(0, 255, 136, 0.05)' : 'rgba(255, 171, 0, 0.05)',
+                border: `1px solid ${source === 'REAL_API' ? 'rgba(0, 255, 136, 0.15)' : 'rgba(255, 171, 0, 0.15)'}`,
+                borderRadius: '999px',
+                marginBottom: '24px',
+                backdropFilter: 'blur(8px)',
+                boxShadow: `0 4px 20px -5px ${source === 'REAL_API' ? 'rgba(0, 255, 136, 0.1)' : 'rgba(255, 171, 0, 0.1)'}`
+            }}>
+                <span style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    backgroundColor: source === 'REAL_API' ? '#00ff88' : '#ffab00',
+                    boxShadow: `0 0 10px ${source === 'REAL_API' ? 'rgba(0, 255, 136, 0.5)' : 'rgba(255, 171, 0, 0.5)'}`,
+                    transition: 'all 0.3s ease'
+                }} />
+
+                <span style={{
+                    color: source === 'REAL_API' ? '#00ff88' : '#ffab00',
+                    fontSize: '0.85rem',
+                    fontWeight: '600',
+                    letterSpacing: '0.5px',
+                    fontFamily: 'inherit'
+                }}>
+                    {source === 'REAL_API' ? 'متصل  ' : 'نمط البيانات التجريبية'}
+                </span>
+
+                {debugError && (
+                    <span style={{
+                        borderRight: '1px solid rgba(255,255,255,0.1)',
+                        paddingRight: '8px',
+                        marginRight: '8px',
+                        color: '#ff4444',
+                        fontSize: '0.75rem'
+                    }}>
+                        {debugError}
+                    </span>
+                )}
+            </div>
             {serviceType && (
                 <div style={{ marginBottom: '20px', textAlign: 'right' }}>
                     <h2 style={{ color: '#fff', fontSize: '1.5rem' }}>{serviceType.label?.ar} - محرك النموذج الديناميكي</h2>
