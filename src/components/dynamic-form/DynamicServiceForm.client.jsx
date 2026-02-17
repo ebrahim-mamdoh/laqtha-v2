@@ -9,15 +9,25 @@ import { FieldRenderer } from './FieldRenderer.client';
 import apiClient from '@/lib/api';
 import { useRouter } from 'next/navigation';
 
-export default function DynamicServiceForm({ fields = [], serviceType, initialData = null, source, debugError }) {
+export default function DynamicServiceForm({ fields = [], serviceType, initialData = null, source, debugError, mode = 'create' }) {
     const router = useRouter();
     const [submitError, setSubmitError] = useState(null);
     const [submitSuccess, setSubmitSuccess] = useState(null);
-    const [submissionState, setSubmissionState] = useState('draft');
+    const [submissionState, setSubmissionState] = useState(initialData?.state || 'draft');
 
     // 1. Initial Values Generation
     const initialValues = useMemo(() => {
-        if (initialData) return initialData;
+        // If editing and we have data, merge it with defaults structure
+        if (initialData) {
+            return {
+                name: initialData.name || { ar: '', en: '' },
+                description: initialData.description || { ar: '', en: '' },
+                state: initialData.state || 'draft',
+                attributes: initialData.attributes || {},
+                sortOrder: initialData.sortOrder || 0,
+                isFeatured: initialData.isFeatured || false
+            };
+        }
 
         const defaults = {
             name: { ar: '', en: '' },
@@ -44,6 +54,18 @@ export default function DynamicServiceForm({ fields = [], serviceType, initialDa
     }, [fields, submissionState]);
 
 
+    // Helper: Build Strict Update Payload
+    const buildUpdatePayload = (values) => {
+        // Backend Contract: Whitelist only allowed fields
+        return {
+            name: values.name,
+            description: values.description,
+            attributes: values.attributes,
+            sortOrder: values.sortOrder,
+            isFeatured: values.isFeatured
+        };
+    };
+
     // 3. Submission Handler
     const handleSubmit = async (values, { setSubmitting, setStatus }) => {
         setSubmitError(null);
@@ -64,28 +86,41 @@ export default function DynamicServiceForm({ fields = [], serviceType, initialDa
             // Add other type conversions if needed
         });
 
-        // Construct Final Payload
-        const payload = {
-            name: values.name,
-            description: values.description,
-            attributes: formattedAttributes,
-            state: submissionState, // Trust the local state which is updated by button click
-            sortOrder: 1, // Default as requested
-            isFeatured: false // Default as requested
-        };
+        // Update values with formatted attributes for payload construction
+        const currentValues = { ...values, attributes: formattedAttributes };
 
         try {
-            const response = await apiClient.post('/partner/items', payload);
+            let response;
+            if (mode === 'edit' && initialData?.id) {
+                // Strict Whitelist for Update
+                const payload = buildUpdatePayload(currentValues);
+                response = await apiClient.put(`/partner/items/${initialData.id}`, payload);
+            } else {
+                // Create Mode: Include active state
+                const payload = {
+                    name: currentValues.name,
+                    description: currentValues.description,
+                    attributes: currentValues.attributes,
+                    state: submissionState, // Include state only for create
+                    sortOrder: currentValues.sortOrder || 1,
+                    isFeatured: currentValues.isFeatured || false
+                };
+                response = await apiClient.post('/partner/items', payload);
+            }
 
             if (response.data.success) {
-                setSubmitSuccess(response.data.message || 'تم إنشاء العنصر بنجاح');
-                console.log("Created successfully:", response.data.data);
+                const action = mode === 'edit' ? 'تحديث' : 'إنشاء';
+                setSubmitSuccess(response.data.message || `تم ${action} العنصر بنجاح`);
+                console.log(`${action} successfully:`, response.data.data);
 
-                // Optional: Redirect after short delay or show a "Go to List" button
-                // For now, keeping the success message visible.
-                // router.push('/partner/dashboard/services'); 
+                if (mode === 'create') {
+                    // router.push('/partner/dashboard/services');
+                } else {
+                    // Refresh data or redirect
+                    router.push('/partner/dashboard/services');
+                }
             } else {
-                setSubmitError(response.data.message || 'فشل في إنشاء العنصر');
+                setSubmitError(response.data.message || 'فشل في العملية');
             }
 
         } catch (error) {
@@ -229,7 +264,7 @@ export default function DynamicServiceForm({ fields = [], serviceType, initialDa
                                 }}
                                 disabled={isSubmitting}
                             >
-                                {isSubmitting ? 'جاري الاضافة...' : 'اضافة عنصر'}
+                                {isSubmitting ? (mode === 'edit' ? 'جاري الحفظ...' : 'جاري الاضافة...') : (mode === 'edit' ? 'حفظ التعديلات' : 'اضافة عنصر')}
                             </button>
 
                             <button

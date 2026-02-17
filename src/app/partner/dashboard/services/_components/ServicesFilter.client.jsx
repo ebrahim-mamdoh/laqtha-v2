@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from '../services.module.css';
 
 export default function ServicesFilter() {
+    const router = useRouter();
     const [search, setSearch] = useState('');
 
     return (
@@ -49,7 +51,10 @@ export default function ServicesFilter() {
             </div>
 
             <div className={styles.actionButtons}>
-                <button className={`${styles.btn} ${styles.primaryBtn}`}>
+                <button
+                    className={`${styles.btn} ${styles.primaryBtn}`}
+                    onClick={() => router.push('/partner/dashboard/add-service')}
+                >
                     اضافة خدمة جديدة
                 </button>
 

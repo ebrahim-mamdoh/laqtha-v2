@@ -53,3 +53,18 @@ export const archivePartnerItem = async (itemId) => {
         throw error;
     }
 };
+
+/**
+ * Update a partner item
+ * @param {string} itemId - The ID of the item to update
+ * @param {Object} data - The data to update
+ * @returns {Promise<Object>} API response
+ */
+export const updatePartnerItem = async (itemId, data) => {
+    try {
+        const response = await apiClient.put(`/partner/items/${itemId}`, data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};

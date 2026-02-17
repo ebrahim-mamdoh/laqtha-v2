@@ -91,13 +91,47 @@ async function getServiceMetadata() {
 }
 
 
-export const metadata = {
-    title: 'اضافة خدمة جديدة',
-    description: 'نموذج اضافة خدمة ديناميكي',
-};
+// 2. Fetch Existing Item for Edit
+async function getItemDetails(itemId, token, cookieStore) {
+    if (!itemId) return null;
+    try {
+        const response = await apiClient.get(`/partner/items/${itemId}`, {
+            headers: {
+                'Authorization': `Bearer ${token?.value}`,
+                'Cookie': cookieStore.toString()
+            }
+        });
+        if (response.data && response.data.success) {
+            return response.data.data;
+        }
+        return null;
+    } catch (e) {
+        console.error("Error fetching item details:", e.message);
+        return null;
+    }
+}
 
-export default async function AddServicePage() {
+export async function generateMetadata({ searchParams }) {
+    const { mode } = await searchParams;
+    return {
+        title: mode === 'edit' ? 'تعديل الخدمة' : 'اضافة خدمة جديدة',
+        description: mode === 'edit' ? 'تعديل بيانات الخدمة' : 'نموذج اضافة خدمة ديناميكي',
+    };
+}
+
+export default async function AddServicePage({ searchParams }) {
+    const { mode, id } = await searchParams;
+    const isEditMode = mode === 'edit' && id;
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get('partner_accessToken');
+
     const data = await getServiceMetadata();
+
+    let initialData = null;
+    if (isEditMode) {
+        initialData = await getItemDetails(id, token, cookieStore);
+    }
 
     // Ensure fields are sorted as per contract "Frontend must Sort by displayOrder"
     const sortedFields = data.fields?.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0)) || [];
@@ -112,8 +146,12 @@ export default async function AddServicePage() {
         }}>
             <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                    <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '10px' }}>اضافة خدمة جديدة</h1>
-                    <p style={{ color: '#888' }}>يمكنك اضافة عناصر الخدمات من هنا</p>
+                    <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '10px' }}>
+                        {isEditMode ? 'تعديل الخدمة' : 'اضافة خدمة جديدة'}
+                    </h1>
+                    <p style={{ color: '#888' }}>
+                        {isEditMode ? 'يمكنك تعديل بيانات الخدمة من هنا' : 'يمكنك اضافة عناصر الخدمات من هنا'}
+                    </p>
                 </div>
 
                 <div className={styles.pageContainer}>
@@ -122,6 +160,8 @@ export default async function AddServicePage() {
                         serviceType={data.serviceType}
                         source={data._source}
                         debugError={data._error}
+                        mode={isEditMode ? 'edit' : 'create'}
+                        initialData={initialData}
                     />
                 </div>
             </div>

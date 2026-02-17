@@ -7,9 +7,11 @@ import ServicesFilter from './ServicesFilter.client';
 import { fetchPartnerItems, archivePartnerItem } from '../services.api';
 import { Modal, Button, Spinner } from 'react-bootstrap';
 import notify from '@/lib/notify';
+import { useRouter } from 'next/navigation';
 
 export default function ServicesContent() {
     const queryClient = useQueryClient();
+    const router = useRouter();
 
     // UI State
     const [activeFilter, setActiveFilter] = useState('all');
@@ -115,6 +117,10 @@ export default function ServicesContent() {
         setItemToArchive(null);
     };
 
+    const handleEditClick = (item) => {
+        router.push(`/partner/dashboard/add-service?mode=edit&id=${item.id}`);
+    };
+
     // Helper for Status Badge Class
     const getStatusClass = (status) => {
         switch (status) {
@@ -187,7 +193,12 @@ export default function ServicesContent() {
 
                                 <div className={styles.cardActions}>
                                     {item.isEditable && (
-                                        <button className={styles.actionBtn}>تعديل</button>
+                                        <button
+                                            className={styles.actionBtn}
+                                            onClick={() => handleEditClick(item)}
+                                        >
+                                            تعديل
+                                        </button>
                                     )}
                                     {item.stateProperties?.canPublish && (
                                         <button className={styles.actionBtn}>نشر</button>
@@ -274,8 +285,6 @@ export default function ServicesContent() {
                     </button>
                 </Modal.Footer>
             </Modal>
-
-
         </div>
     );
 }
