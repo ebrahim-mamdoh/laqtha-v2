@@ -257,3 +257,71 @@
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* Modal Styles */
+.glassModal .modal-content {
+    background: linear-gradient(135deg, #1a0b2e 0%, #110620 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+    color: #fff !important;
+    text-align: center !important;
+}
+
+.glassModal :global(.modal-header) {
+    border-bottom: none !important;
+    justify-content: center !important;
+    padding-bottom: 0 !important;
+    margin-top: 20px;
+}
+
+.glassModal :global(.modal-title) {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+}
+
+.glassModal :global(.modal-body) {
+    color: #a0a0b0 !important;
+    font-size: 1.1rem !important;
+    line-height: 1.6;
+    padding: 20px 40px !important;
+    margin-bottom: 10px;
+}
+
+.glassModal :global(.modal-footer) {
+    border-top: none !important;
+    justify-content: center !important;
+    gap: 15px;
+    padding-top: 0 !important;
+    padding-bottom: 30px !important;
+}
+
+.modalBtn {
+    padding: 12px 40px !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    border: none !important;
+    min-width: 120px;
+}
+
+.cancelBtn {
+    background: #4a4a4a !important;
+    color: #fff !important;
+}
+
+.confirmBtn {
+    background: #ef5350 !important; 
+    color: #fff !important;
+}
+
+/* Force override bootstrap */
+.glassModal {
+    background: linear-gradient(135deg, #1a0b2e 0%, #110620 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+    color: #fff !important;
+    text-align: center !important;
+}

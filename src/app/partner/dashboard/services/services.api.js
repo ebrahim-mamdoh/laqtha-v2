@@ -3,12 +3,6 @@ import apiClient from '@/lib/api';
 /**
  * Fetch partner items with filters
  * @param {Object} filters
- * @param {string} [filters.state] - Filter by item state
- * @param {boolean} [filters.includeArchived] - Include archived items
- * @param {number} [filters.page] - Page number
- * @param {number} [filters.limit] - Items per page
- * @param {string} [filters.sortBy] - Field to sort by
- * @param {string} [filters.sortOrder] - 'asc' or 'desc'
  * @returns {Promise<Object>} API response
  */
 export const fetchPartnerItems = async (filters = {}) => {
@@ -18,8 +12,6 @@ export const fetchPartnerItems = async (filters = {}) => {
         params.append('state', filters.state);
     }
 
-    // Explicitly handle boolean as string if needed, but URLSearchParams handles toString, 
-    // however backend might expect specific format. Usually 'true'/'false' is fine.
     if (filters.includeArchived !== undefined) {
         params.append('includeArchived', filters.includeArchived);
     }
@@ -42,6 +34,20 @@ export const fetchPartnerItems = async (filters = {}) => {
 
     try {
         const response = await apiClient.get('/partner/items', { params });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+/**
+ * Archive a partner item
+ * @param {string} itemId - The ID of the item to archive
+ * @returns {Promise<Object>} API response
+ */
+export const archivePartnerItem = async (itemId) => {
+    try {
+        const response = await apiClient.delete(`/partner/items/${itemId}`);
         return response.data;
     } catch (error) {
         throw error;
