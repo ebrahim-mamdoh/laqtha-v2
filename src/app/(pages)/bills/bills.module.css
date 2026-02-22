@@ -245,11 +245,10 @@
 
 /* TABLE WRAPPER */
 .tableContainer {
-  /* background: transparent; */
-  /* The screenshot shows rows have distinct backgrounds or the container is transparent */
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
   margin-top: 16px;
+  background: rgba(27, 8, 48, 0.2);
 }
 
 .transparentTable {
@@ -259,13 +258,14 @@
 }
 
 .transparentTable th {
-  padding: 16px 12px;
-  color: rgba(255, 255, 255, 0.6);
+  padding: 20px 12px;
+  color: #fff;
   font-weight: 500;
-  font-size: 14px;
-  text-align: right; /* RTL */
+  font-size: 15px;
+  text-align: center; 
   border: none;
   background: transparent;
+  white-space: nowrap;
 }
 
 .transparentTable td {
@@ -273,8 +273,8 @@
   color: #fff;
   font-size: 14px;
   vertical-align: middle;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-  text-align: right;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+  text-align: center;
   background: transparent;
 }
 
@@ -294,17 +294,23 @@
   cursor: pointer;
   background: transparent;
   border: 1px solid rgba(255,255,255,0.3);
-  margin-top: 4px; /* Slight alignment fix */
+  margin-top: 4px; 
 }
 
-/* Action Button (...) */
+/* Action Button Group */
+.actionGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
 .actionBtn {
-  background: rgba(255, 255, 255, 0.05);
+  background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.6);
   width: 32px;
   height: 32px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -312,38 +318,182 @@
   transition: all 0.2s;
 }
 .actionBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.deleteBtn:hover {
+  color: #ff3b3b;
+}
+
+/* Dots Dropdown */
+.dotsContainer {
+  position: relative;
+}
+
+.dotsDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: auto;
+  z-index: 1000;
+  background: #25093b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 4px;
+  min-width: 150px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dotsItem {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 10px 14px;
+  text-align: right;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.dotsItem:hover {
+  background: rgba(255, 255, 255, 0.05);
   color: #fff;
 }
 
-.storeName {
-  color: rgba(255, 255, 255, 0.9);
+/* Status Badges - Matching reference colors */
+.statusBadge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
   font-weight: 500;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
 }
 
-/* MOBILE CARDS */
-.billCard {
-  background: linear-gradient(180deg, rgba(46, 11, 73, 0.6), rgba(26, 4, 41, 0.6));
+.statusCompleted {
+  background: rgba(139, 0, 0, 0.2); /* Dark red/brownish from reference */
+  color: #ff4d4d;
+  border: 1px solid rgba(139, 0, 0, 0.3);
+}
+
+.statusPending {
+  background: rgba(217, 0, 169, 0.1); /* Pinkish/Purple from reference */
+  color: #D900A9;
+  border: 1px solid rgba(217, 0, 169, 0.2);
+}
+
+/* Add Service Button */
+.headerActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.addServiceBtn {
+  background: linear-gradient(90deg, #F901C9 0%, #094EFD 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
   border-radius: 12px;
-  padding: 16px;
-  border: 1px solid rgba(255,255,255,0.05);
-  margin-bottom: 16px;
-}
-.cardTop {
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(217, 0, 169, 0.3);
 }
-.cardInvoice { font-size: 14px; color: rgba(255,255,255,0.7); }
-.cardAmount { font-size: 16px; font-weight: bold; color: #D900A9; }
 
-.cardRow {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
+.addServiceBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(217, 0, 169, 0.4);
 }
-.cardLabel { font-size: 12px; color: rgba(255,255,255,0.5); }
-.cardValue { font-size: 14px; color: #fff; }
+
+/* Modals */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modalContent {
+  background: #1e052d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.qrContainer {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.confirmBtn {
+  background: #ff3b3b;
+  color: #fff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -352,6 +502,7 @@
   .tableContainer { display: none; }
   .searchInput { margin-bottom: 16px; }
   .filterPopup { left: 0; right: 0; min-width: auto; width: 100%; position: fixed; top: auto; bottom: 0; margin: 0; border-radius: 20px 20px 0 0; z-index: 1000; animation: slideUp 0.3s; }
+  .headerActions { flex-direction: column; gap: 16px; align-items: stretch; }
 }
 
 @keyframes slideUp {

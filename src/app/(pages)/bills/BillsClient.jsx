@@ -33,10 +33,28 @@ const ChevronDownIcon = () => (
 );
 
 const DotsIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const QRIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 9h6V3H3v6zm1-5h4v4H4V4zm-1 17h6v-6H3v6zm1-5h4v4H4v-4zM15 3v6h6V3h-6zm1 1h4v4h-4V4zM13 13h2v2h-2v-2zm2 2h2v2h-2v-2zm2-2h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm0-4h2v2h-2v-2zm-2 2h2v2h-2v-2zM13 17h2v2h-2v-2zm2 2h2v2h-2v-2zm2-2h2v2h-2v-2z" fill="currentColor" />
+  </svg>
+);
+
+const DeleteIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2m-6 5v6m4-6v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const PlusIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -50,57 +68,129 @@ const StatCard = React.memo(({ title, value }) => (
 StatCard.displayName = 'StatCard';
 
 // ✅ Memoized table row component
-const TableRow = React.memo(({ bill, index }) => (
-  <tr className={styles.tbodyRow}>
-    <td>
-      <div className="d-flex align-items-center gap-2">
-        <input type="checkbox" className={styles.checkbox} />
-        <span>{bill.invoiceNumber || "0334"}</span>
-      </div>
-    </td>
-    <td>
-      <span className={styles.storeName}>{bill.name}</span>
-    </td>
-    <td>{formatCurrency(bill.amount)}</td>
-    <td>{bill.status}</td>
-    <td>{new Date(bill.date).toLocaleDateString("en-GB")}</td>
-    <td>
-      <button className={styles.actionBtn}>
-        <DotsIcon />
-      </button>
-    </td>
-  </tr>
-));
+const TableRow = React.memo(({ bill, onQR, onDelete }) => {
+  const isCompleted = bill.status === "مكتمل";
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    if (!showMenu) return;
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMenu]);
+
+  return (
+    <tr className={styles.tbodyRow} style={{ position: showMenu ? "relative" : "", zIndex: showMenu ? 100 : "" }}>
+      <td>
+        <div className="d-flex align-items-center gap-2">
+          <input type="checkbox" className={styles.checkbox} />
+          <span>{bill.invoiceNumber || "0334"}</span>
+        </div>
+      </td>
+      <td>
+        <span className={styles.storeName}>{bill.name}</span>
+      </td>
+      <td>{bill.type || "حجز"}</td>
+      <td>{formatCurrency(bill.amount)}</td>
+      <td>
+        <span className={`${styles.statusBadge} ${isCompleted ? styles.statusCompleted : styles.statusPending}`}>
+          {bill.status}
+        </span>
+      </td>
+      <td>{new Date(bill.date).toLocaleDateString("en-GB")}</td>
+      <td>{bill.endDate ? new Date(bill.endDate).toLocaleDateString("en-GB") : new Date(bill.date).toLocaleDateString("en-GB")}</td>
+      <td>
+        <div className={styles.actionGroup}>
+          <button className={styles.actionBtn} onClick={() => onDelete(bill)} title="حذف">
+            <DeleteIcon />
+          </button>
+          <button className={styles.actionBtn} onClick={() => onQR(bill)} title="رمز QR">
+            <QRIcon />
+          </button>
+
+          <div className={styles.dotsContainer} ref={menuRef}>
+            <button
+              className={styles.actionBtn}
+              onClick={() => setShowMenu(!showMenu)}
+            >
+              <DotsIcon />
+            </button>
+
+            {showMenu && (
+              <div className={styles.dotsDropdown}>
+                <button className={styles.dotsItem} onClick={() => { setShowMenu(false); console.log("Reorder", bill.id); }}>
+                  اعادة الطلب
+                </button>
+                <button className={styles.dotsItem} onClick={() => { setShowMenu(false); console.log("Print", bill.id); }}>
+                  طباعة الفاتورة
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </td>
+    </tr>
+  );
+});
 TableRow.displayName = 'TableRow';
 
 // ✅ Memoized mobile bill card component
-const BillCard = React.memo(({ bill }) => (
-  <div className={styles.billCard}>
-    <div className={styles.cardTop}>
-      <div className={styles.cardInvoice}>{bill.invoiceNumber}</div>
-      <div className={styles.cardAmount}>{formatCurrency(bill.amount)}</div>
+const BillCard = React.memo(({ bill, onQR, onDelete }) => {
+  const isCompleted = bill.status === "مكتمل";
+
+  return (
+    <div className={styles.billCard}>
+      <div className={styles.cardTop}>
+        <div className={styles.cardInvoice}>#{bill.invoiceNumber}</div>
+        <div className={styles.cardAmount}>{formatCurrency(bill.amount)}</div>
+      </div>
+
+      <div className={styles.cardBody}>
+        <div className={styles.cardRow}>
+          <span className={styles.cardLabel}>الاسم</span>
+          <span className={styles.cardValue}>{bill.name}</span>
+        </div>
+
+        <div className={styles.cardRow}>
+          <span className={styles.cardLabel}>النوع</span>
+          <span className={styles.cardValue}>{bill.type || "حجز"}</span>
+        </div>
+
+        <div className={styles.cardRow}>
+          <span className={styles.cardLabel}>الحالة</span>
+          <span className={`${styles.statusBadge} ${isCompleted ? styles.statusCompleted : styles.statusPending}`}>
+            {bill.status}
+          </span>
+        </div>
+
+        <div className={styles.cardRow}>
+          <span className={styles.cardLabel}>تاريخ البدء</span>
+          <span className={styles.cardValue}>
+            {new Date(bill.date).toLocaleDateString("en-GB")}
+          </span>
+        </div>
+
+        <div className={styles.cardRow}>
+          <span className={styles.cardLabel}>الإجراءات</span>
+          <div className={styles.actionGroup}>
+            <button className={styles.actionBtn} onClick={() => onDelete(bill)}>
+              <DeleteIcon />
+            </button>
+            <button className={styles.actionBtn} onClick={() => onQR(bill)}>
+              <QRIcon />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div className={styles.cardBody}>
-      <div className={styles.cardRow}>
-        <span className={styles.cardLabel}>الاسم</span>
-        <span className={styles.cardValue}>{bill.name}</span>
-      </div>
-
-      <div className={styles.cardRow}>
-        <span className={styles.cardLabel}>النوع</span>
-        <span className={styles.cardValue}>{bill.type}</span>
-      </div>
-
-      <div className={styles.cardRow}>
-        <span className={styles.cardLabel}>التاريخ</span>
-        <span className={styles.cardValue}>
-          {new Date(bill.date).toLocaleDateString("en-GB")}
-        </span>
-      </div>
-    </div>
-  </div>
-));
+  );
+});
 BillCard.displayName = 'BillCard';
 
 function BillsClient() {
@@ -120,6 +210,11 @@ function BillsClient() {
   const [isMobile, setIsMobile] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  // Modal states
+  const [selectedBill, setSelectedBill] = useState(null);
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const sortRef = useRef(null);
   const filterRef = useRef(null);
@@ -164,6 +259,23 @@ function BillsClient() {
     }
   };
 
+  const handleQRClick = useCallback((bill) => {
+    setSelectedBill(bill);
+    setShowQRModal(true);
+  }, []);
+
+  const handleDeleteClick = useCallback((bill) => {
+    setSelectedBill(bill);
+    setShowDeleteModal(true);
+  }, []);
+
+  const confirmDelete = () => {
+    // Implement delete logic here if needed
+    console.log("Deleting bill:", selectedBill?.id);
+    setShowDeleteModal(false);
+    setSelectedBill(null);
+  };
+
   // Helper for filter Option
   const FilterOption = ({ label, isActive, onClick }) => (
     <button
@@ -203,6 +315,9 @@ function BillsClient() {
                 <StatCard title="الاجمالي" value={stats.total} />
               </div>
             </div>
+
+            {/* ✅ Header Actions (Add Service) */}
+
 
             {/* ✅ Filters Row */}
             <div className={`row align-items-center ${styles.filterRow}`}>
@@ -322,15 +437,22 @@ function BillsClient() {
                             <tr>
                               <th>رقم الفاتورة</th>
                               <th>اسم العملية</th>
+                              <th>نوع العملية</th>
                               <th>قيمة العملية</th>
                               <th>حالة العملية</th>
-                              <th>تاريخ العملية</th>
+                              <th>تاريخ بدأ العملية</th>
+                              <th>تاريخ انتهاء العملية</th>
                               <th></th>
                             </tr>
                           </thead>
                           <tbody>
                             {bills.map((b, idx) => (
-                              <TableRow key={b.id} bill={b} index={idx} />
+                              <TableRow
+                                key={b.id}
+                                bill={b}
+                                onQR={handleQRClick}
+                                onDelete={handleDeleteClick}
+                              />
                             ))}
                           </tbody>
                         </table>
@@ -338,7 +460,12 @@ function BillsClient() {
                     ) : (
                       <div className="d-flex flex-column gap-3">
                         {bills.map((b) => (
-                          <BillCard key={b.id} bill={b} />
+                          <BillCard
+                            key={b.id}
+                            bill={b}
+                            onQR={handleQRClick}
+                            onDelete={handleDeleteClick}
+                          />
                         ))}
                       </div>
                     )}
@@ -350,6 +477,37 @@ function BillsClient() {
           </div>
         </div>
       </div>
+
+      {/* QR Modal */}
+      {showQRModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowQRModal(false)}>
+          <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+            <h3 className={styles.modalTitle}>رمز QR للعملية</h3>
+            <div className={styles.qrContainer}>
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${selectedBill?.invoiceNumber || selectedBill?.id}`}
+                alt="QR Code"
+              />
+            </div>
+            <p className="text-white-50 small mb-4">رقم الفاتورة: {selectedBill?.invoiceNumber}</p>
+            <button className={styles.cancelBtn} onClick={() => setShowQRModal(false)}>إغلاق</button>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowDeleteModal(false)}>
+          <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+            <h3 className={styles.modalTitle}>تأكيد الحذف</h3>
+            <p className="text-white mb-4">هل أنت متأكد من حذف هذه العملية ({selectedBill?.name})؟</p>
+            <div className={styles.modalActions}>
+              <button className={styles.confirmBtn} onClick={confirmDelete}>حذف</button>
+              <button className={styles.cancelBtn} onClick={() => setShowDeleteModal(false)}>إلغاء</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

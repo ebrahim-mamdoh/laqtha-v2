@@ -1,7 +1,7 @@
 // sidebar.jsx
 "use client";
 
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -57,6 +57,25 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(href + "/");
   };
+
+  // ✅ Lock body scroll when sidebar is open on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 992 && isOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isOpen]);
 
   return (
     <aside
@@ -135,15 +154,15 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
               <img src="/icons/Chield_check.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}>سياسة الخصوصية</span>
             </Link>
-             <Link href="/terms" className={styles.SupportLink}>
+            <Link href="/terms" className={styles.SupportLink}>
               <img src="/icons/User_alt.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}> شروط الاستخدام</span>
             </Link>
-             <Link href="/questions" className={styles.SupportLink}>
+            <Link href="/questions" className={styles.SupportLink}>
               <img src="/icons/Chat.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}> الأسئلة الشائعة</span>
             </Link>
-             <Link href="/partner/register" className={styles.SupportLink}>
+            <Link href="/partner/register" className={styles.SupportLink}>
               <img src="/icons/Chat.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}>انضمام كشريك</span>
             </Link>
@@ -151,7 +170,7 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
               <img src="/icons/chat_svg/Headphones_fill.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}> الدعم الفني</span>
             </Link>
-          
+
             {/* Profile Card */}
             <div className={styles.profileCard}>
               <div className={styles.info}>

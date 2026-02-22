@@ -2,18 +2,27 @@
 
 /* container */
 .sidebar {
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background: var(--main-color);
   color: #fff;
   padding: 12px;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
   border: 1px solid rgba(255,255,255,0.03);
   transition: width 260ms cubic-bezier(.2,.9,.3,1), padding 180ms ease;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 /* widths */
@@ -91,8 +100,6 @@
   flex-direction: column;
   gap: 6px;
 }
-
-.navItem {}
 
 /* link */
 .navLink {
@@ -313,7 +320,7 @@
     right: 0;
     z-index: 2000;
     width: 260px;
-    height: 100vh;
+    height: 100dvh;
     border-radius: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform: translateX(100%);
