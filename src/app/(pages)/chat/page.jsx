@@ -180,7 +180,7 @@ export default function ChatPage() {
               <div className={styles.welcomeSection}>
                 <Image src="/images/bubble.png" alt="bubble" width={90} height={90} className={styles.bubbleImg} />
                 <div className={styles.welcomeMsg}>
-                  مرحباً {user?.name || "بك"}! 👋 <br /> خبرني شنو تريد تطلب اليوم وأنا ألقطها 😉
+                  مرحباً {user?.name || "بك"}! 👋 <br /> قول لي وش تبي وانا بلقط لك من كل مكان 😉
                 </div>
               </div>
 
