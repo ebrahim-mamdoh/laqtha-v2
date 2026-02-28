@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Toast, ToastContainer } from "react-bootstrap";
 import styles from "./register.module.css";
 
 import { useAuth } from "@/context/AuthContext";
@@ -16,6 +17,7 @@ export default function RegisterPage() {
   const [serverError, setServerError] = useState(null); // ✅ لإظهار الخطأ من السيرفر
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   // ✅ regex مطابق للتحقق المستخدم في backend
   const phoneRegex = /^(?:\+9665\d{7,8}|05\d{7,8})$/;
@@ -83,7 +85,10 @@ export default function RegisterPage() {
         }
 
         // alert(data.message?.ar || "تم التسجيل بنجاح!"); // Optional: prefer UI notification
-        router.replace("/otp");
+        setShowToast(true);
+        setTimeout(() => {
+          router.replace("/otp");
+        }, 2000);
 
       } catch (err) {
         console.error("REGISTER ERROR:", err);
@@ -315,6 +320,25 @@ export default function RegisterPage() {
           </form>
         </div>
       </div>
+
+      <ToastContainer position="top-end" className="p-3" style={{ zIndex: 9999 }}>
+        <Toast
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          delay={3000}
+          autohide
+          bg="success"
+        >
+          <Toast.Body className="text-white">
+            <div className="d-flex align-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-check-circle-fill me-2" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+              </svg>
+              <span>تم تسجيل الدخول بنجاح</span>
+            </div>
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 }

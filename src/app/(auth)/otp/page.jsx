@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation"; // ✅ استيراد router من App Router
 import styles from "./otp.module.css";
 
@@ -13,6 +13,14 @@ export default function Otp() {
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
+  const inputRefs = useRef([]);
+
+  useEffect(() => {
+    // Focus first input on mount
+    if (inputRefs.current[0]) {
+      inputRefs.current[0].focus();
+    }
+  }, []);
 
   // 📩 قراءة الإيميل من localStorage عند تحميل الصفحة
   useEffect(() => {
@@ -32,12 +40,42 @@ export default function Otp() {
 
   // 🧩 التحكم في حقول OTP
   const handleChange = (index, value) => {
-    if (!/^[0-9]?$/.test(value)) return;
+    // Allow only numbers
+    if (isNaN(value)) return;
+
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-    if (value && index < 3) {
-      document.getElementById(`otp-${index + 1}`).focus();
+
+    // Auto move to next input
+    if (value !== "" && index < 3) {
+      inputRefs.current[index + 1].focus();
+    }
+  };
+
+  const handleKeyDown = (index, e) => {
+    // Backspace: move to prev input
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").slice(0, 4);
+    if (!/^\d+$/.test(pastedData)) return;
+
+    const newOtp = [...otp];
+    pastedData.split("").forEach((char, i) => {
+      if (i < 4) newOtp[i] = char;
+    });
+    setOtp(newOtp);
+
+    // Focus appropriate input
+    if (pastedData.length === 4) {
+      inputRefs.current[3].focus();
+    } else {
+      inputRefs.current[pastedData.length].focus();
     }
   };
 
@@ -112,14 +150,20 @@ export default function Otp() {
                   قد قمنا بإرسال رمز التحقق إليك، المرجو التحقق منه في بريدك الإلكتروني
                 </h2>
 
-                <div className={styles.otpInputs}>
+                <div className={styles.otpInputs} onPaste={handlePaste}>
                   {otp.map((v, i) => (
                     <input
                       key={i}
                       id={`otp-${i}`}
+                      ref={(el) => (inputRefs.current[i] = el)}
+                      type="text"
                       maxLength="1"
                       value={v}
                       onChange={(e) => handleChange(i, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(i, e)}
+                      disabled={loading}
+                      autoComplete="one-time-code"
+                      inputMode="numeric"
                       className={styles.otpBox}
                     />
                   ))}

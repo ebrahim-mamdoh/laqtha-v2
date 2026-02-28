@@ -8,13 +8,9 @@
 import axios from 'axios';
 
 // Base API URL from environment variable
-const baseURL = process.env.NEXT_PUBLIC_API_URL;
-
-if (!baseURL) {
-  throw new Error("NEXT_PUBLIC_API_URL is not defined");
-}
-
-export const API_BASE_URL = baseURL;
+const RAW_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5002';
+// Safely ensure the base url ends with /api (backend expects /api prefix for all endpoints)
+export const API_BASE_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api`;
 
 /**
  * Axios instance configured for API requests
@@ -23,7 +19,7 @@ export const API_BASE_URL = baseURL;
  * - Sets default headers
  */
 export const apiClient = axios.create({
-  baseURL: `${baseURL}/api`, // Updated to match user request requirement
+  baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -74,16 +70,14 @@ apiClient.interceptors.response.use(
 
 /**
  * Helper function to build API endpoints
- * @param {string} path - The API path (e.g., '/auth/login') NO /api prefix needed if usage is consistent
+ * @param {string} path - The API path (e.g., '/api/auth/login')
  * @returns {string} - Full API URL
  */
 export const getApiUrl = (path) => {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  // Remove /api if it's already in the base URL, or handle it carefully.
-  // The user asked for baseURL: `${baseURL}/api`, so endpoints should NOT have /api prefix usually.
-  // But legacy code might pass /api/...
-  // Let's make it robust.
-  return `${baseURL}/api${cleanPath.replace(/^\/api/, '')}`;
+  // Prevent duplicating /api if cleanPath already starts with it
+  const finalPath = cleanPath.startsWith('/api/') ? cleanPath.substring(4) : cleanPath;
+  return `${API_BASE_URL}${finalPath}`;
 };
 
 /**

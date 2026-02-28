@@ -239,6 +239,7 @@ width: 100%;
   justify-content: center;
   gap: 18px; /* المسافة بين الخانات */
   margin: 25px 0;
+  direction: ltr;
 }
 
 .otpBox {

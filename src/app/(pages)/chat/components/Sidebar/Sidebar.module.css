@@ -5,7 +5,7 @@
   height: 100dvh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start; /* Changed from space-between to avoid unnatural gaps */
   background: var(--main-color);
   color: #fff;
   padding: 12px;
@@ -90,6 +90,7 @@
 .nav {
   margin-top: 6px;
   flex: 0 0 auto;
+  width: 100%;
 }
 
 .navList {
@@ -98,7 +99,12 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+  width: 100%;
+}
+
+.navItem {
+  width: 100%;
 }
 
 /* link */
@@ -106,16 +112,18 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px;
+  padding: 12px 14px;
   border-radius: 12px;
   color: rgba(255,255,255,0.85);
   text-decoration: none;
   transition: background .18s ease, transform .18s ease, color .18s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.navLink:hover {
+.navLink:not(.active):hover {
   background: rgba(255,255,255,0.03);
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,1);
   transform: translateX(-4px);
 }
 
@@ -156,7 +164,11 @@
 /* active state */
 .active {
   background: linear-gradient(90deg, #094EFD 0%, #F901C9 100%);
-  box-shadow: 0 10px 30px rgba(9,78,253,0.08);
+  box-shadow: 0 4px 15px rgba(249, 1, 201, 0.15);
+  color: #fff;
+}
+.active .label {
+  font-weight: 600;
 }
 .active .icon {
   filter: brightness(0) invert(1);
@@ -166,8 +178,10 @@
 .bottom {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px; /* slightly tighter */
   margin-top: 12px;
+  flex: 1 1 auto; /* Fill remaining space logically */
+  width: 100%;
 }
 
 .bottomList {
@@ -177,11 +191,9 @@
   margin-bottom: 8px;
 }
 
-.bottom {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 12px;
+/* Ensure closed avatar goes to bottom too */
+.bottom > .avatar {
+  margin-top: auto;
 }
 
 /* support button */
@@ -211,6 +223,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-top: auto; /* Naturally pushes JUST the profile box to the bottom */
 }
 
 .profileInfo {
@@ -304,12 +317,19 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  /* padding: 10px 12px; */
+  padding: 12px 14px;
   border-radius: 10px;
   color: #83868F;
   font-size: 14px;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.SupportLink:hover {
+  background: rgba(255,255,255,0.03);
+  color: #fff;
 }
 
 /* ========== 📱 Mobile Overlay Behavior ========== */
@@ -319,7 +339,8 @@
     top: 0;
     right: 0;
     z-index: 2000;
-    width: 260px;
+    width: 85vw; /* responsive instead of fixed px */
+    max-width: 320px; /* cap the width naturally */
     height: 100dvh;
     border-radius: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -361,12 +382,17 @@
 
   /* nav adjustments */
   .nav {
-    margin-top: 20px;
+    margin-top: 16px; /* more subtle spacing */
   }
 
   .navList {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .navItem {
+    width: 100%;
   }
 
   .navLink {
@@ -375,6 +401,7 @@
   }
 
   .bottom {
-    margin-top: auto;
+    /* Removed margin-top: auto; and rely on flex distribution natively */
+    padding-bottom: max(16px, env(safe-area-inset-bottom)); 
   }
 }

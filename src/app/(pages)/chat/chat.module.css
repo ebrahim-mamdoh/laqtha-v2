@@ -288,7 +288,8 @@ max-width: 100vw; /* Don't exceed viewport width */
 .sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }
 /* ================= CHAT MESSAGES ================= */
 .messagesArea {
-  flex: 1;
+  flex: 1 1 0%;
+  min-height: 0; /* CRUCIAL: allows child to shrink and scroll inside flex */
   overflow-y: auto;
   padding: 20px 30px;
   display: flex;
@@ -394,9 +395,24 @@ max-width: 100vw; /* Don't exceed viewport width */
 
 @media (max-width: 767px) {
   .chatShell {
-    padding: 16px;
-    min-height: 72dvh;
+    padding: 0;
+    height: 100%;
+    min-height: unset;
     max-width: 100vw; /* Don't exceed viewport */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Ensure the Bootstrap row wrapper fills the remaining height properly */
+  .chatPage > div[class*="row"],
+  .chatPage > :global(.row) {
+    flex: 1;
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   /* ✅ Mobile: vertical stack, no overflow */
@@ -421,10 +437,19 @@ max-width: 100vw; /* Don't exceed viewport width */
   }
 
   .chatPage {
-    padding: 30px 16px; /* Reduce horizontal padding on mobile */
-    min-height: 93dvh;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    box-sizing: border-box;
+    padding: 16px 16px; /* Adjust padding on mobile */
+    padding-bottom: max(24px, env(safe-area-inset-bottom)); /* More comfortable bottom spacing! */
+    /* height: 100dvh;  */
+    min-height: 92dvh;
+    overflow: hidden; /* Prevent horizontal/vertical scroll at page level */
     max-width: 100vw; /* Don't exceed viewport */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .messagesArea {
+    padding: 12px 4px; /* give more horizontal space on mobile */
   }
 
   /* ✅ Better touch feedback */
@@ -433,14 +458,16 @@ max-width: 100vw; /* Don't exceed viewport width */
     opacity: 0.9;
   }
 
-  /* ✅ Fix input bar overflow on mobile */
+  /* ✅ Fix input bar overflow and spacing on mobile */
   .inputBar {
-    padding: 8px 10px; /* Reduce padding slightly */
-    margin: 10px 0 0 0; /* Remove horizontal margins */
+    padding: 10px 14px; /* More comfortable padding */
+    margin: 8px 0 0 0; /* Remove horizontal margins */
+    flex: 0 0 auto;
+    width: 100%;
   }
 
   .textInput {
-    font-size: 13px; /* Slightly smaller on mobile */
+    font-size: 14px; /* Make readable */
     padding: 8px 12px;
   }
 }

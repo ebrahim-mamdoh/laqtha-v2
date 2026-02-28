@@ -40,6 +40,13 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
     }, 150);
   }, [queryClient]);
 
+  // ✅ Close sidebar on mobile after clicking a link
+  const handleLinkClick = () => {
+    if (window.innerWidth < 992 && isOpen && onToggle) {
+      onToggle();
+    }
+  };
+
   const handleLogout = async (e) => {
     e.preventDefault();
     if (typeof onLogout === "function") {
@@ -127,6 +134,7 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
                   className={`${styles.navLink} ${active ? styles.active : ""}`}
                   aria-current={active ? "page" : undefined}
                   onMouseEnter={() => handlePrefetch(item.href)} // ✅ Prefetch on hover
+                  onClick={handleLinkClick} // ✅ Close on mobile click
                 >
                   <span className={styles.iconWrapper}>
                     <Image
@@ -150,23 +158,23 @@ export default function Sidebar({ isOpen = true, onToggle, onLogout }) {
         {isOpen ? (
           <>
             {/* Support Button */}
-            <Link href="/privacy" className={styles.SupportLink}>
+            <Link href="/privacy" className={styles.SupportLink} onClick={handleLinkClick}>
               <img src="/icons/Chield_check.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}>سياسة الخصوصية</span>
             </Link>
-            <Link href="/terms" className={styles.SupportLink}>
+            <Link href="/terms" className={styles.SupportLink} onClick={handleLinkClick}>
               <img src="/icons/User_alt.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}> شروط الاستخدام</span>
             </Link>
-            <Link href="/questions" className={styles.SupportLink}>
+            <Link href="/questions" className={styles.SupportLink} onClick={handleLinkClick}>
               <img src="/icons/Chat.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}> الأسئلة الشائعة</span>
             </Link>
-            <Link href="/partner/register" className={styles.SupportLink}>
+            <Link href="/partner/register" className={styles.SupportLink} onClick={handleLinkClick}>
               <img src="/icons/Chat.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}>انضمام كشريك</span>
             </Link>
-            <Link href="mailto:ebrahimmadoh3@gmail.com" className={styles.SupportLink}>
+            <Link href="mailto:ebrahimmadoh3@gmail.com" className={styles.SupportLink} onClick={handleLinkClick}>
               <img src="/icons/chat_svg/Headphones_fill.svg" alt="الدعم الفني" width={20} height={20} />
               <span className={styles.text}> الدعم الفني</span>
             </Link>
