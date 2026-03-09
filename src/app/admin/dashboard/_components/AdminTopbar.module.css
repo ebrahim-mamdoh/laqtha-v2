@@ -1,0 +1,158 @@
+/* ============================================================
+   ADMIN TOPBAR — styles
+   ============================================================ */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  direction: rtl;
+}
+
+/* Page title (right side) */
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.pageTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--admin-text);
+  line-height: 1.2;
+}
+
+.pageSubtitle {
+  font-size: 0.72rem;
+  color: var(--admin-text-secondary);
+}
+
+/* Search (center, grows) */
+.searchWrap {
+  flex: 1;
+  max-width: 360px;
+  margin-inline-end: auto;
+}
+
+.searchInner {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  inset-inline-start: 12px;
+  color: var(--admin-muted);
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-pill);
+  padding-block: 8px;
+  padding-inline-start: 36px;
+  padding-inline-end: 14px;
+  font-size: 0.8rem;
+  color: var(--admin-text);
+  outline: none;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput::placeholder {
+  color: var(--admin-muted);
+}
+
+.searchInput:focus {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px var(--admin-primary-soft);
+}
+
+/* Right-side actions */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.dateChip {
+  font-size: 0.72rem;
+  color: var(--admin-text-secondary);
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-pill);
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.iconBtn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--admin-text-secondary);
+  transition: background 0.18s, border-color 0.18s;
+}
+
+.iconBtn:hover {
+  background: var(--admin-primary-soft);
+  border-color: var(--admin-primary-glow);
+  color: var(--admin-primary);
+}
+
+.notifBadge {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background: var(--admin-danger);
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: var(--admin-radius-pill);
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--admin-surface);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--admin-success);
+  flex-shrink: 0;
+}
+
+.themeBtn {
+  font-size: 0.75rem;
+  color: var(--admin-text-secondary);
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-pill);
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  transition: background 0.18s;
+}
+
+.themeBtn:hover {
+  background: var(--admin-primary-soft);
+  color: var(--admin-primary);
+  border-color: var(--admin-primary);
+}

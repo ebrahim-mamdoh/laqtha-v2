@@ -1,0 +1,69 @@
+/* ============================================================
+   ACCESS DENIED — styles
+   Shown when a logged-in user lacks the admin role.
+   ============================================================ */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--admin-bg);
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  padding: 24px;
+}
+
+.card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 48px 40px;
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--admin-shadow-md);
+}
+
+.icon {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--admin-text);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--admin-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--admin-primary-soft);
+  color: var(--admin-primary);
+  border: 1px solid var(--admin-primary-glow);
+  border-radius: var(--admin-radius-pill);
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: 'Cairo', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.18s;
+}
+
+.backBtn:hover {
+  background: var(--admin-primary);
+  color: #fff;
+}

@@ -1,0 +1,103 @@
+/* ============================================================
+   ADMIN DASHBOARD — DESIGN SYSTEM TOKENS
+   Imported once at the admin layout level.
+   All admin components must rely solely on these variables.
+   ============================================================ */
+
+:root,
+[data-admin-theme="dark"] {
+  /* Backgrounds */
+  --admin-bg: #09050E;
+  --admin-bg-secondary: #0f0a17;
+  --admin-surface: #120D1C;
+  --admin-card: #1A1228;
+  --admin-card-hover: #221835;
+
+  /* Borders */
+  --admin-border: rgba(255, 255, 255, 0.05);
+  --admin-border-strong: rgba(255, 255, 255, 0.1);
+
+  /* Brand / Accent */
+  --admin-primary: #E91E8C;
+  --admin-primary-soft: rgba(233, 30, 140, 0.15);
+  --admin-primary-glow: rgba(233, 30, 140, 0.3);
+  --admin-secondary: #9C27B0;
+  --admin-secondary-soft: rgba(156, 39, 176, 0.15);
+  --admin-accent: #7B1FA2;
+  --admin-accent-soft: rgba(123, 31, 162, 0.15);
+
+  /* Status */
+  --admin-success: #22c55e;
+  --admin-success-soft: rgba(34, 197, 94, 0.15);
+  --admin-warning: #f59e0b;
+  --admin-warning-soft: rgba(245, 158, 11, 0.15);
+  --admin-danger: #ef4444;
+  --admin-danger-soft: rgba(239, 68, 68, 0.15);
+  --admin-info: #3b82f6;
+  --admin-info-soft: rgba(59, 130, 246, 0.15);
+
+  /* Typography */
+  --admin-text: #F0EAF8;
+  --admin-text-secondary: #b3a5ca;
+  --admin-muted: #9082A8;
+
+  /* Chart colors */
+  --chart-hotels: var(--admin-secondary);
+  --chart-restaurants: var(--admin-primary);
+  --chart-transport: var(--admin-accent);
+  --chart-tourism: var(--admin-success);
+  --chart-other: var(--admin-warning);
+
+  /* Layout dimensions */
+  --admin-sidebar-width: 240px;
+  --admin-topbar-height: 70px;
+  --admin-radius: 14px;
+  --admin-radius-sm: 8px;
+  --admin-radius-pill: 999px;
+
+  /* Shadows */
+  --admin-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --admin-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --admin-shadow-glow: 0 0 20px rgba(168, 85, 247, 0.2);
+
+  /* Scrollbar */
+  --admin-scrollbar-thumb: rgba(168, 85, 247, 0.3);
+  --admin-scrollbar-track: rgba(255, 255, 255, 0.03);
+}
+
+[data-admin-theme="light"] {
+  --admin-bg: #f0f0f8;
+  --admin-bg-secondary: #e8e8f5;
+  --admin-surface: #ffffff;
+  --admin-card: #ffffff;
+  --admin-card-hover: #f5f5ff;
+
+  --admin-border: rgba(0, 0, 0, 0.08);
+  --admin-border-strong: rgba(0, 0, 0, 0.14);
+
+  --admin-primary: #7c3aed;
+  --admin-primary-soft: rgba(124, 58, 237, 0.1);
+  --admin-primary-glow: rgba(124, 58, 237, 0.2);
+  --admin-accent: #db2777;
+  --admin-accent-soft: rgba(219, 39, 119, 0.1);
+
+  --admin-success: #16a34a;
+  --admin-success-soft: rgba(22, 163, 74, 0.1);
+  --admin-warning: #d97706;
+  --admin-warning-soft: rgba(217, 119, 6, 0.1);
+  --admin-danger: #dc2626;
+  --admin-danger-soft: rgba(220, 38, 38, 0.1);
+  --admin-info: #2563eb;
+  --admin-info-soft: rgba(37, 99, 235, 0.1);
+
+  --admin-text: #0f0f1a;
+  --admin-text-secondary: #4b4b6a;
+  --admin-muted: #9090b0;
+
+  --admin-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --admin-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --admin-shadow-glow: 0 0 20px rgba(124, 58, 237, 0.1);
+
+  --admin-scrollbar-thumb: rgba(124, 58, 237, 0.3);
+  --admin-scrollbar-track: rgba(0, 0, 0, 0.04);
+}
