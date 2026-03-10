@@ -1,0 +1,398 @@
+/* ============================================================
+   ADMIN PAYMENTS PAGE — CSS MODULE
+   All values strictly use admin theme tokens.
+   ============================================================ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  direction: rtl;
+}
+
+/* ── Stats grid (6 columns) ───────────────────── */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.statCard {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+  transition: transform 0.18s, box-shadow 0.18s;
+  justify-content: center;
+  min-height: 90px;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-md);
+}
+
+.statValue {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--stat-color, var(--admin-text));
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  color: var(--admin-text-secondary);
+}
+
+/* ── Content Grid (Right table, Left charts) ────────────── */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr; /* Matches the layout ratio from screenshot */
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Charts Panel (Left Side) ───────────────────────────── */
+.chartsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chartCard {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 20px;
+}
+
+.chartTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  margin-block-end: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.donutWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.donutChartContainer {
+  flex: 1;
+  height: 160px;
+}
+
+/* Custom Legend for Donut */
+.donutLegend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 100px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--admin-text-secondary);
+}
+
+.legendLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dot-color);
+}
+
+.legendValue {
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+/* Failure Bars */
+.failureBars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.failureItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.failureLabel {
+  font-size: 0.75rem;
+  color: var(--admin-text-secondary);
+  font-weight: 600;
+  flex: 1;
+  text-align: right;
+}
+
+.failureTrack {
+  width: 80px;
+  height: 4px;
+  background: var(--admin-border);
+  border-radius: var(--admin-radius-pill);
+  overflow: hidden;
+}
+
+.failureBarVal {
+  height: 100%;
+  background: var(--bar-color);
+  border-radius: var(--admin-radius-pill);
+}
+
+.failurePercent {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--bar-color);
+  width: 30px;
+  text-align: right;
+}
+
+/* ── Main Table Panel (Right Side) ──────────────────────── */
+.tablePanel {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-block-end: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+}
+
+.panelTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Filters bar ────────────────────────────────────────── */
+.filtersBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 14px 20px;
+  border-block-end: 1px solid var(--admin-border);
+  background: var(--admin-card);
+}
+
+.filterInput,
+.filterSelect {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  color: var(--admin-text);
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.filterInput:focus,
+.filterSelect:focus {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px var(--admin-primary-soft);
+}
+
+.filterInput {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filterSelect {
+  min-width: 140px;
+}
+
+.filterDate {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  color: var(--admin-text);
+  font-family: 'Cairo', sans-serif;
+  direction: ltr; /* usually ltr for MM/DD/YYYY */
+  text-align: right;
+  outline: none;
+  width: 130px;
+}
+
+.filterSpacer {
+  flex: 1;
+}
+
+.btnExport {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--admin-surface);
+  color: var(--admin-text);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  padding: 8px 14px;
+  font-size: 0.78rem;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.btnExport:hover {
+  background: var(--admin-card-hover);
+}
+
+/* ── Table  ─────────────────────────────────────────────── */
+.tableWrap {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--admin-border) var(--admin-surface);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  min-width: 800px;
+}
+
+.table th {
+  text-align: right;
+  padding: 12px 16px;
+  color: var(--admin-muted);
+  font-weight: 600;
+  font-size: 0.68rem;
+  border-block-end: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 14px 16px;
+  border-block-end: 1px solid var(--admin-border);
+  color: var(--admin-text-secondary);
+  vertical-align: middle;
+}
+
+.table tbody tr:hover td {
+  background: var(--admin-surface);
+}
+
+/* ── Typography & Special Cells ──────────────────────────── */
+.txnId {
+  color: var(--admin-muted);
+  font-family: monospace;
+  font-size: 0.7rem;
+}
+
+.orderId {
+  color: var(--admin-text);
+  font-weight: 700;
+}
+
+.amount {
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* Dynamic Pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--admin-radius-pill);
+  font-size: 0.65rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--pill-bg);
+  color: var(--pill-color);
+  border: 1px solid var(--pill-borderColor, transparent);
+}
+
+/* ── Actions ────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  padding: 4px 6px;
+  border-radius: var(--admin-radius-pill);
+  width: fit-content;
+}
+
+.actionBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--admin-muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+.actionBtn:hover {
+  background: var(--admin-primary-soft);
+  color: var(--admin-primary);
+}
+
+/* ── Empty State ───────────────────────────────────────── */
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+}
