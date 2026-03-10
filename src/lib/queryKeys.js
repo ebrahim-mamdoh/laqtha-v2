@@ -5,4 +5,11 @@ export const queryKeys = {
   dashboard: ['dashboard'],
   wallet: ['wallet'],
   hotels: ['hotels'],
+  admin: {
+    notifications: ['admin', 'notifications'],
+    tickets: ['admin', 'tickets'],
+    users: ['admin', 'users'],
+    partners: ['admin', 'partners'],
+    orders: ['admin', 'orders'],
+  },
 };

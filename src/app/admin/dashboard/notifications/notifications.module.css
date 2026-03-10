@@ -1,0 +1,150 @@
+/* ============================================================
+   ADMIN NOTIFICATIONS PAGE — CSS MODULE
+   Uses admin theme variables directly matching the dropdown UI.
+   ============================================================ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  direction: rtl;
+}
+
+.sectionTitle {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--admin-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-block-end: 8px;
+}
+
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+}
+
+/* ── Notification Card ───────────────────────────────────── */
+.notifCard {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-strong);
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow-md);
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-block-end: 1px solid var(--admin-border);
+  background: var(--admin-card);
+  border-radius: var(--admin-radius) var(--admin-radius) 0 0;
+}
+
+.headerTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--admin-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.markReadBtn {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--admin-primary);
+  background: var(--admin-primary-soft);
+  border: 1px solid var(--admin-primary-glow);
+  border-radius: var(--admin-radius-pill);
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  transition: background 0.15s, color 0.15s;
+}
+
+.markReadBtn:hover:not(:disabled) {
+  background: var(--admin-primary);
+  color: #fff;
+}
+
+.markReadBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Notification Items ──────────────────────────────────── */
+.notifList {
+  display: flex;
+  flex-direction: column;
+}
+
+.notifItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-block-end: 1px solid var(--admin-border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.notifItem:hover {
+  background: var(--admin-card-hover);
+}
+
+.notifItem:last-child {
+  border-block-end: none;
+}
+
+.notifIconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--admin-radius-sm);
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.iconDanger { background: var(--admin-danger-soft); color: var(--admin-danger); }
+.iconWarning { background: var(--admin-warning-soft); color: var(--admin-warning); }
+.iconSuccess { background: var(--admin-success-soft); color: var(--admin-success); }
+.iconInfo { background: var(--admin-info-soft); color: var(--admin-info); }
+
+.notifContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notifBodyTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  line-height: 1.4;
+}
+
+.notifTime {
+  font-size: 0.7rem;
+  color: var(--admin-muted);
+}
+
+.notifUnreadDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--admin-primary);
+  flex-shrink: 0;
+  box-shadow: 0 0 10px var(--admin-primary-glow);
+}
