@@ -1,0 +1,238 @@
+/* ============================================================
+   ADMIN REPORTS PAGE — CSS MODULE
+   All values strictly use admin theme tokens.
+   ============================================================ */
+
+   .page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    direction: rtl;
+  }
+  
+  /* ── Section Title ───────────────────────────────────────── */
+  .sectionTitle {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--admin-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-block-end: 20px;
+  }
+  .sectionTitle::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--admin-border);
+  }
+  
+  /* ── 2x2 Grid Layout ─────────────────────────────────────── */
+  .grid2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  @media (max-width: 1024px) {
+    .grid2x2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* ── Card Styles ─────────────────────────────────────────── */
+  .card {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .cardTitle {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* ── Top Left Pink badge ── */
+  .badgeTopLeft {
+    background: color-mix(in srgb, var(--admin-primary) 15%, transparent);
+    color: var(--admin-primary);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--admin-radius-pill);
+    direction: ltr; /* keep PDF/Excel text ltr */
+  }
+  
+  /* ── Form Items (Generator) ─────────────────────────────── */
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .formLabel {
+    font-size: 0.72rem;
+    color: var(--admin-text-secondary);
+    font-weight: 600;
+  }
+  
+  .formGroupRow {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .formSelect,
+  .formInput {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius-sm);
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    color: var(--admin-text);
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  
+  .formSelect:focus,
+  .formInput:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px var(--admin-primary-soft);
+  }
+  
+  .formDateGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .formNotice {
+    font-size: 0.68rem;
+    color: var(--admin-warning);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    margin-block-start: 4px;
+  }
+  
+  .btnSubmit {
+    background: var(--admin-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--admin-radius);
+    padding: 14px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-block-start: auto; /* push to bottom of card */
+  }
+  
+  .btnSubmit:hover {
+    background: color-mix(in srgb, var(--admin-primary) 90%, black);
+  }
+  
+  /* ── Ready Reports List ─────────────────────────────────── */
+  .readyReportList {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .reportItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-block-end: 1px solid var(--admin-border);
+  }
+  
+  .reportItem:last-child {
+    border-block-end: none;
+  }
+  
+  .reportInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .reportIconWrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: var(--icon-bg);
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+  }
+  
+  .reportTextWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .reportTitle {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--admin-text);
+  }
+  
+  .reportDate {
+    font-size: 0.68rem;
+    color: var(--admin-text-secondary);
+  }
+  
+  .btnDownload {
+    background: transparent;
+    color: var(--admin-text);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius-sm);
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .btnDownload:hover {
+    background: var(--admin-surface);
+  }
+  
+  /* ── Loading/Error Container ────────────────────────────── */
+  .centerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: var(--admin-muted);
+    font-size: 0.9rem;
+  }

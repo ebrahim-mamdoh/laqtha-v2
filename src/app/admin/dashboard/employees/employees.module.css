@@ -1,0 +1,297 @@
+/* ============================================================
+   ADMIN EMPLOYEES PAGE — CSS MODULE
+   All values strictly use admin theme tokens.
+   ============================================================ */
+
+   .page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    direction: rtl;
+  }
+  
+  /* ── Stats grid (5 columns) ───────────────────── */
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  
+  .statCard {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    transition: transform 0.18s, box-shadow 0.18s;
+    justify-content: center;
+    min-height: 100px;
+  }
+  
+  .statCard:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--admin-shadow-md);
+  }
+  
+  .statValue {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--stat-color, var(--admin-text));
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  
+  .statLabel {
+    font-size: 0.75rem;
+    color: var(--admin-text-secondary);
+  }
+  
+  /* ── Filters bar ────────────────────────────────────────── */
+  .filtersBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius) var(--admin-radius) 0 0;
+    padding: 14px 16px;
+    border-block-end: none;
+  }
+
+  .btnNew {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--admin-primary);
+    color: white;
+    border: none;
+    border-radius: var(--admin-radius-sm);
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+  
+  .btnNew:hover {
+    background: color-mix(in srgb, var(--admin-primary) 90%, black);
+  }
+  
+  .filterInput,
+  .filterSelect {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius-sm);
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    color: var(--admin-text);
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
+  
+  .filterInput:focus,
+  .filterSelect:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px var(--admin-primary-soft);
+  }
+  
+  .filterInput {
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+  }
+  
+  .filterSelect {
+    min-width: 140px;
+  }
+  
+  .filterSpacer {
+    flex: 1;
+  }
+  
+  .btnExport {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--admin-surface);
+    color: var(--admin-text);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius-sm);
+    padding: 8px 14px;
+    font-size: 0.78rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+  
+  .btnExport:hover {
+    background: var(--admin-card-hover);
+  }
+  
+  /* ── Table wrapper ──────────────────────────────────────── */
+  .tableCard {
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 0 0 var(--admin-radius) var(--admin-radius);
+    overflow: hidden;
+  }
+  
+  .tableHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-block-end: 1px solid var(--admin-border);
+    border-block-start: 1px solid var(--admin-border);
+    background: var(--admin-surface);
+  }
+  
+  .tableTitle {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .tableWrap {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--admin-border) var(--admin-surface);
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+  
+  .table th {
+    text-align: right;
+    padding: 12px 16px;
+    color: var(--admin-muted);
+    font-weight: 600;
+    font-size: 0.68rem;
+    border-block-end: 1px solid var(--admin-border);
+    background: var(--admin-surface);
+  }
+  
+  .table td {
+    padding: 14px 16px;
+    border-block-end: 1px solid var(--admin-border);
+    color: var(--admin-text-secondary);
+    vertical-align: middle;
+  }
+  
+  .table tbody tr:hover td {
+    background: var(--admin-surface);
+  }
+  
+  /* ── Typography & Special Cells ──────────────────────────── */
+  .employeeWrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--admin-primary-soft);
+    color: var(--admin-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  
+  .empName {
+    font-weight: 700;
+    color: var(--admin-text);
+  }
+  
+  /* Rating Stars Cell */
+  .ratingWrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--admin-warning);
+    font-weight: 700;
+  }
+  .ratingStars {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+
+  .statNumber {
+    font-weight: 700;
+  }
+  
+  /* Dynamic Pill */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: var(--admin-radius-pill);
+    font-size: 0.65rem;
+    font-weight: 700;
+    white-space: nowrap;
+    background: var(--pill-bg);
+    color: var(--pill-color);
+    border: 1px solid var(--pill-borderColor, transparent);
+  }
+  
+  /* ── Actions ────────────────────────────────────────────── */
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    padding: 4px 6px;
+    border-radius: var(--admin-radius-pill);
+    width: fit-content;
+  }
+  
+  .actionBtn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 0.7rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--admin-muted);
+    transition: background 0.15s, color 0.15s;
+  }
+  
+  .actionBtn:hover {
+    background: var(--admin-primary-soft);
+    color: var(--admin-primary);
+  }
+  
+  /* ── Empty State ───────────────────────────────────────── */
+  .centerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: var(--admin-muted);
+    font-size: 0.9rem;
+  }

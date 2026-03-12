@@ -1,88 +1,69 @@
-/* ============================================================
-   ADMIN NOTIFICATIONS PAGE — CSS MODULE
-   Uses admin theme variables directly matching the dropdown UI.
-   ============================================================ */
-
 .page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  direction: rtl;
+  gap: 24px;
 }
 
+/* ── Section Title ───────────────────────────────────────── */
 .sectionTitle {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: var(--admin-text);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-block-end: 8px;
-}
-
-.centerContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
+  font-size: 0.7rem;
+  font-weight: 700;
   color: var(--admin-muted);
-  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-block-end: 20px;
+}
+.sectionTitle::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--admin-border);
 }
 
-/* ── Notification Card ───────────────────────────────────── */
+/* ── Notification Card ────────────────────────────────────── */
 .notifCard {
-  background: var(--admin-surface);
-  border: 1px solid var(--admin-border-strong);
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
-  box-shadow: var(--admin-shadow-md);
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
+  overflow: hidden;
+  margin-bottom: 24px;
 }
 
 .headerRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 24px;
+  padding: 16px 20px;
   border-block-end: 1px solid var(--admin-border);
-  background: var(--admin-card);
-  border-radius: var(--admin-radius) var(--admin-radius) 0 0;
+  background: var(--admin-surface);
 }
 
 .headerTitle {
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: 0.88rem;
+  font-weight: 700;
   color: var(--admin-text);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .markReadBtn {
-  font-size: 0.78rem;
-  font-weight: 700;
+  background: transparent;
   color: var(--admin-primary);
-  background: var(--admin-primary-soft);
-  border: 1px solid var(--admin-primary-glow);
-  border-radius: var(--admin-radius-pill);
-  padding: 6px 14px;
+  border: none;
+  font-size: 0.72rem;
+  font-family: inherit;
+  font-weight: 700;
   cursor: pointer;
-  font-family: 'Cairo', sans-serif;
-  transition: background 0.15s, color 0.15s;
 }
 
-.markReadBtn:hover:not(:disabled) {
-  background: var(--admin-primary);
-  color: #fff;
+.markReadBtn:hover {
+  text-decoration: underline;
 }
 
-.markReadBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ── Notification Items ──────────────────────────────────── */
 .notifList {
   display: flex;
   flex-direction: column;
@@ -91,60 +72,163 @@
 .notifItem {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 20px 24px;
+  padding: 16px 20px;
   border-block-end: 1px solid var(--admin-border);
+  gap: 16px;
+  transition: background 0.18s;
   cursor: pointer;
-  transition: background 0.15s;
-}
-
-.notifItem:hover {
-  background: var(--admin-card-hover);
 }
 
 .notifItem:last-child {
   border-block-end: none;
 }
 
-.notifIconWrap {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--admin-radius-sm);
-  display: grid;
-  place-items: center;
-  font-size: 1.3rem;
-  flex-shrink: 0;
+.notifItem:hover {
+  background: var(--admin-surface);
 }
 
-.iconDanger { background: var(--admin-danger-soft); color: var(--admin-danger); }
-.iconWarning { background: var(--admin-warning-soft); color: var(--admin-warning); }
-.iconSuccess { background: var(--admin-success-soft); color: var(--admin-success); }
-.iconInfo { background: var(--admin-info-soft); color: var(--admin-info); }
+/* Base Icon Wrap */
+.notifIconWrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+}
+
+/* Custom coloring per type */
+.iconDanger {
+  background: color-mix(in srgb, var(--admin-danger) 15%, transparent);
+  color: var(--admin-danger);
+}
+.iconWarning {
+  background: color-mix(in srgb, var(--admin-warning) 15%, transparent);
+  color: var(--admin-warning);
+}
+.iconSuccess {
+  background: color-mix(in srgb, var(--admin-success) 15%, transparent);
+  color: var(--admin-success);
+}
+.iconInfo {
+  background: color-mix(in srgb, var(--admin-primary) 15%, transparent);
+  color: var(--admin-primary);
+}
 
 .notifContent {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .notifBodyTitle {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.8rem;
   color: var(--admin-text);
-  line-height: 1.4;
+  font-weight: 700;
 }
 
 .notifTime {
-  font-size: 0.7rem;
-  color: var(--admin-muted);
+  font-size: 0.68rem;
+  color: var(--admin-text-secondary);
 }
 
 .notifUnreadDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+  width: 8px;
+  height: 8px;
   background: var(--admin-primary);
+  border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 0 10px var(--admin-primary-glow);
+}
+
+/* ── Settings Controls ────────────────────────────────── */
+.settingsCard {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  overflow: hidden;
+}
+
+.settingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-block-end: 1px solid var(--admin-border);
+}
+.settingItem:last-child {
+  border-block-end: none;
+}
+
+.settingLabelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settingTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.settingDesc {
+  font-size: 0.72rem;
+  color: var(--admin-text-secondary);
+}
+
+/* Toggle Switch matching screenshot Pink */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--admin-surface);
+  transition: .4s;
+  border-radius: 34px;
+  outline: 1px solid var(--admin-border);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--admin-muted);
+  transition: .4s;
+  border-radius: 50%;
+}
+
+/* "Checked" state maps to Primary/Magenta per screenshots */
+.switch input:checked + .slider {
+  background-color: color-mix(in srgb, var(--admin-primary) 50%, transparent);
+  outline: 1px solid var(--admin-primary);
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(20px);
+  background-color: var(--admin-primary);
+}
+
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
 }
