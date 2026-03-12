@@ -15,5 +15,6 @@ export const queryKeys = {
     ratings: ['admin', 'ratings'],
     employees: ['admin', 'employees'],
     reports: ['admin', 'reports'],
+    settings: ['admin', 'settings'],
   },
 };

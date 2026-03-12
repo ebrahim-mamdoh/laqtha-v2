@@ -18,13 +18,13 @@ export default function ReportsClient() {
     }
 
     return (
-        <div className={styles.grid2x2}>
+        <div className={styles.outerGrid} dir="rtl">
+            {/* ── Top row: Bar chart (right in RTL) then Line chart (left in RTL) ── */}
             <ReportsCharts data={reports} />
-            <div className={styles.grid2x2} style={{ gridColumn: "1 / -1", gap: "20px" }}>
-                {/* Bottom row matches grid exactly for forms and lists */}
-                <ReportsGenerator />
-                <ReportsList reports={reports.readyReports} />
-            </div>
+
+            {/* ── Bottom row: Generator (right in RTL) then List (left in RTL) ── */}
+            <ReportsGenerator />
+            <ReportsList reports={reports.readyReports} />
         </div>
     );
 }

@@ -1,0 +1,291 @@
+/* ============================================================
+   ADMIN SETTINGS PAGE — CSS MODULE
+   Pixel-perfect match to the Stitch design.
+   All values strictly use admin theme tokens.
+   ============================================================ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  direction: rtl;
+}
+
+.pageTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--admin-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+/* ── Two-column layout ────────────────────────────────────── */
+.columnsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .columnsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Section Card ─────────────────────────────────────────── */
+.sectionCard {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-block-end: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.sectionHeaderIcon {
+  font-size: 0.85rem;
+}
+
+/* ── Form Body ────────────────────────────────────────────── */
+.formBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--admin-text-secondary);
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: var(--admin-text);
+  font-family: inherit;
+  direction: rtl;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px var(--admin-primary-soft);
+}
+
+.formInput[type="password"] {
+  letter-spacing: 2px;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 60px;
+  line-height: 1.5;
+}
+
+.formNote {
+  font-size: 0.66rem;
+  color: var(--admin-muted);
+  line-height: 1.5;
+}
+
+.formGroupRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ── Save Button ──────────────────────────────────────────── */
+.btnSave {
+  background: var(--admin-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--admin-radius);
+  padding: 13px 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btnSave:hover {
+  background: color-mix(in srgb, var(--admin-primary) 88%, black);
+  transform: translateY(-1px);
+}
+
+.btnSave:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Toggle Switch ────────────────────────────────────────── */
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-block-end: 1px solid var(--admin-border);
+  gap: 12px;
+}
+
+.toggleRow:last-child {
+  border-block-end: none;
+}
+
+.toggleLabelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.toggleTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.toggleDesc {
+  font-size: 0.68rem;
+  color: var(--admin-text-secondary);
+}
+
+/* The actual toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  transition: 0.3s;
+  border-radius: 34px;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 17px;
+  width: 17px;
+  inset-inline-start: 3px;
+  bottom: 3px;
+  background-color: var(--admin-muted);
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.switch input:checked + .slider {
+  background-color: color-mix(in srgb, var(--admin-primary) 30%, transparent);
+  border-color: var(--admin-primary);
+}
+
+.switch input:checked + .slider::before {
+  inset-inline-start: calc(100% - 20px);
+  background-color: var(--admin-primary);
+}
+
+/* ── Info row (monospace keys) ───────────────────────────── */
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 20px;
+  border-block-end: 1px solid var(--admin-border);
+}
+
+.infoLabel {
+  font-size: 0.68rem;
+  color: var(--admin-muted);
+  font-weight: 600;
+}
+
+.infoValue {
+  font-size: 0.78rem;
+  color: var(--admin-text);
+  font-family: monospace;
+  word-break: break-all;
+}
+
+/* ── Webhook destructive-style button ─────────────────────── */
+.btnDanger {
+  background: color-mix(in srgb, var(--admin-danger) 15%, transparent);
+  color: var(--admin-danger);
+  border: 1px solid var(--admin-danger);
+  border-radius: var(--admin-radius);
+  padding: 11px 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.btnDanger:hover {
+  background: color-mix(in srgb, var(--admin-danger) 25%, transparent);
+}
+
+/* ── loading / error ─────────────────────────────────────── */
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  color: var(--admin-muted);
+  font-size: 0.9rem;
+}

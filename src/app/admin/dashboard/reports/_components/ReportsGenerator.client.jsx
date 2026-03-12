@@ -21,7 +21,7 @@ export default function ReportsGenerator() {
     };
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} dir="rtl">
             <div className={styles.cardHeader}>
                 <div className={styles.cardTitle}>إنشاء تقرير مخصص 🛠️</div>
             </div>
@@ -35,14 +35,29 @@ export default function ReportsGenerator() {
                 </select>
             </div>
 
+            {/* Date row: in RTL "إلى" (To) is on the RIGHT, "من" (From) is on the LEFT */}
             <div className={styles.formGroupRow}>
                 <div className={styles.formDateGroup}>
                     <label className={styles.formLabel}>إلى</label>
-                    <input type="date" name="to" className={styles.formInput} value={formData.to} onChange={handleChange} dir="ltr" />
+                    <input
+                        type="date"
+                        name="to"
+                        className={styles.formInput}
+                        value={formData.to}
+                        onChange={handleChange}
+                        dir="ltr"
+                    />
                 </div>
                 <div className={styles.formDateGroup}>
                     <label className={styles.formLabel}>من</label>
-                    <input type="date" name="from" className={styles.formInput} value={formData.from} onChange={handleChange} dir="ltr" />
+                    <input
+                        type="date"
+                        name="from"
+                        className={styles.formInput}
+                        value={formData.from}
+                        onChange={handleChange}
+                        dir="ltr"
+                    />
                 </div>
             </div>
 
