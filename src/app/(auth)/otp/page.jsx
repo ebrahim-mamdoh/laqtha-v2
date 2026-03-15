@@ -8,7 +8,9 @@ import apiClient from '@/lib/api';
 
 export default function Otp() {
   const router = useRouter(); // ✅ تهيئة الـ router
-  const [otp, setOtp] = useState(["", "", "", ""]);
+  // Make OTP length configurable -- default to 6
+  const OTP_LENGTH = 6;
+  const [otp, setOtp] = useState(new Array(OTP_LENGTH).fill(""));
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState("");
@@ -40,50 +42,78 @@ export default function Otp() {
 
   // 🧩 التحكم في حقول OTP
   const handleChange = (index, value) => {
-    // Allow only numbers
-    if (isNaN(value)) return;
+    // Keep only digits and a single character
+    const cleaned = String(value).replace(/\D/g, "").slice(0, 1);
 
     const newOtp = [...otp];
-    newOtp[index] = value;
+    newOtp[index] = cleaned;
     setOtp(newOtp);
 
-    // Auto move to next input
-    if (value !== "" && index < 3) {
-      inputRefs.current[index + 1].focus();
+    // Auto move to next input when a digit was entered
+    if (cleaned !== "" && index < OTP_LENGTH - 1) {
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
   const handleKeyDown = (index, e) => {
     // Backspace: move to prev input
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputRefs.current[index - 1].focus();
+    if (e.key === "Backspace") {
+      // If current has a value, clear it (default browser behavior will do that),
+      // but if it's already empty, move focus to previous and clear it.
+      if (!otp[index] && index > 0) {
+        inputRefs.current[index - 1]?.focus();
+        const newOtp = [...otp];
+        newOtp[index - 1] = "";
+        setOtp(newOtp);
+        e.preventDefault();
+      }
+    }
+
+    // Allow arrow navigation between inputs
+    if (e.key === "ArrowLeft" && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+      e.preventDefault();
+    }
+    if (e.key === "ArrowRight" && index < OTP_LENGTH - 1) {
+      inputRefs.current[index + 1]?.focus();
+      e.preventDefault();
     }
   };
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").slice(0, 4);
-    if (!/^\d+$/.test(pastedData)) return;
+    const raw = e.clipboardData.getData("text") || "";
+    const pastedData = raw.replace(/\D/g, "").slice(0, OTP_LENGTH);
+    if (!pastedData) return;
+
+    // Determine start index based on the element that received the paste
+    let startIndex = 0;
+    try {
+      const targetId = e.target?.id || "";
+      const parts = String(targetId).split("-");
+      const maybeIndex = Number(parts[1]);
+      if (!Number.isNaN(maybeIndex)) startIndex = maybeIndex;
+    } catch (err) {
+      // ignore and start from 0
+    }
 
     const newOtp = [...otp];
     pastedData.split("").forEach((char, i) => {
-      if (i < 4) newOtp[i] = char;
+      const pos = startIndex + i;
+      if (pos < OTP_LENGTH) newOtp[pos] = char;
     });
     setOtp(newOtp);
 
-    // Focus appropriate input
-    if (pastedData.length === 4) {
-      inputRefs.current[3].focus();
-    } else {
-      inputRefs.current[pastedData.length].focus();
-    }
+    // Focus the input after the last pasted character (or last input)
+    const focusIndex = Math.min(startIndex + pastedData.length - 1, OTP_LENGTH - 1);
+    inputRefs.current[focusIndex]?.focus();
   };
 
   // 🧠 عند الضغط على زر التحقق
   const handleSubmit = async () => {
     const code = otp.join("");
-    if (code.length < 4) {
-      setError("الرجاء إدخال رمز مكون من 4 أرقام");
+    if (code.length !== OTP_LENGTH) {
+      setError(`الرجاء إدخال رمز مكون من ${OTP_LENGTH} أرقام`);
       return;
     }
 
