@@ -1,98 +1,7 @@
-// StatCards.server.jsx
-// SERVER/CLIENT DECISION: Server Component.
-// Pure presentational data display — no interactivity, no state.
-// Receives static data (could be from an async server fetch later).
+"use client";
 
 import styles from "./StatCards.module.css";
-
-// ── Data definitions ─────────────────────────────────────────────────────────
-// In production these would come from an async fetch/db call in the parent page.
-const STAT_ROWS = [
-    [
-        {
-            icon: "📋",
-            label: "إجمالي الطلبات",
-            value: "1,284",
-            badge: "+2.1%",
-            badgeType: "up",
-            footer: "أمس 1,083 · بالأمس 74%",
-            accent: "var(--admin-primary)",
-            iconBg: "var(--admin-primary-soft)",
-        },
-        {
-            icon: "💰",
-            label: "إجمالي الإيرادات",
-            value: "84,320",
-            badge: "+7%",
-            badgeType: "up",
-            footer: "مقارنة بالأسبوع الماضي · ريال",
-            accent: "var(--admin-success)",
-            iconBg: "var(--admin-success-soft)",
-        },
-        {
-            icon: "👥",
-            label: "إجمالي المستخدمين",
-            value: "42,881",
-            badge: "+1%",
-            badgeType: "up",
-            footer: "آخر 30 يوم",
-            accent: "var(--admin-info)",
-            iconBg: "var(--admin-info-soft)",
-        },
-        {
-            icon: "🎫",
-            label: "التذاكر النشطة",
-            value: "34",
-            badge: "+8%",
-            badgeType: "down",
-            footer: "تحتاج إلى مراجعة فورية",
-            accent: "var(--admin-danger)",
-            iconBg: "var(--admin-danger-soft)",
-        },
-    ],
-    [
-        {
-            icon: "🤝",
-            label: "الشركاء",
-            value: "318",
-            badge: "+2",
-            badgeType: "up",
-            footer: "الجدد هذا الشهر: 12",
-            accent: "var(--admin-accent)",
-            iconBg: "var(--admin-accent-soft)",
-        },
-        {
-            icon: "⭐",
-            label: "متوسط التقييم",
-            value: "4.7",
-            badge: "ممتاز",
-            badgeType: "up",
-            footer: "من 9,210 تقييم",
-            accent: "var(--admin-warning)",
-            iconBg: "var(--admin-warning-soft)",
-        },
-        {
-            icon: "🚀",
-            label: "معدل الإتمام",
-            value: "94%",
-            badge: "+1%",
-            badgeType: "up",
-            footer: "مقارنة بـ 76% الشهر الماضي",
-            accent: "var(--admin-success)",
-            iconBg: "var(--admin-success-soft)",
-        },
-        {
-            icon: "🔄",
-            label: "معدل الاحتفاظ",
-            value: "68%",
-            badge: "-3%",
-            badgeType: "down",
-            footer: "يحتاج متابعة · هدف: 5.4%",
-            accent: "var(--admin-warning)",
-            iconBg: "var(--admin-warning-soft)",
-        },
-    ],
-];
+import { useDashboardOverview } from "../overview/useOverview";
 
 function StatCard({ icon, label, value, badge, badgeType, footer, accent, iconBg }) {
     const badgeClass =
@@ -119,6 +28,99 @@ function StatCard({ icon, label, value, badge, badgeType, footer, accent, iconBg
 }
 
 export default function StatCards() {
+    const { data: stats, isLoading, isError } = useDashboardOverview();
+
+    // Fallback display while loading or on error
+    const displayStats = stats || {};
+    const fallbackValue = isLoading ? "..." : "0";
+
+    const STAT_ROWS = [
+        [
+            {
+                icon: "📋",
+                label: "إجمالي الطلبات",
+                value: displayStats.todayOrders ?? fallbackValue,
+                badge: "يومي",
+                badgeType: "up",
+                footer: "الطلبات المستلمة اليوم",
+                accent: "var(--admin-primary)",
+                iconBg: "var(--admin-primary-soft)",
+            },
+            {
+                icon: "💰",
+                label: "إجمالي الإيرادات",
+                value: displayStats.todayRevenue ?? fallbackValue,
+                badge: "يومي",
+                badgeType: "up",
+                footer: "الإيرادات المحققة اليوم · ريال",
+                accent: "var(--admin-success)",
+                iconBg: "var(--admin-success-soft)",
+            },
+            {
+                icon: "👥",
+                label: "إجمالي المستخدمين",
+                value: displayStats.totalUsers ?? fallbackValue,
+                badge: "إجمالي",
+                badgeType: "up",
+                footer: "جميع المستخدمين المسجلين",
+                accent: "var(--admin-info)",
+                iconBg: "var(--admin-info-soft)",
+            },
+            {
+                icon: "🎫",
+                label: "التذاكر النشطة",
+                value: displayStats.openTickets ?? fallbackValue,
+                badge: "نشط",
+                badgeType: "warning",
+                footer: "تذاكر الدعم الفني المفتوحة",
+                accent: "var(--admin-danger)",
+                iconBg: "var(--admin-danger-soft)",
+            },
+        ],
+        [
+            {
+                icon: "🤝",
+                label: "الشركاء النشطين",
+                value: displayStats.activePartners ?? fallbackValue,
+                badge: "نشط",
+                badgeType: "up",
+                footer: "شركاء تقديم الخدمة المعتمدين",
+                accent: "var(--admin-accent)",
+                iconBg: "var(--admin-accent-soft)",
+            },
+            {
+                icon: "⭐",
+                label: "الحجوزات المعلقة",
+                value: displayStats.pendingBookings ?? fallbackValue,
+                badge: "معلق",
+                badgeType: "warning",
+                footer: "حجوزات بانتظار التأكيد",
+                accent: "var(--admin-warning)",
+                iconBg: "var(--admin-warning-soft)",
+            },
+            {
+                icon: "🚀",
+                label: "مسترجعات اليوم",
+                value: displayStats.todayRefunds ?? fallbackValue,
+                badge: "يومي",
+                badgeType: "down",
+                footer: "المبالغ المسترجعة للعملاء اليوم",
+                accent: "var(--admin-success)",
+                iconBg: "var(--admin-success-soft)",
+            },
+            {
+                icon: "⏳",
+                label: "طلبات الشراكة المعلقة",
+                value: displayStats.pendingPartnerApprovals ?? fallbackValue,
+                badge: "جديد",
+                badgeType: "warning",
+                footer: "شركاء بانتظار الموافقة",
+                accent: "var(--admin-warning)",
+                iconBg: "var(--admin-warning-soft)",
+            },
+        ],
+    ];
+
     return (
         <>
             {STAT_ROWS.map((row, rowIdx) => (

@@ -6,6 +6,7 @@ export const queryKeys = {
   wallet: ['wallet'],
   hotels: ['hotels'],
   admin: {
+    dashboardOverview: ['admin', 'dashboardOverview'],
     notifications: ['admin', 'notifications'],
     tickets: ['admin', 'tickets'],
     users: ['admin', 'users'],
