@@ -9,7 +9,7 @@ import apiClient from '@/lib/api';
 
 export default function OtpForm({ email }) {
     const router = useRouter();
-    const [otp, setOtp] = useState(['', '', '', '']);
+    const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -42,7 +42,7 @@ export default function OtpForm({ email }) {
         setOtp(newOtp);
 
         // Auto move to next input
-        if (value !== '' && index < 3) {
+        if (value !== '' && index < 5) {
             inputRefs.current[index + 1].focus();
         }
     };
@@ -56,18 +56,18 @@ export default function OtpForm({ email }) {
 
     const handlePaste = (e) => {
         e.preventDefault();
-        const pastedData = e.clipboardData.getData('text').slice(0, 4);
+        const pastedData = e.clipboardData.getData('text').slice(0, 6);
         if (!/^\d+$/.test(pastedData)) return;
 
         const newOtp = [...otp];
         pastedData.split('').forEach((char, i) => {
-            if (i < 4) newOtp[i] = char;
+            if (i < 6) newOtp[i] = char;
         });
         setOtp(newOtp);
 
         // Focus appropriate input
-        if (pastedData.length === 4) {
-            inputRefs.current[3].focus();
+        if (pastedData.length === 6) {
+            inputRefs.current[5].focus();
         } else {
             inputRefs.current[pastedData.length].focus();
         }
@@ -76,7 +76,7 @@ export default function OtpForm({ email }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const otpValue = otp.join('');
-        if (otpValue.length !== 4) return;
+        if (otpValue.length !== 6) return;
 
         setLoading(true);
         setError('');
@@ -111,7 +111,7 @@ export default function OtpForm({ email }) {
         setSuccess('');
 
         try {
-            const response = await apiClient.post('/v2/partners/resend-otp', { email });
+            const response = await apiClient.post('/partners/resend-otp', { email });
             const data = response.data;
 
             if (data.success) {
@@ -134,7 +134,7 @@ export default function OtpForm({ email }) {
             {success && <div className={styles.success}>{success}</div>}
 
             <div className={styles.inputGroup}>
-                <label className={styles.label}>أدخل الرمز المكون من 4 أرقام</label>
+                <label className={styles.label}>أدخل الرمز المكون من 6 أرقام</label>
                 <div className={styles.otpContainer} onPaste={handlePaste}>
                     {otp.map((digit, index) => (
                         <input
@@ -157,7 +157,7 @@ export default function OtpForm({ email }) {
             <button
                 type="submit"
                 className={styles.submitBtn}
-                disabled={loading || otp.join('').length !== 4}
+                disabled={loading || otp.join('').length !== 6}
             >
                 {loading ? 'جاري التحقق...' : 'تأكيد'}
             </button>

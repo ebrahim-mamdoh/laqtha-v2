@@ -98,7 +98,7 @@
 							"raw": "{\n  \"email\": \"partner@example.com\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/v2/partners/resend-otp",
+							"raw": "{{baseUrl}}/api/partners/resend-otp",
 							"host": ["{{baseUrl}}"],
 							"path": ["api", "v2", "partners", "resend-otp"]
 						},
