@@ -1,18 +1,24 @@
-// PartnersStats.server.jsx
-// SERVER COMPONENT for static rendering of the 6 KPI stats.
+"use client";
 
 import styles from "../partners.module.css";
-
-const STATS = [
-    { label: "شركاء نشطون", value: "318", color: "var(--admin-text)" },
-    { label: "انتظار موافقة", value: "12", color: "var(--admin-primary)" },
-    { label: "موقوف", value: "8", color: "var(--admin-danger)" },
-    { label: "إلغاء", value: "142", color: "var(--admin-success)" },
-    { label: "متأخر", value: "98", color: "var(--admin-info)" },
-    { label: "مستحقات معلقة", value: "248K ر.س", color: "var(--admin-warning)" },
-];
+import { usePartnersStats } from "../usePartnersStats";
 
 export default function PartnersStats() {
+    const { data: statsData, isLoading, isError } = usePartnersStats();
+    
+    // Fallback while loading
+    const displayStats = statsData?.overview || {};
+    const fallbackValue = isLoading ? "..." : "0";
+
+    const STATS = [
+        { label: "إجمالي الشركاء", value: displayStats.total ?? fallbackValue, color: "var(--admin-text)" },
+        { label: "شركاء نشطون", value: displayStats.approved ?? fallbackValue, color: "var(--admin-success)" },
+        { label: "انتظار موافقة", value: displayStats.pendingApproval ?? fallbackValue, color: "var(--admin-primary)" },
+        { label: "تسجيلات حديثة", value: displayStats.recentRegistrations ?? fallbackValue, color: "var(--admin-info)" },
+        { label: "موقوف", value: displayStats.suspended ?? fallbackValue, color: "var(--admin-warning)" },
+        { label: "إلغاء", value: displayStats.rejected ?? fallbackValue, color: "var(--admin-danger)" },
+    ];
+
     return (
         <div className={styles.statsGrid}>
             {STATS.map((s, i) => (

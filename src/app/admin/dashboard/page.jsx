@@ -49,7 +49,7 @@ export default function AdminDashboardPage() {
                             <div className={styles.cardTitle}>
                                 📋 آخر الطلبات
                             </div>
-                            <a href="/admin/orders" className={styles.viewAll}>
+                            <a href="/admin/dashboard/orders" className={styles.viewAll}>
                                 عرض الكل ←
                             </a>
                         </div>

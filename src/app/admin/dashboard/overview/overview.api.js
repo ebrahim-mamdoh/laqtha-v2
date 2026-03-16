@@ -15,3 +15,14 @@ export async function fetchDashboardOverview() {
         pendingPartnerApprovals: stats.pendingPartnerApprovals
     };
 }
+
+export async function fetchRecentActivity() {
+    const { data } = await apiClient.get("/v2/admin/dashboard/recent-activity");
+    return data.data.latestBookings.slice(0, 4).map(booking => ({
+        id: booking.bookingNumber,
+        customer: booking.customerName || "عميل غير مسجل",
+        type: booking.serviceType?.ar || "غير محدد",
+        amount: `${booking.amount} ريال`,
+        status: booking.state
+    }));
+}

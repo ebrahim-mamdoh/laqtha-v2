@@ -1,47 +1,32 @@
-// RecentOrders.server.jsx
-// SERVER/CLIENT DECISION: Server Component — pure table rendering, no interactivity.
-// In production: replace ORDERS with an async fetch() call.
+"use client";
 
 import styles from "./BottomRow.module.css";
-
-const ORDERS = [
-    {
-        id: "LQ-00116",
-        customer: "عبدالله الدخيل",
-        type: "فندق",
-        amount: "850 ريال",
-        status: "success",
-    },
-    {
-        id: "LQ-00134",
-        customer: "سارة المطيري",
-        type: "مطعم",
-        amount: "340 ريال",
-        status: "success",
-    },
-    {
-        id: "LQ-00139",
-        customer: "خالد العنزي",
-        type: "سياحة",
-        amount: "1,200 ريال",
-        status: "pending",
-    },
-    {
-        id: "LQ-00114",
-        customer: "نورة المروعي",
-        type: "نقل",
-        amount: "1,500 ريال",
-        status: "success",
-    },
-];
+import { useRecentActivity } from "../overview/useOverview";
 
 const STATUS_MAP = {
     success: { label: "ناجح", cls: styles.statusSuccess },
+    completed: { label: "ناجح", cls: styles.statusSuccess },
     pending: { label: "معلق", cls: styles.statusPending },
+    pending_approval: { label: "معلق", cls: styles.statusPending },
     cancelled: { label: "ملغي", cls: styles.statusCancelled },
+    rejected: { label: "ملغي", cls: styles.statusCancelled },
 };
 
 export default function RecentOrders() {
+    const { data: orders = [], isLoading, isError } = useRecentActivity();
+
+    if (isLoading) {
+        return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted, gray)' }}>جاري التحميل...</div>;
+    }
+
+    if (isError) {
+        return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--admin-danger)' }}>حدث خطأ في تحميل آخر الطلبات</div>;
+    }
+
+    if (orders.length === 0) {
+        return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted, gray)' }}>لا يوجد نشاط أخير لعرضه</div>;
+    }
+
     return (
         <table className={styles.table} dir="rtl">
             <thead>
@@ -54,7 +39,7 @@ export default function RecentOrders() {
                 </tr>
             </thead>
             <tbody>
-                {ORDERS.map((order) => {
+                {orders.map((order) => {
                     const st = STATUS_MAP[order.status] ?? STATUS_MAP.pending;
                     return (
                         <tr key={order.id}>

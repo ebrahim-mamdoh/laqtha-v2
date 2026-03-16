@@ -11,6 +11,7 @@ export const queryKeys = {
     tickets: ['admin', 'tickets'],
     users: ['admin', 'users'],
     partners: ['admin', 'partners'],
+    partnersStats: ['admin', 'partners-stats'],
     orders: ['admin', 'orders'],
     payments: ['admin', 'payments'],
     ratings: ['admin', 'ratings'],
