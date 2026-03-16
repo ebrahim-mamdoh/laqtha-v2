@@ -3,7 +3,10 @@ import styles from "../users.module.css";
 
 export default function UsersFilters({ filters, setFilters }) {
     const handleChange = (field, val) => {
-        setFilters((prev) => ({ ...prev, [field]: val }));
+        setFilters((prev) => {
+            // Reset page to 1 when filters change (we'll implement page in parent)
+            return { ...prev, [field]: val, page: 1 };
+        });
     };
 
     return (
@@ -11,40 +14,18 @@ export default function UsersFilters({ filters, setFilters }) {
             <input
                 type="text"
                 className={styles.filterInput}
-                placeholder="بحث بالاسم أو الجوال..."
+                placeholder="بحث بالاسم أو الجوال أو البريد..."
                 value={filters.search}
                 onChange={(e) => handleChange("search", e.target.value)}
             />
 
             <select
                 className={styles.filterSelect}
-                value={filters.city}
-                onChange={(e) => handleChange("city", e.target.value)}
+                value={filters.role}
+                onChange={(e) => handleChange("role", e.target.value)}
             >
-                <option value="">جميع المدن</option>
-                <option value="Jeddah">جدة</option>
-                <option value="Riyadh">الرياض</option>
-                <option value="Makkah">مكة</option>
-            </select>
-
-            <select
-                className={styles.filterSelect}
-                value={filters.membership}
-                onChange={(e) => handleChange("membership", e.target.value)}
-            >
-                <option value="">جميع العضويات</option>
-                <option value="VIP">VIP</option>
-                <option value="Normal">عادي</option>
-            </select>
-
-            <select
-                className={styles.filterSelect}
-                value={filters.status}
-                onChange={(e) => handleChange("status", e.target.value)}
-            >
-                <option value="">جميع الحالات</option>
-                <option value="active">نشط</option>
-                <option value="blocked">محظور</option>
+                <option value="customer">عميل (Customer)</option>
+                <option value="driver">شريك (Partner/Driver)</option>
             </select>
 
             <div className={styles.filterSpacer} />

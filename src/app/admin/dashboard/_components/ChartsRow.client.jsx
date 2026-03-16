@@ -16,6 +16,7 @@ import {
     Cell,
 } from "recharts";
 import styles from "./ChartsRow.module.css";
+import { useSectorPerformance } from "../overview/useOverview";
 
 // ── Revenue line chart data ──────────────────────────────────────────────────
 const REVENUE_DATA = [
@@ -26,15 +27,6 @@ const REVENUE_DATA = [
     { day: "الخميس", revenue: 13100 },
     { day: "الجمعة", revenue: 15800 },
     { day: "السبت", revenue: 12600 },
-];
-
-// ── Donut / Pie chart data ───────────────────────────────────────────────────
-const DONUT_DATA = [
-    { name: "الفنادق", value: 38, color: "var(--admin-secondary)" },
-    { name: "المطاعم", value: 27, color: "var(--admin-primary)" },
-    { name: "النقل", value: 18, color: "var(--admin-accent)" },
-    { name: "السياحة", value: 12, color: "var(--admin-success)" },
-    { name: "الخدمات", value: 5, color: "var(--admin-warning)" },
 ];
 
 // Custom tooltip for recharts (theme-aware via CSS variables)
@@ -64,6 +56,8 @@ function RevenueTooltip({ active, payload, label }) {
 }
 
 export default function ChartsRow() {
+    const { data: donutData = [], isLoading, isError } = useSectorPerformance();
+
     return (
         <div className={styles.chartsRow}>
             {/* ── Revenue Line Chart ─────────────────────────────── */}
@@ -123,51 +117,61 @@ export default function ChartsRow() {
                     <span className={styles.chartBadge}>حسب الخدمة</span>
                 </div>
                 <div className={styles.chartBody}>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 20,
-                            direction: "rtl",
-                        }}
-                    >
-                        {/* Donut */}
-                        <ResponsiveContainer width={160} height={160}>
-                            <PieChart>
-                                <Pie
-                                    data={DONUT_DATA}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={48}
-                                    outerRadius={72}
-                                    dataKey="value"
-                                    startAngle={90}
-                                    endAngle={-270}
-                                    strokeWidth={0}
-                                >
-                                    {DONUT_DATA.map((entry) => (
-                                        <Cell key={entry.name} fill={entry.color} />
-                                    ))}
-                                </Pie>
-                            </PieChart>
-                        </ResponsiveContainer>
-
-                        {/* Legend */}
-                        <div className={styles.donutLegend} style={{ flex: 1 }}>
-                            {DONUT_DATA.map((item) => (
-                                <div className={styles.legendRow} key={item.name}>
-                                    <div className={styles.legendLeft}>
-                                        <div
-                                            className={styles.legendDot}
-                                            style={{ background: item.color }}
-                                        />
-                                        {item.name}
-                                    </div>
-                                    <span className={styles.legendPct}>{item.value}%</span>
-                                </div>
-                            ))}
+                    {isLoading ? (
+                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "160px", color: "var(--text-muted, gray)", margin: "auto" }}>
+                            جاري التحميل...
                         </div>
-                    </div>
+                    ) : isError ? (
+                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "160px", color: "var(--admin-danger)", margin: "auto" }}>
+                            خطأ في التحميل
+                        </div>
+                    ) : (
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 20,
+                                direction: "rtl",
+                            }}
+                        >
+                            {/* Donut */}
+                            <ResponsiveContainer width={160} height={160}>
+                                <PieChart>
+                                    <Pie
+                                        data={donutData}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={48}
+                                        outerRadius={72}
+                                        dataKey="value"
+                                        startAngle={90}
+                                        endAngle={-270}
+                                        strokeWidth={0}
+                                    >
+                                        {donutData.map((entry) => (
+                                            <Cell key={entry.name} fill={entry.color} />
+                                        ))}
+                                    </Pie>
+                                </PieChart>
+                            </ResponsiveContainer>
+
+                            {/* Legend */}
+                            <div className={styles.donutLegend} style={{ flex: 1 }}>
+                                {donutData.map((item) => (
+                                    <div className={styles.legendRow} key={item.name}>
+                                        <div className={styles.legendLeft}>
+                                            <div
+                                                className={styles.legendDot}
+                                                style={{ background: item.color }}
+                                            />
+                                            {item.name}
+                                        </div>
+                                        <span className={styles.legendPct}>{item.percentage}%</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

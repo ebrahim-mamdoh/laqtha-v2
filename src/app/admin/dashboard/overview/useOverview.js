@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/queryKeys";
-import { fetchDashboardOverview, fetchRecentActivity } from "./overview.api";
+import { fetchDashboardOverview, fetchRecentActivity, fetchSectorPerformance } from "./overview.api";
 
 export function useDashboardOverview() {
     return useQuery({
@@ -15,5 +15,13 @@ export function useRecentActivity() {
         queryKey: [...queryKeys.admin.dashboardOverview, "recentActivity"],
         queryFn: fetchRecentActivity,
         staleTime: 1 * 60 * 1000, // 1 minute cache
+    });
+}
+
+export function useSectorPerformance() {
+    return useQuery({
+        queryKey: [...queryKeys.admin.dashboardOverview, "sectorPerformance"],
+        queryFn: fetchSectorPerformance,
+        staleTime: 5 * 60 * 1000, // 5 minutes cache
     });
 }
