@@ -17,8 +17,20 @@ export default function OrdersFilters({ onFilterChange }) {
         alert("تصدير Excel قريبًا...");
     }
 
+    const stateMap = {
+        "قيد الانتظار": "pending",
+        "مكتمل": "completed",
+        "ملغي": "cancelled",
+        "قيد التنفيذ": "in-progress"
+    };
+
     function handleNotify(field, value) {
-        const next = { search, status, type, dateFrom, dateTo, [field]: value };
+        let mappedValue = value;
+        if (field === "status") {
+            mappedValue = stateMap[value] || value;
+        }
+        
+        const next = { search, status: field === "status" ? mappedValue : (stateMap[status] || status), type, dateFrom, dateTo, [field]: mappedValue };
         onFilterChange?.(next);
     }
 
@@ -61,7 +73,6 @@ export default function OrdersFilters({ onFilterChange }) {
                 }}
             />
 
-            {/* Status */}
             <select
                 id="orders-status"
                 className={styles.filterSelect}
@@ -72,10 +83,10 @@ export default function OrdersFilters({ onFilterChange }) {
                 }}
             >
                 <option value="">كل الحالات</option>
-                <option value="new">جديد</option>
-                <option value="processing">قيد التنفيذ</option>
-                <option value="completed">مكتمل</option>
-                <option value="cancelled">ملغي</option>
+                <option value="قيد الانتظار">قيد الانتظار</option>
+                <option value="قيد التنفيذ">قيد التنفيذ</option>
+                <option value="مكتمل">مكتمل</option>
+                <option value="ملغي">ملغي</option>
             </select>
 
             {/* Type */}

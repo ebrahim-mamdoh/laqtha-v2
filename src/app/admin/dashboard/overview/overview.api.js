@@ -29,12 +29,12 @@ export async function fetchRecentActivity() {
 
 export async function fetchSectorPerformance() {
     const { data } = await apiClient.get("/v2/admin/dashboard/sector-performance");
-    
+
     // Fallback if data.sectors doesn't exist
     const sectors = data.data.sectors || [];
-    
+
     const totalBookings = sectors.reduce((sum, s) => sum + (s.bookingCount || 0), 0);
-    
+
     const colors = [
         "var(--admin-secondary)",
         "var(--admin-primary)",

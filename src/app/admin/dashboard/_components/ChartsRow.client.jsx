@@ -148,8 +148,8 @@ export default function ChartsRow() {
                                         endAngle={-270}
                                         strokeWidth={0}
                                     >
-                                        {donutData.map((entry) => (
-                                            <Cell key={entry.name} fill={entry.color} />
+                                        {donutData.map((entry, index) => (
+                                            <Cell key={`${entry.name}-${index}`} fill={entry.color} />
                                         ))}
                                     </Pie>
                                 </PieChart>
@@ -157,8 +157,8 @@ export default function ChartsRow() {
 
                             {/* Legend */}
                             <div className={styles.donutLegend} style={{ flex: 1 }}>
-                                {donutData.map((item) => (
-                                    <div className={styles.legendRow} key={item.name}>
+                                {donutData.map((item, index) => (
+                                    <div className={styles.legendRow} key={`${item.name}-${index}`}>
                                         <div className={styles.legendLeft}>
                                             <div
                                                 className={styles.legendDot}

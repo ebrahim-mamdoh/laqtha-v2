@@ -5,77 +5,20 @@
 import styles from "../orders.module.css";
 
 const STATUS_MAP = {
-    new: { label: "جديد", cls: styles.statusNew },
-    processing: { label: "قيد التنفيذ", cls: styles.statusProcessing },
+    pending: { label: "قيد الانتظار", cls: styles.statusNew },
+    "in-progress": { label: "قيد التنفيذ", cls: styles.statusProcessing },
     completed: { label: "مكتمل", cls: styles.statusCompleted },
     cancelled: { label: "ملغي", cls: styles.statusCancelled },
 };
 
-const ORDERS = [
-    {
-        id: "LQ-00141",
-        customer: "عبدالله الدخيل",
-        type: "فندق",
-        partner: "فندق الريتز",
-        amount: "850 ريال",
-        status: "completed",
-        date: "2026-03-08",
-    },
-    {
-        id: "LQ-00140",
-        customer: "سارة المطيري",
-        type: "مطعم",
-        partner: "Shake Shack",
-        amount: "340 ريال",
-        status: "completed",
-        date: "2026-03-08",
-    },
-    {
-        id: "LQ-00139",
-        customer: "خالد العنزي",
-        type: "سياحة",
-        partner: "رحلة الرياض",
-        amount: "1,200 ريال",
-        status: "processing",
-        date: "2026-03-07",
-    },
-    {
-        id: "LQ-00138",
-        customer: "نورة المروعي",
-        type: "نقل",
-        partner: "كريم",
-        amount: "1,500 ريال",
-        status: "completed",
-        date: "2026-03-07",
-    },
-    {
-        id: "LQ-00137",
-        customer: "فهد العتيبي",
-        type: "خدمة",
-        partner: "Apple Play",
-        amount: "250 ريال",
-        status: "new",
-        date: "2026-03-07",
-    },
-    {
-        id: "LQ-00136",
-        customer: "منى القحطاني",
-        type: "فندق",
-        partner: "فندق القصر",
-        amount: "2,148 ريال",
-        status: "cancelled",
-        date: "2026-03-06",
-    },
-];
-
-export default function OrdersTable({ orders = ORDERS }) {
+export default function OrdersTable({ orders = [], meta, onPageChange, onViewClick, onCancelClick }) {
     return (
         <div className={styles.tableCard}>
             {/* Header */}
             <div className={styles.tableHeader}>
                 <div className={styles.tableTitle}>
                     📦 جميع الطلبات والحجوزات
-                    <span className={styles.tableCount}>{orders.length} نتيجة</span>
+                    <span className={styles.tableCount}>{meta?.total || 0} نتيجة</span>
                 </div>
             </div>
 
@@ -88,7 +31,6 @@ export default function OrdersTable({ orders = ORDERS }) {
                             <th>اسم العميل</th>
                             <th>نوع الخدمة</th>
                             <th>الشريك</th>
-                            <th>المبلغ</th>
                             <th>الحالة</th>
                             <th>تاريخ الإنشاء</th>
                             <th>الإجراءات</th>
@@ -96,32 +38,32 @@ export default function OrdersTable({ orders = ORDERS }) {
                     </thead>
                     <tbody>
                         {orders.map((order) => {
-                            const st = STATUS_MAP[order.status] ?? STATUS_MAP.new;
+                            const st = STATUS_MAP[order.state] ?? STATUS_MAP.pending;
                             return (
                                 <tr key={order.id}>
                                     <td>
-                                        <span className={styles.orderId}>{order.id}</span>
+                                        <span className={styles.orderId}>{order.number}</span>
                                     </td>
                                     <td>
-                                        <span className={styles.customer}>{order.customer}</span>
+                                        <span className={styles.customer} title={order.customerEmail}>{order.customerName}</span>
                                     </td>
-                                    <td>{order.type}</td>
-                                    <td>{order.partner}</td>
+                                    <td>{order.service}</td>
                                     <td>
-                                        <span className={styles.amount}>{order.amount}</span>
+                                        <span title={order.partnerContact}>{order.partnerName}</span>
                                     </td>
                                     <td>
                                         <span className={`${styles.status} ${st.cls}`}>
-                                            {st.label}
+                                            {order.stateLabel || st.label}
                                         </span>
                                     </td>
-                                    <td>{order.date}</td>
+                                    <td>{order.createdAt}</td>
                                     <td>
                                         <div className={styles.actions}>
                                             <button
                                                 className={styles.actionBtn}
                                                 title="عرض"
                                                 aria-label={`عرض الطلب ${order.id}`}
+                                                onClick={() => onViewClick?.(order.id)}
                                             >
                                                 👁️
                                             </button>
@@ -134,8 +76,11 @@ export default function OrdersTable({ orders = ORDERS }) {
                                             </button>
                                             <button
                                                 className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
-                                                title="حذف"
-                                                aria-label={`حذف الطلب ${order.id}`}
+                                                title={order.stateLabel !== "مؤكد" ? "لا يمكن إلغاء هذا الطلب" : "إلغاء"}
+                                                aria-label={`إلغاء الطلب ${order.id}`}
+                                                disabled={order.stateLabel !== "مؤكد"}
+                                                onClick={() => onCancelClick?.(order.id)}
+                                                style={{ opacity: order.stateLabel !== "مؤكد" ? 0.4 : 1, cursor: order.stateLabel !== "مؤكد" ? "not-allowed" : "pointer" }}
                                             >
                                                 🗑️
                                             </button>
@@ -149,22 +94,59 @@ export default function OrdersTable({ orders = ORDERS }) {
             </div>
 
             {/* Pagination */}
-            <div className={styles.pagination}>
-                <span className={styles.pageInfo}>
-                    عرض 1–{orders.length} من أصل 1,284 طلب
-                </span>
-                <div className={styles.pageControls}>
-                    <button className={styles.pageBtn} disabled>«</button>
-                    <button className={styles.pageBtn} disabled>‹</button>
-                    <button className={`${styles.pageBtn} ${styles.pageBtnActive}`}>1</button>
-                    <button className={styles.pageBtn}>2</button>
-                    <button className={styles.pageBtn}>3</button>
-                    <span style={{ color: "var(--admin-muted)", padding: "0 4px" }}>...</span>
-                    <button className={styles.pageBtn}>43</button>
-                    <button className={styles.pageBtn}>›</button>
-                    <button className={styles.pageBtn}>»</button>
+            {meta && (
+                <div className={styles.pagination}>
+                    <span className={styles.pageInfo}>
+                        عرض الصفحات (توجد {meta.total} نتائج)
+                    </span>
+                    <div className={styles.pageControls}>
+                        <button 
+                            className={styles.pageBtn} 
+                            disabled={meta.page <= 1}
+                            onClick={() => onPageChange?.(meta.page - 1)}
+                        >‹</button>
+                        
+                        {Array.from({ length: Math.min(meta.totalPages, 5) }, (_, i) => {
+                            let startPage = 1;
+                            if (meta.totalPages > 5) {
+                                startPage = Math.max(1, meta.page - 2);
+                                if (startPage + 4 > meta.totalPages) {
+                                    startPage = meta.totalPages - 4;
+                                }
+                            }
+                            const pageNum = startPage + i;
+                            
+                            return (
+                                <button 
+                                    key={pageNum}
+                                    className={`${styles.pageBtn} ${meta.page === pageNum ? styles.pageBtnActive : ''}`}
+                                    onClick={() => onPageChange?.(pageNum)}
+                                >
+                                    {pageNum}
+                                </button>
+                            );
+                        })}
+
+                        {meta.totalPages > 5 && meta.page < meta.totalPages - 2 && (
+                            <>
+                                <span style={{ color: "var(--admin-muted)", padding: "0 4px" }}>...</span>
+                                <button 
+                                    className={styles.pageBtn}
+                                    onClick={() => onPageChange?.(meta.totalPages)}
+                                >
+                                    {meta.totalPages}
+                                </button>
+                            </>
+                        )}
+
+                        <button 
+                            className={styles.pageBtn} 
+                            disabled={!meta.totalPages || meta.page >= meta.totalPages}
+                            onClick={() => onPageChange?.(meta.page + 1)}
+                        >›</button>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
