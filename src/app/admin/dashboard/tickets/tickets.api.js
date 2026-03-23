@@ -1,73 +1,19 @@
 import { apiClient } from "@/lib/api";
 
-const MOCK_TICKETS = [
-    {
-        id: "LQ-SUP-47801",
-        customer: "عبدالله الحارثي",
-        entity: "مدفوعات 💳",
-        category: "مشكلة مالية",
-        categoryColor: "var(--admin-warning)",
-        subject: "خصم مزدوج",
-        priority: "عاجلة",
-        priorityColor: "var(--admin-danger)",
-        sla: "متأخرة 3.5 ساعة ⚠️",
-        slaColor: "var(--admin-danger)",
-        assignee: "سارة المصري",
-        date: "اليوم 09:10",
-        status: "قيد المعالجة",
-        statusColor: "var(--admin-primary)",
-    },
-    {
-        id: "LQ-SUP-47802",
-        customer: "سارة المطيري",
-        entity: "إقامة 🏠",
-        category: "مشكلة تقنية",
-        categoryColor: "var(--admin-info)",
-        subject: "لم يتأكد الحجز",
-        priority: "عاجلة",
-        priorityColor: "var(--admin-danger)",
-        sla: "متأخرة 1.2 ساعة ⚠️",
-        slaColor: "var(--admin-warning)",
-        assignee: "أحمد خالد",
-        date: "اليوم 08:30",
-        status: "بانتظار رد العميل",
-        statusColor: "var(--admin-info)",
-    },
-    {
-        id: "LQ-SUP-47803",
-        customer: "خالد العنزي",
-        entity: "نقل 🚕",
-        category: "استفسار عام",
-        categoryColor: "var(--admin-muted)",
-        subject: "السائق لم يصل",
-        priority: "متوسطة",
-        priorityColor: "var(--admin-warning)",
-        sla: "في الوقت ✅",
-        slaColor: "var(--admin-success)",
-        assignee: "منال سعيد",
-        date: "أمس 15:30",
-        status: "قيد المعالجة",
-        statusColor: "var(--admin-primary)",
-    },
-    {
-        id: "LQ-SUP-47804",
-        customer: "نورة الدوسري",
-        entity: "التطبيق 📱",
-        category: "مشكلة تقنية",
-        categoryColor: "var(--admin-primary)",
-        subject: "تعذر الدخول",
-        priority: "منخفضة",
-        priorityColor: "var(--admin-success)",
-        sla: "في الوقت ✅",
-        slaColor: "var(--admin-success)",
-        assignee: "سارة المصري",
-        date: "أمس 11:00",
-        status: "مفتوحة",
-        statusColor: "var(--admin-success)",
-    },
-];
+const mapTicket = (ticket) => ({
+    id: ticket._id,
+    number: ticket.ticketNumber,
+    customer: ticket.userId?.name || "-",
+    email: ticket.userId?.email || "-",
+    category: ticket.category || "-",
+    issue: ticket.subject || ticket.message || "-",
+    priority: ticket.priority || "-",
+    status: ticket.status || "-",
+    createdAt: ticket.createdAt
+});
 
 export async function fetchTickets() {
-    await new Promise((res) => setTimeout(res, 400));
-    return MOCK_TICKETS;
+    const { data } = await apiClient.get("/v2/admin/tickets");
+    const tickets = data?.data?.tickets || [];
+    return tickets.map(mapTicket);
 }

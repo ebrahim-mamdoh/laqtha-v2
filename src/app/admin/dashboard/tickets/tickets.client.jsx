@@ -21,9 +21,9 @@ export default function TicketsClient() {
             // Very basic local filtering for mock data demonstration
             if (
                 filters.search &&
-                !t.id.includes(filters.search) &&
+                !t.number.includes(filters.search) &&
                 !t.customer.includes(filters.search) &&
-                !t.subject.includes(filters.search)
+                !t.issue.includes(filters.search)
             ) {
                 return false;
             }
