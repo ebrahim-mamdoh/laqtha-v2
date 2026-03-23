@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 export function middleware(req) {
   const tokenCookie = req.cookies.get("laqtaha_token");
   const userCookie = req.cookies.get("laqtaha_user");
-  
+
   const token = tokenCookie?.value || null;
   let user = null;
-  
+
   try {
     if (userCookie?.value) {
       user = JSON.parse(decodeURIComponent(userCookie.value));
@@ -17,17 +17,20 @@ export function middleware(req) {
 
   const { pathname } = req.nextUrl;
 
-  // لو مش داخل وهو عايز يدخل شات أو أونبورديج → رجعه لوجين
-  if (!token && (pathname.startsWith("/chat") || pathname.startsWith("/onboarding"))) {
+  // Rule 2: If user IS authenticated -> redirect to '/share'
+  if (token && pathname === "/") {
+    return NextResponse.redirect(new URL("/share", req.url));
+  }
+
+  // Not authenticated & protected route -> redirect to login
+  if (!token && (pathname.startsWith("/chat") || pathname.startsWith("/onboarding") || pathname.startsWith("/share"))) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // لو داخل بس لسه ماكملش الاستبيان → يفضل في /onboarding
+  // Onboarding checks
   if (token && user && user.profileComplete === false && pathname.startsWith("/chat")) {
     return NextResponse.redirect(new URL("/onboarding", req.url));
   }
-
-  // لو داخل وكمل الاستبيان → يروح /chat على طول
   if (token && user && user.profileComplete === true && pathname.startsWith("/onboarding")) {
     return NextResponse.redirect(new URL("/chat", req.url));
   }
@@ -36,5 +39,5 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/chat/:path*", "/onboarding/:path*", "/login", "/register"],
+  matcher: ["/", "/chat/:path*", "/onboarding/:path*", "/login", "/register", "/share/:path*"],
 };
