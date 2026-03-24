@@ -30,7 +30,7 @@ export default function ScreensSection() {
         <div className="text-center mb-5 pb-4">
           <h2 className={styles.sectionTitle} style={{ color: 'var(--lp-text)' }}>أفضل المزايا في مكان واحد</h2>
           <p className={styles.sectionSubtitle}>
-            لقطها هي دليلك لاكتشاف وطلب الشاحنات إلى مكانك وضمانك في وقت الطلبات الحرجة
+            لقطها ليس مجرد اداة للحجز والطلب، انه رفيقك في رحلاتك ومساعدك في وقت الطلبات الديقة
           </p>
         </div>
 
@@ -42,11 +42,11 @@ export default function ScreensSection() {
                   <div className={styles.heroGlow} style={{ width: '400px', height: '400px', opacity: 0.5 }}></div>
                   <div style={{ position: 'relative', zIndex: 2, background: 'var(--lp-card-bg)', border: '1px solid var(--lp-border)', borderRadius: '35px', padding: '12px', width: '280px', height: '580px', margin: '0 auto', boxShadow: '0 20px 40px rgba(0,0,0,0.15)' }}>
                     <div style={{ height: '100%', background: 'var(--lp-bg)', borderRadius: '25px', padding: '20px', display: 'flex', flexDirection: 'column' }}>
-                       {/* Mock UI lines */}
-                       <div style={{ width: '40%', height: '10px', background: 'var(--gradient-primary)', borderRadius: '5px', marginBottom: '20px' }}></div>
-                       <div style={{ width: '100%', height: '80px', background: 'var(--lp-card-bg)', borderRadius: '15px', marginBottom: '15px' }}></div>
-                       <div style={{ width: '100%', height: '150px', background: 'var(--color-purple)', opacity: 0.1, borderRadius: '15px', marginBottom: '15px' }}></div>
-                       <div style={{ width: '100%', height: '80px', background: 'var(--lp-card-bg)', borderRadius: '15px', marginBottom: '15px' }}></div>
+                      {/* Mock UI lines */}
+                      <div style={{ width: '40%', height: '10px', background: 'var(--gradient-primary)', borderRadius: '5px', marginBottom: '20px' }}></div>
+                      <div style={{ width: '100%', height: '80px', background: 'var(--lp-card-bg)', borderRadius: '15px', marginBottom: '15px' }}></div>
+                      <div style={{ width: '100%', height: '150px', background: 'var(--color-purple)', opacity: 0.1, borderRadius: '15px', marginBottom: '15px' }}></div>
+                      <div style={{ width: '100%', height: '80px', background: 'var(--lp-card-bg)', borderRadius: '15px', marginBottom: '15px' }}></div>
                     </div>
                   </div>
                 </div>

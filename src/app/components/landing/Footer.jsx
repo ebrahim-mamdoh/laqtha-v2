@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./landing.module.css";
 
 export default function Footer() {
@@ -7,9 +8,14 @@ export default function Footer() {
       <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
         {/* Brand & Rights */}
         <div className="d-flex flex-column gap-2 text-center text-md-start">
-          <Link href="/" className="d-inline-flex align-items-center gap-2 fw-bold fs-4 text-decoration-none" style={{ color: 'var(--lp-text)' }}>
-             <span style={{ color: 'var(--color-primary)' }}>لقطة</span>
-             <div style={{ width: 18, height: 18, background: 'var(--gradient-primary)', borderRadius: 4, display: 'inline-block' }}></div>
+          <Link href="/" className="d-inline-flex align-items-center text-decoration-none">
+             <Image 
+               src="/landing/logo.svg" 
+               alt="Laqtaha Logo" 
+               width={100} 
+               height={40} 
+               style={{ width: 'auto', height: '40px' }} 
+             />
           </Link>
           <small style={{ color: 'var(--lp-text-muted)' }}>
              &copy; {new Date().getFullYear()} لقطة. جميع الحقوق محفوظة.
