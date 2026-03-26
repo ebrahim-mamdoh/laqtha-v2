@@ -1,0 +1,71 @@
+.features-section {
+  background: #000;
+  padding: 80px 0;
+}
+
+/* GRID CORE */
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* CARDS */
+.card {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* SIZES */
+.card.large {
+  height: 320px;
+}
+
+.card.small {
+  height: 160px;
+}
+
+/* PLACE ITEMS (MAGIC هنا 👇) */
+
+/* LEFT COLUMN ترتيب */
+.grid-layout.left .card:nth-child(1) {
+  grid-column: span 2;
+}
+
+.grid-layout.left .card:nth-child(2) {
+  grid-column: 1;
+}
+
+.grid-layout.left .card:nth-child(3) {
+  grid-column: span 2;
+}
+
+.grid-layout.left .card:nth-child(4) {
+  grid-column: 1;
+}
+
+/* RIGHT COLUMN ترتيب */
+.grid-layout.right .card:nth-child(1) {
+  grid-column: 2;
+}
+
+.grid-layout.right .card:nth-child(2) {
+  grid-column: span 2;
+}
+
+.grid-layout.right .card:nth-child(3) {
+  grid-column: 2;
+}
+
+.grid-layout.right .card:nth-child(4) {
+  grid-column: span 2;
+}
+
+/* DEMO COLORS */
+.image {
+  background: #222;
+}
+
+.text {
+  background: #111;
+}

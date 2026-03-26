@@ -1,0 +1,121 @@
+/* ================================
+   ScreensSection — Isolated Styles
+   ================================ */
+
+.section {
+  background-color: var(--lp-bg, #0f1012);
+  padding: 80px 0;
+}
+
+/* ---- Header ---- */
+.header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.header h2 {
+  color: var(--lp-text, #ffffff);
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+}
+
+.header p {
+  color: var(--lp-text-muted, #a1a1a1);
+  font-size: 1.1rem;
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ---- Two-column wrapper ---- */
+.columnsWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ---- Left column: no offset ---- */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ---- Right column: intentional vertical stagger ---- */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 120px; /* stagger — margin-top, NOT padding-top (padding inflates grid cell height) */
+}
+
+/* ---- Feature Item ---- */
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+
+/* ---- Image wrapper ---- */
+.imageWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Next/Image renders its own inline styles on <img>.
+   Target the component via className prop directly instead. */
+.screenImage {
+  border-radius: 28px;
+  max-width: 300px;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* ---- Text block ---- */
+.text {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.text h3 {
+  color: var(--lp-text, #ffffff);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.text p {
+  color: var(--lp-text-muted, #a1a1a1);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+/* ================================
+   Responsive — Mobile
+   ================================ */
+@media (max-width: 768px) {
+  .columnsWrapper {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .rightColumn {
+    margin-top: 0; /* remove stagger on mobile */
+  }
+
+  .leftColumn,
+  .rightColumn {
+    gap: 48px;
+  }
+
+  .header h2 {
+    font-size: 2rem;
+  }
+}
